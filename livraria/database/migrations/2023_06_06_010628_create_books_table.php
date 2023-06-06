@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->integer("quantity");
-            $table->float("amount");
+            $table->string("title");
+            $table->string("description")->nullable();
+            $table->string("isbn");
+            $table->foreignId("publishers_id");
             $table->timestamps();
-            $table->foreignId("book_id")->references("book");
         });
     }
 
@@ -25,10 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock');
-        Schema::table("stock", function (Blueprint $table){
-            $table->dropForeign("book_id");
-            $table->dropColumn("book_id");
-        });
+        Schema::dropIfExists("books");
     }
 };

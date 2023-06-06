@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,11 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('publishing_house', function (Blueprint $table) {
-            $table->id();
-            $table->string("name");
-            $table->timestamps();
-        });
+        DB::statement("
+        CREATE TRIGGER books_after_insert AFTER INSERT ON books FOR EACH ROW
+        BEGIN
+	        insert into stocks(books_id) values (new.id);
+        END
+        ");
     }
 
     /**
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('publishing_house');
+        DB::statement("drop trigger books_after_insert");
     }
 };

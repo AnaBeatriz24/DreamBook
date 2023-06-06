@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exit_book', function (Blueprint $table) {
-            $table->foreignId("exit_id")->references("exit");
-            $table->foreignId("book_id")->references("book");
+        Schema::create('sales_books', function (Blueprint $table) {
+            $table->foreignId("sales_id");
+            $table->foreignId("books_id");
             $table->integer("quantity");
             $table->float("amount");
             $table->timestamps();
@@ -25,12 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table("exit_book", function (Blueprint $table){
-            $table->dropForeign("exit_id");
-            $table->dropColumn("exit_id");
-
-            $table->dropForeign("book_id");
-            $table->dropColumn("book_id");
-        });
+        Schema::dropIfExists("sales_books");
     }
 };
