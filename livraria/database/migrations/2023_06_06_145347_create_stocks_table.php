@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer("quantity")->default(0);
             $table->float("amount")->default(0);
-            $table->foreignId("books_id");
+            $table->unsignedBigInteger("books_id");
             $table->timestamps();
+
+            $table->foreign('books_id')
+                ->references('id')
+                ->on("books");
         });
     }
 

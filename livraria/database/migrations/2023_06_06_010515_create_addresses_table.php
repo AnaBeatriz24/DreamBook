@@ -17,8 +17,12 @@ return new class extends Migration
             $table->string("cep");
             $table->integer("number");
             $table->string("complement");
-            $table->foreignId("users_id");
+            $table->unsignedBigInteger("users_id");
             $table->timestamps();
+
+            $table->foreign('users_id')
+                ->references('id')
+                ->on("users");
         });
     }
 

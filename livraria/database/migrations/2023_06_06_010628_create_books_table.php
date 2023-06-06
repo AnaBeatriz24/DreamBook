@@ -16,8 +16,12 @@ return new class extends Migration
             $table->string("title");
             $table->string("description")->nullable();
             $table->string("isbn");
-            $table->foreignId("publishers_id");
+            $table->unsignedBigInteger("publishers_id");
             $table->timestamps();
+
+            $table->foreign('publishers_id')
+                ->references('id')
+                ->on("publishers");
         });
     }
 

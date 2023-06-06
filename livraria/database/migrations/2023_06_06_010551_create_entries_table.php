@@ -14,9 +14,17 @@ return new class extends Migration
         Schema::create('entries', function (Blueprint $table) {
             $table->id();
             $table->timestamp("dateBuy")->default(now());
-            $table->foreignId("suppliers_id");
-            $table->foreignId("users_id");
+            $table->unsignedBigInteger("suppliers_id");
+            $table->unsignedBigInteger("users_id");
             $table->timestamps();
+
+            $table->foreign('suppliers_id')
+                ->references('id')
+                ->on("suppliers");
+
+            $table->foreign('users_id')
+                ->references('id')
+                ->on("users");
         });
     }
 
