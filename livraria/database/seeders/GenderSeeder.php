@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class GenderSeeder extends Seeder
 {
@@ -119,7 +120,6 @@ class GenderSeeder extends Seeder
         DB::table("genders")->insert([
             'name' => "Psicologia"
         ]);
-
 
         DB::table("genders")->insert([
             'name' => "Religião e Espiritualidade"

@@ -19,8 +19,8 @@ class UserSeeder extends Seeder
             'email' => "gerente@mail.com.br",
             'password' => Hash::make("123"),
             'email_verified_at' => now(),
-            'status' => true,
-            'profile_id' => 1,
+
+            'profiles_id' => 1,
         ]);
 
         DB::table("users")->insert([
@@ -28,8 +28,8 @@ class UserSeeder extends Seeder
             'email' => "vendedor@mail.com.br",
             'password' => Hash::make("123"),
             'email_verified_at' => now(),
-            'status' => true,
-            'profile_id' => 2,
+
+            'profiles_id' => 2,
         ]);
 
         DB::table("users")->insert([
@@ -37,8 +37,8 @@ class UserSeeder extends Seeder
             'email' => "atendente@mail.com.br",
             'password' => Hash::make("123"),
             'email_verified_at' => now(),
-            'status' => true,
-            'profile_id' => 3,
+
+            'profiles_id' => 3,
         ]);
 
         DB::table("users")->insert([
@@ -46,32 +46,32 @@ class UserSeeder extends Seeder
             'email' => "comprador@mail.com.br",
             'password' => Hash::make("123"),
             'email_verified_at' => now(),
-            'status' => true,
-            'profile_id' => 4,
+
+            'profiles_id' => 4,
         ]);
         DB::table("users")->insert([
             'name' =>"cliente 1",
             'email' =>"cliente1@mail.com.br",
             'email_verified_at' => now(),
-            'status' => true,
-            'profile_id' => 5,
 
+            'profiles_id' => 5,
+            'password' => Hash::make("123"),
         ]);
         DB::table("users")->insert([
             'name' =>"cliente 2",
             'email' =>"cliente2@mail.com.br",
             'email_verified_at' => now(),
-            'status' => true,
-            'profile_id' => 5,
 
+            'profiles_id' => 5,
+            'password' => Hash::make("123"),
         ]);
         DB::table("users")->insert([
             'name' =>"cliente 3",
             'email' =>"cliente3@mail.com.br",
             'email_verified_at' => now(),
-            'status' => true,
-            'profile_id' => 5,
 
+            'profiles_id' => 5,
+            'password' => Hash::make("123"),
         ]);
     }
 }

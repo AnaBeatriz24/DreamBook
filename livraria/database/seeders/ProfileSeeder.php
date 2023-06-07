@@ -14,23 +14,23 @@ class ProfileSeeder extends Seeder
     public function run(): void
     {
         DB::table("profiles")->insert([
-            'profile' => "Gerente"
+            'role' => "Gerente"
         ]);
 
         DB::table("profiles")->insert([
-            'profile' => "Vendedor"
+            'role' => "Vendedor"
         ]);
 
         DB::table("profiles")->insert([
-            'profile' => "Atendente"
+            'role' => "Atendente"
         ]);
 
         DB::table("profiles")->insert([
-            'profile' => "Comprador"
+            'role' => "Comprador"
         ]);
 
         DB::table("profiles")->insert([
-            'profile' => "Cliente"
+            'role' => "Cliente"
         ]);
     }
 }

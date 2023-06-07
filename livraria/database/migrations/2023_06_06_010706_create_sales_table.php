@@ -20,15 +20,15 @@ return new class extends Migration
             $table->unsignedBigInteger("coupons_id")->nullable();
             $table->unsignedBigInteger("paymentMethods_id")->nullable();
             $table->unsignedBigInteger("addresses_id")->nullable();
-            $table->unsignedBigInteger("vendedor_id")->nullable();
-            $table->unsignedBigInteger("atendente_id")->nullable();
+            $table->unsignedBigInteger("cashier_id")->nullable();
+            $table->unsignedBigInteger("attendant_id")->nullable();
             $table->integer("parcels")->nullable();
             $table->float("discount")->nullable();
             $table->foreign("addresses_id")->references("id")->on("addresses");
             $table->foreign("coupons_id")->references("id")->on("coupons");
             $table->foreign("paymentMethods_id")->references("id")->on("payment_methods");
-            $table->foreign("vendedor_id")->references("id")->on("users");
-            $table->foreign("atendente_id")->references("id")->on("users");
+            $table->foreign("cashier_id")->references("id")->on("users");
+            $table->foreign("attendant_id")->references("id")->on("users");
             $table->timestamps();
         });
     }
