@@ -55,11 +55,24 @@ class User extends Authenticatable
 
     public function addresses():BelongsTo
     {
-        return $this->belongsTo(User::class, "addresses_id");
+        return $this->belongsTo(Addresses::class, "addresses_id");
     }
 
     public function entries():BelongsTo
     {
-        return $this->belongsTo(User::class, "users_id");
+        return $this->belongsTo(Entries::class, "users_id");
+    }
+
+    public function sales():BelongsTo
+    {
+        return $this->belongsTo(Sales::class, "users_id");
+    }
+    public function cashier():BelongsTo
+    {
+        return $this->belongsTo(Sales::class, "cashier_id");
+    }
+    public function attendant():BelongsTo
+    {
+        return $this->belongsTo(Sales::class, "attendant_id");
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Addresses extends Model
@@ -15,7 +16,8 @@ class Addresses extends Model
         'name',
         'cep',
         'number',
-        'complement'
+        'complement',
+        "users_id"
     ];
 
     protected $hidden = [
@@ -24,6 +26,11 @@ class Addresses extends Model
 
     public function users():HasMany
     {
-        return $this->hasMany(User::class, "addresses_id");
+        return $this->hasMany(User::class, "users_id");
+    }
+
+    public function sales():BelongsTo
+    {
+        return $this->belongsTo(Sales::class, "addresses_id");
     }
 }

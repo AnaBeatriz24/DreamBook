@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Publishers;
+use App\Models\Publisher;
 use Illuminate\Http\Request;
 
 class PublishersController extends Controller
@@ -34,7 +34,7 @@ class PublishersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Publishers $publishers)
+    public function show(Publisher $publishers)
     {
         //
     }
@@ -42,7 +42,7 @@ class PublishersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Publishers $publishers)
+    public function edit(Publisher $publishers)
     {
         //
     }
@@ -50,7 +50,7 @@ class PublishersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Publishers $publishers)
+    public function update(Request $request, Publisher $publishers)
     {
         //
     }
@@ -58,7 +58,7 @@ class PublishersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Publishers $publishers)
+    public function destroy(Publisher $publishers)
     {
         //
     }

@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Entries extends Model
 {
@@ -13,22 +15,29 @@ class Entries extends Model
     protected $table = "entries";
 
     protected $fillable = [
+        'suppliers_id',
         'dateBuy',
+        'users_id',
+        "suppliers_id"
     ];
 
     protected $hidden = [
         "id"
     ];
 
-    public function suppliers():BelongsTo
+    public function suppliers():HasMany
     {
-        return $this->belongsTo(User::class, "suppliers_id");
+        return $this->hasMany(Suppliers::class, "suppliers_id");
     }
 
-    public function users():BelongsTo
+    public function users():HasMany
     {
-        return $this->belongsTo(User::class, "users_id");
+        return $this->hasMany(User::class, "users_id");
     }
 
+    public function books():BelongsToMany
+    {
+        return $this->belongsToMany(Books::class, 'entries_books', 'entries_id', 'books_id')->using(EntryBook::class);
+    }
 
 }

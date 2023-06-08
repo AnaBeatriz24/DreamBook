@@ -23,6 +23,6 @@ class Suppliers extends Model
 
     public function entries():BelongsTo
     {
-        return $this->belongsTo(User::class, "suppliers_id");
+        return $this->belongsTo(Entries::class, "suppliers_id");
     }
 }
