@@ -13,11 +13,7 @@ class Genders extends Model
     protected $table = "genders";
 
     protected $fillable = [
-        'name',
-    ];
-
-    protected $hidden = [
-        "id"
+        "id", 'name',
     ];
 
     public function books():BelongsToMany
