@@ -52,4 +52,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Profiles::class, "profiles_id");
     }
+
+    public function addresses():BelongsTo
+    {
+        return $this->belongsTo(User::class, "addresses_id");
+    }
+
+    public function entries():BelongsTo
+    {
+        return $this->belongsTo(User::class, "users_id");
+    }
 }
