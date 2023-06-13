@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\BooksController;
+use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +36,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/createUsers', [UserController::class, 'create'])->name('user.create');
+    Route::get('/showUsers', [UserController::class, 'show'])->name('user.show');
+
+    Route::get('/createCoupons', [CouponsController::class, 'create'])->name('coupon.create');
+    Route::get('/showCoupons', [CouponsController::class, 'show'])->name('coupon.show');
+
+    Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
+    Route::get('/showBooks', [BooksController::class, 'searchBooks'])->name('book.search');
 });
 
 Route::get("home")

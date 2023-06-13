@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Books;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class BooksController extends Controller
 {
+    public function searchBooks()
+    {
+        return Inertia::render('SearchBooks');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +25,7 @@ class BooksController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('CreateBook');
     }
 
     /**

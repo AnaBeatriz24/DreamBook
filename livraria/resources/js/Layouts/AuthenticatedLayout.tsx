@@ -23,7 +23,25 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
+                                    Home
+                                </NavLink>
+                                <NavLink href={route('user.create')} active={route().current('user.create')}>
+                                    Adicionar Usuário
+                                </NavLink>
+                                <NavLink href={route('user.show')} active={route().current('user.show')}>
+                                    Visualizar Usuários
+                                </NavLink>
+                                <NavLink href={route('book.create')} active={route().current('book.create')}>
+                                    Adicionar Livro
+                                </NavLink>
+                                <NavLink href={route('book.search')} active={route().current('book.search')}>
+                                    Pesquisar Livro
+                                </NavLink>
+                                <NavLink href={route('coupon.create')} active={route().current('coupon.create')}>
+                                    Adicionar Cupons
+                                </NavLink>
+                                <NavLink href={route('coupon.show')} active={route().current('coupon.show')}>
+                                    Cupons Disponíveis
                                 </NavLink>
                             </div>
                         </div>

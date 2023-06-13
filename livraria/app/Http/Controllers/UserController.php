@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Coupons;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class CouponsController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -21,7 +20,7 @@ class CouponsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CreateCoupon');
+        return Inertia::render('CreateUser');
     }
 
     /**
@@ -35,15 +34,15 @@ class CouponsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Coupons $coupons)
+    public function show()
     {
-        return Inertia::render('ShowCoupons');
+        return Inertia::render('ShowUsers');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Coupons $coupons)
+    public function edit(string $id)
     {
         //
     }
@@ -51,7 +50,7 @@ class CouponsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Coupons $coupons)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,7 +58,7 @@ class CouponsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Coupons $coupons)
+    public function destroy(string $id)
     {
         //
     }
