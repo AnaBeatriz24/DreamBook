@@ -47,4 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/showBooks', [BooksController::class, 'searchBooks'])->name('book.search');
 });
 
+Route::get("home")
+    ->middleware(['auth', 'verified'])->name("home");
+
 require __DIR__.'/auth.php';
