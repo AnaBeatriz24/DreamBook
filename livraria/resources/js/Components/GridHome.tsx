@@ -1,8 +1,7 @@
 import ButtonHome from "@/Components/ButtonHome";
 import {Link} from "@inertiajs/react";
 
-
-const colunas = (profile) => {
+const colunas = (profile:number) => {
     if (profile === 1){
         return "lg:grid lg:grid-cols-3 lg:place-items-center"
     } else if (profile === 2){
@@ -11,71 +10,88 @@ const colunas = (profile) => {
         return "lg:grid lg:grid-cols-3 lg:place-items-center"
     } else if (profile === 4){
         return "lg:grid lg:grid-cols-2 lg:place-items-center"
+    } else if (profile === 5){
+        return "lg:grid lg:grid-cols-2 lg:place-items-center"
     }
 }
 
-const buttons = (profile) => {
+const buttons = (profile:number) => {
     if(profile === 1){
         return <>
-            <Link href={route("company.create")}>
-                <ButtonHome opt="addEmpresa" />
+            <Link href={route("user.create")}>
+                <ButtonHome opt="addUser" />
             </Link>
-            <Link href={route("user.createAdm")}>
-                <ButtonHome opt="addAdminEmpresa" />
+            <Link href={route("book.create")}>
+                <ButtonHome opt="addBook" />
             </Link>
-            <Link href={route("manager.create")}>
-                <ButtonHome opt="addGerente" />
+            <Link href={route("coupon.create")}>
+                <ButtonHome opt="addCoupon" />
             </Link>
-            <Link href={route("company.index")} >
-                <ButtonHome opt="empresas" />
+            <Link href={route("user.show")} >
+                <ButtonHome opt="viewUser" />
             </Link>
-            <Link href={route("manager.view")}>
-                <ButtonHome opt="gerentes" />
+            <Link href={route("book.search")}>
+                <ButtonHome opt="searchBook" />
+            </Link>
+            <Link href={route("coupon.show")}>
+                <ButtonHome opt="viewCoupon" />
             </Link>
         </>
 
     } else if(profile === 2){
         return <>
-            <Link href={route("company.create")} >
-                <ButtonHome opt="addEmpresa" />
+            <Link href={route("user.create")}>
+                <ButtonHome opt="addUser" />
             </Link>
-            <Link href={route("user.createAdm")} >
-                <ButtonHome opt="addAdminEmpresa" />
+            <Link href={route("user.show")} >
+                <ButtonHome opt="viewUser" />
             </Link>
-            <Link href={route("company.index")} >
-                <ButtonHome opt="empresas" />
+            <Link href={route("book.search")}>
+                <ButtonHome opt="searchBook" />
+            </Link>
+            <Link href={route("sales.history")}>
+                <ButtonHome opt="myHistory" />
             </Link>
         </>
 
     } else if(profile === 3){
         return <>
-            <Link href={route("dashboard")} >
-                <ButtonHome opt="dashboards" />
-            </Link>
-            <Link href={route("dashboard.create")} >
-                <ButtonHome opt="addDashboard" />
-            </Link>
-            <Link href={route("user.createUser")}>
+            <Link href={route("user.create")}>
                 <ButtonHome opt="addUser" />
             </Link>
-            <Link href={route("user.view")}>
-                <ButtonHome opt="usuarios" />
+            <Link href={route("user.show")} >
+                <ButtonHome opt="viewUser" />
             </Link>
-            {/*<Link href={route("production.create")}>*/}
-            {/*    <ButtonHome opt="addProdutividade" />*/}
-            {/*</Link>*/}
-            {/*<Link href={route("production.view")}>*/}
-            {/*    <ButtonHome opt="viewProduction" />*/}
-            {/*</Link>*/}
+            <Link href={route("book.search")}>
+                <ButtonHome opt="searchBook" />
+            </Link>
+            <Link href={route("sales.history")}>
+                <ButtonHome opt="myHistory" />
+            </Link>
+            <Link href={route("sales.open")}>
+                <ButtonHome opt="openSales" />
+            </Link>
+            <Link href={route("sales.start")}>
+                <ButtonHome opt="startSale" />
+            </Link>
         </>
 
     } else if(profile === 4){
         return <>
-            <Link href={route("dashboard")} >
-                <ButtonHome opt="dashboards" />
+            <Link href={route("book.create")}>
+                <ButtonHome opt="addBook" />
             </Link>
-            <Link href={route("dashboard.create")} >
-                <ButtonHome opt="addDashboard" />
+            <Link href={route("book.search")}>
+                <ButtonHome opt="searchBook" />
+            </Link>
+        </>
+    } else if(profile === 5){
+        return <>
+            <Link href={route("book.search")}>
+                <ButtonHome opt="searchBook" />
+            </Link>
+            <Link href={route("sales.history")}>
+                <ButtonHome opt="myHistory" />
             </Link>
         </>
     }
