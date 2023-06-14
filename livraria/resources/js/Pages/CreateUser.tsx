@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link, useForm, usePage} from '@inertiajs/react';
 import { PageProps } from '@/types';
-import {FormEventHandler} from "react";
+import {FormEventHandler, useEffect} from "react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
@@ -10,21 +10,26 @@ import Dropdown from "@/Components/Dropdown";
 
 export default function CreateUser({ auth, profiles }: PageProps) {
 
-    console.log(profiles);
     const { data, setData, post, processing, errors, reset } = useForm({
-        role: profiles,
+        role: profiles[0].id,
         name: '',
         email: '',
-
+        password:'',
+        password_confirmation:'',
     });
+
+    useEffect(() => {
+        return () => {
+            reset('password', 'password_confirmation');
+        };
+    }, []);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
-        post(route('register'));
+        post(route('user.store'));
     };
 
-
+    const valida:boolean = !(data.password === data.password_confirmation) || (data.password === '' || data.password_confirmation === '');
 
     return (
         <AuthenticatedLayout
@@ -42,11 +47,12 @@ export default function CreateUser({ auth, profiles }: PageProps) {
                                 <InputLabel htmlFor="role" value="Selecione o tipo de Usuário" />
                                     <div className="mb-3 mt-1">
 
-                                            <select id="id"
+                                            <select id="role"
                                                     name="role"
                                                     data-dropdown-toggle="roleSelect"
                                                     data-dropdown-trigger="hover"
                                                     className="w-52 lg:w-full sm:w-72 focus:border-amber-900 focus:ring-amber-900 rounded-[10px] shadow-sm"
+                                                    onChange={(e) => setData("role", e.target.value)}
                                             >
                                                 {
                                                     profiles.map((e) => {
@@ -59,7 +65,7 @@ export default function CreateUser({ auth, profiles }: PageProps) {
                                     </div>
 
                                     <div>
-                                    <InputLabel htmlFor="name" value="Name" />
+                                    <InputLabel htmlFor="name" value="Nome" />
 
                                     <TextInput
                                         id="name"
@@ -79,6 +85,7 @@ export default function CreateUser({ auth, profiles }: PageProps) {
                                     <InputLabel htmlFor="email" value="Email" />
 
                                     <TextInput
+                                        type="email"
                                         id="email"
                                         name="email"
                                         value={data.email}
@@ -92,8 +99,42 @@ export default function CreateUser({ auth, profiles }: PageProps) {
                                     <InputError message={errors.email} className="mt-2" />
                                 </div>
 
+                                <div className="mt-3">
+                                    <InputLabel htmlFor="password" value="Senha" />
+
+                                    <TextInput
+                                        id="password"
+                                        type="password"
+                                        name="password"
+                                        value={data.password}
+                                        className="mt-1 block w-full"
+                                        autoComplete="new-password"
+                                        onChange={(e) => setData('password', e.target.value)}
+                                        required
+                                    />
+
+                                    <InputError message={errors.password} className="mt-2" />
+                                </div>
+
+                                <div className="mt-4">
+                                    <InputLabel htmlFor="password_confirmation" value="Digite a Senha Novamente" />
+
+                                    <TextInput
+                                        id="password_confirmation"
+                                        type="password"
+                                        name="password_confirmation"
+                                        value={data.password_confirmation}
+                                        className="mt-1 block w-full"
+                                        autoComplete="new-password"
+                                        onChange={(e) => setData('password_confirmation', e.target.value)}
+                                        required
+                                    />
+
+                                    <InputError message={errors.password_confirmation} className="mt-2" />
+                                </div>
+
                                 <div className="flex items-center justify-center mt-4">
-                                    <PrimaryButton className="ml-4" processing={processing}>
+                                    <PrimaryButton className="ml-4" disabled={valida}>
                                         Cadastrar
                                     </PrimaryButton>
                                 </div>

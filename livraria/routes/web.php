@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/createUsers', [UserController::class, 'create'])->name('user.create');
+    Route::post('/createUsers', [UserController::class, 'store'])->name('user.store');
     Route::get('/showUsers', [UserController::class, 'show'])->name('user.show');
 
     Route::get('/createCoupons', [CouponsController::class, 'create'])->name('coupon.create');
