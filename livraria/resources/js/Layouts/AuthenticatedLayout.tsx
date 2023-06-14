@@ -17,13 +17,13 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                     ["Adicionar Cupons", "coupon.create"],
                     ["Cupons Disponíveis", "coupon.show"],];
             case 2:
-                return [["Dashboard", "dashboard"],];
+                return [["Home", "home"],];
             case 3:
-                return [["Dashboard", "dashboard"],];
+                return [["Home", "home"],];
             case 4:
-                return [["Dashboard", "dashboard"],];
+                return [["Home", "home"],];
             case 5:
-                return [["Dashboard", "dashboard"],];
+                return [["Home", "home"],];
         }};
 
     return (
@@ -114,8 +114,8 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
+                        <ResponsiveNavLink href={route('home')} active={route().current('home')}>
+                            Home
                         </ResponsiveNavLink>
                     </div>
 

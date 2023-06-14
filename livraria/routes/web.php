@@ -28,9 +28,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', ['generos' => \App\Models\Genders::all()]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/home', function () {
+    return Inertia::render('Home', ['generos' => \App\Models\Genders::all()]);
+})->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -46,8 +46,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
     Route::get('/showBooks', [BooksController::class, 'searchBooks'])->name('book.search');
 });
-
-Route::get("home")
-    ->middleware(['auth', 'verified'])->name("home");
 
 require __DIR__.'/auth.php';
