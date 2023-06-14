@@ -22,7 +22,7 @@ class ProfileSeeder extends Seeder
         ]);
 
         DB::table("profiles")->insert([
-            'role' => "Atendente"
+            'role' => "Caixa"
         ]);
 
         DB::table("profiles")->insert([
