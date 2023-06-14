@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Books;
+use App\Models\Genders;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -25,7 +26,9 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CreateBook');
+        return Inertia::render('CreateBook',["genders" => Genders::all()]);
+
+
     }
 
     /**
