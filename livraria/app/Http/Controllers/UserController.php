@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Profiles;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 class UserController extends Controller
 {
@@ -21,7 +22,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CreateUser', ["profiles" => Profiles::where("id", ">", "1")->get()]);
+        $profiles = (Auth::user()->profiles_id === 1) ? Profiles::where("id", ">", 1)->get() : Profiles::where("id", "=", 5)->get();
+        return Inertia::render('CreateUser', ["profiles" => $profiles]);
     }
 
     /**
