@@ -40,47 +40,49 @@ export default function CreateCoupon({ auth }: PageProps) {
                 <BreadchumbSystem rota={rotas}/>
             </div>
 
-            <div className={"p-10 bg-teal-950"}>
-                <form onSubmit={submit}>
-                    <div>
-                        <InputLabel htmlFor="name" className={"text-white"} value="Nome" />
+            <div className={"flex justify-center mt-12"}>
+                <div className={"p-10 bg-teal-950 w-3/4"}>
+                    <form onSubmit={submit}>
+                        <div>
+                            <InputLabel htmlFor="name" className={"text-white"} value="Nome" />
 
-                        <TextInput
-                            id="name"
-                            type="text"
-                            name="name"
-                            value={data.name}
-                            className="mt-1 block w-full"
-                            autoComplete="name"
-                            isFocused={true}
-                            onChange={(e) => setData('name', e.target.value)}
-                        />
+                            <TextInput
+                                id="name"
+                                type="text"
+                                name="name"
+                                value={data.name}
+                                className="mt-1 block w-full"
+                                autoComplete="name"
+                                isFocused={true}
+                                onChange={(e) => setData('name', e.target.value)}
+                            />
 
-                        <InputError message={errors.name} className="mt-2" />
-                    </div>
+                            <InputError message={errors.name} className="mt-2" />
+                        </div>
 
-                    <div className="mt-4">
-                        <InputLabel htmlFor="discount" className={"text-white"} value="Desconto em porcentagem" />
+                        <div className="mt-4">
+                            <InputLabel htmlFor="discount" className={"text-white"} value="Desconto em porcentagem" />
 
-                        <TextInput
-                            id="discount"
-                            type="number"
-                            name="discount"
-                            value={data.discount}
-                            className="mt-1 block w-full"
-                            autoComplete="discount"
-                            onChange={(e) => setData('discount', e.target.value)}
-                        />
+                            <TextInput
+                                id="discount"
+                                type="number"
+                                name="discount"
+                                value={data.discount}
+                                className="mt-1 block w-full"
+                                autoComplete="discount"
+                                onChange={(e) => setData('discount', e.target.value)}
+                            />
 
-                        <InputError message={errors.discount} className="mt-2" />
-                    </div>
+                            <InputError message={errors.discount} className="mt-2" />
+                        </div>
 
-                    <div className="w-full flex justify-center">
-                        <SecondaryButton type={'submit'} className="ml-4 bg-[#78350F]" disabled={processing}>
-                            Cadastrar
-                        </SecondaryButton>
-                    </div>
-                </form>
+                        <div className="w-full flex justify-center mt-6">
+                            <SecondaryButton type={'submit'} className="ml-4" disabled={processing}>
+                                Cadastrar
+                            </SecondaryButton>
+                        </div>
+                    </form>
+                </div>
             </div>
         </AuthenticatedLayout>
     );
