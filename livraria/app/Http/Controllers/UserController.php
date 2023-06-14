@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profiles;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
 class UserController extends Controller
 {
     /**
@@ -18,9 +18,23 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('CreateUser');
+        $request->validate([
+            'role' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+        ]);
+        $modelo = new User();
+        $modelo->role = $request->role;
+        $modelo->name = $request->name;
+        $modelo->email = $request->email;
+        $modelo->save();
+
+        $profile = Profiles::all() -> where('profile_id', )
+
+
+        return Inertia::render('CreateUser', ["profiles" => Profiles::all()]);
     }
 
     /**

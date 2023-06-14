@@ -15,10 +15,6 @@ class Profiles extends Model
         'role'
     ];
 
-    protected $hidden = [
-        "id"
-    ];
-
     public function users(): HasMany
     {
         return $this->hasMany(User::class, "profiles_id");
