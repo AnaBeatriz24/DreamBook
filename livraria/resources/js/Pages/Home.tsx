@@ -3,21 +3,21 @@ import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 
-export default function Dashboard({ auth, generos }: PageProps) {
+export default function Home({ auth, generos }: PageProps) {
 
     const rotas = [
         {
-            'name': 'Dashboard',
-            'route': 'dashboard',
+            'name': 'Home',
+            'route': 'home',
         }
     ]
 
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Home</h2>}
         >
-            <Head title="Dashboard" />
+            <Head title="Home" />
 
             <div className="mt-8 ml-20">
                 <BreadchumbSystem rota={rotas}/>
