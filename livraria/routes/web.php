@@ -28,6 +28,14 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/contact', function () {
+    dd('Desenvolver tela de entre em contato');
+})->name('contact.index');
+
+Route::get('/team', function () {
+    dd('Desenvolver tela de time/sobre nós');
+})->name('team.index');
+
 Route::get('/home', function () {
     return Inertia::render('Home', ['generos' => \App\Models\Genders::all()]);
 })->middleware(['auth', 'verified'])->name('home');
@@ -45,6 +53,19 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
     Route::get('/showBooks', [BooksController::class, 'searchBooks'])->name('book.search');
+
+    Route::get('/salesHistory', function () {
+        dd('Desenvolver tela de histórico de vendas');
+    })->name('sales.history');
+
+    Route::get('/openSales', function () {
+        dd('Desenvolver tela de pedidos abertos');
+    })->name('sales.open');
+
+    Route::get('/startSale', function () {
+        dd('Desenvolver tela de iniciar pedido');
+    })->name('sales.start');
+
 });
 
 require __DIR__.'/auth.php';

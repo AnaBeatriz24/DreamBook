@@ -11,19 +11,20 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
     // @ts-ignore
     let namesRoutes = () :string[][] => {
+        // @ts-ignore
         switch(user.profiles_id) {
             case 1:
-                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.show"], ["Adicionar Livro", "book.create"], ["Pesquisar Livro", "book.search"],
+                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.show"], ["Adicionar Livro", "book.create"], ["Pesquisar Livros", "book.search"],
                     ["Adicionar Cupons", "coupon.create"],
                     ["Cupons Disponíveis", "coupon.show"],];
             case 2:
-                return [["Home", "home"],];
+                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.show"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"]];
             case 3:
-                return [["Home", "home"],];
+                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.show"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Pedidos Abertos", "sales.open"], ["Iniciar pedido", "sales.start"]];
             case 4:
-                return [["Home", "home"],];
+                return [["Home", "home"], ["Adicionar Livro", "book.create"], ["Pesquisar Livros", "book.search"],];
             case 5:
-                return [["Home", "home"],];
+                return [["Home", "home"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Entre em Contato", "contact.index"], ["Sobre nós", "team.index"]];
         }};
 
     return (
