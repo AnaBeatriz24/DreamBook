@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Coupons;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\In;
 use Inertia\Inertia;
+use function Termwind\render;
 
 class CouponsController extends Controller
 {
@@ -29,7 +31,21 @@ class CouponsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*
+         * TODO: Adicionar as validações sobre o request quando houver pasta lang
+         */
+
+        $newCoupon = new Coupons();
+        $newCoupon->name = $request->name;
+        $newCoupon->discount = $request->discount;
+        $newCoupon->save();
+
+        return redirect()->route('coupon.success');
+    }
+
+    public function createCouponFinish()
+    {
+        return Inertia::render("FinishCreateCoupon");
     }
 
     /**

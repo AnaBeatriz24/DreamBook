@@ -41,6 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/showUsers', [UserController::class, 'show'])->name('user.show');
 
     Route::get('/createCoupons', [CouponsController::class, 'create'])->name('coupon.create');
+    Route::post('/createCoupons', [CouponsController::class, 'store'])->name('coupon.store');
+
+    Route::get("/createdCoupons", [CouponsController::class, 'createCouponFinish'])
+        ->name("coupon.success");
+
     Route::get('/showCoupons', [CouponsController::class, 'show'])->name('coupon.show');
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
