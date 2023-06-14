@@ -1,13 +1,30 @@
-import { useState, PropsWithChildren, ReactNode } from 'react';
+import {useState, PropsWithChildren, ReactNode, DetailedHTMLFactory, DetailedHTMLProps, HTMLAttributes} from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import {InertiaLinkProps, Link} from '@inertiajs/react';
 import { User } from '@/types';
 
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+
+    // @ts-ignore
+    let namesRoutes = () :string[][] => {
+        switch(user.profiles_id) {
+            case 1:
+                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.show"], ["Adicionar Livro", "book.create"], ["Pesquisar Livro", "book.search"],
+                    ["Adicionar Cupons", "coupon.create"],
+                    ["Cupons Disponíveis", "coupon.show"],];
+            case 2:
+                return [["Dashboard", "dashboard"],];
+            case 3:
+                return [["Dashboard", "dashboard"],];
+            case 4:
+                return [["Dashboard", "dashboard"],];
+            case 5:
+                return [["Dashboard", "dashboard"],];
+        }};
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -22,27 +39,13 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Home
-                                </NavLink>
-                                <NavLink href={route('user.create')} active={route().current('user.create')}>
-                                    Adicionar Usuário
-                                </NavLink>
-                                <NavLink href={route('user.show')} active={route().current('user.show')}>
-                                    Visualizar Usuários
-                                </NavLink>
-                                <NavLink href={route('book.create')} active={route().current('book.create')}>
-                                    Adicionar Livro
-                                </NavLink>
-                                <NavLink href={route('book.search')} active={route().current('book.search')}>
-                                    Pesquisar Livro
-                                </NavLink>
-                                <NavLink href={route('coupon.create')} active={route().current('coupon.create')}>
-                                    Adicionar Cupons
-                                </NavLink>
-                                <NavLink href={route('coupon.show')} active={route().current('coupon.show')}>
-                                    Cupons Disponíveis
-                                </NavLink>
+                                {
+                                    namesRoutes().map((value) => {
+                                        return <NavLink href={route(value[1])} active={route().current(value[1])}>
+                                            {value[0]}
+                                        </NavLink>
+                                    })
+                                }
                             </div>
                         </div>
 
