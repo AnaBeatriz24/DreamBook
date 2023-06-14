@@ -29,7 +29,7 @@ export default function CreateUser({ auth, profiles }: PageProps) {
         post(route('user.store'));
     };
 
-
+    const valida:boolean = !(data.password === data.password_confirmation) || (data.password === '' || data.password_confirmation === '');
 
     return (
         <AuthenticatedLayout
@@ -134,7 +134,7 @@ export default function CreateUser({ auth, profiles }: PageProps) {
                                 </div>
 
                                 <div className="flex items-center justify-center mt-4">
-                                    <PrimaryButton className="ml-4">
+                                    <PrimaryButton className="ml-4" disabled={valida}>
                                         Cadastrar
                                     </PrimaryButton>
                                 </div>

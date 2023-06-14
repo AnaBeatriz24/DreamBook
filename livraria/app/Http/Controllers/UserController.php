@@ -33,9 +33,10 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $request->password;
+        $user->profiles_id = $request->role;
+        $user->email_verified_at = now();
         $user->save();
-
-        dd($request);
+        return Inertia::render("Dashboard");
     }
 
     /**
