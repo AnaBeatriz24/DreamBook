@@ -31,7 +31,7 @@ class UserController extends Controller
         $modelo->email = $request->email;
         $modelo->save();
 
-        $profile = Profiles::all() -> where('profile_id', )
+        $profile = Profiles::all() -> where('profile_id');
 
 
         return Inertia::render('CreateUser', ["profiles" => Profiles::all()]);

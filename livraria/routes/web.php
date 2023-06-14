@@ -25,6 +25,22 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+
+        /*TODO: Fazer a seleção dos livros mais vendidos pelo banco de dados */
+        'livrosMaisVendidos' => [
+            0 => [
+                "name" => "O diário de Anne Frank",
+                "path" => "books/HarryPotterCaliceFogo.png"
+            ],
+            1 => [
+                "name" => "A temperatura entre você e eu",
+                "path" => "books/DiarioAnne.png"
+            ],
+            2 => [
+                "name" => "Harry Potter e o Cálice de Fogo",
+                "path" => "books/TemperaturaVoceEu.png"
+            ],
+        ],
     ]);
 });
 
@@ -49,5 +65,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get("home")
     ->middleware(['auth', 'verified'])->name("home");
+
+Route::get("/contact")->name("contact");
+Route::get("/team")->name("team");
 
 require __DIR__.'/auth.php';
