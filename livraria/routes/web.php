@@ -44,9 +44,17 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', ['generos' => \App\Models\Genders::all()]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/contact', function () {
+    dd('Desenvolver tela de entre em contato');
+})->name('contact.index');
+
+Route::get('/team', function () {
+    dd('Desenvolver tela de time/sobre nós');
+})->name('team.index');
+
+Route::get('/home', function () {
+    return Inertia::render('Home', ['generos' => \App\Models\Genders::all()]);
+})->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
 
@@ -59,6 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/createUsers', [UserController::class, 'create'])->name('user.create');
+    Route::post('/createUsers', [UserController::class, 'store'])->name('user.store');
     Route::get('/showUsers', [UserController::class, 'show'])->name('user.show');
 
     Route::get('/createCoupons', [CouponsController::class, 'create'])->name('coupon.create');
@@ -66,9 +75,20 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
     Route::get('/showBooks', [BooksController::class, 'searchBooks'])->name('book.search');
+
+    Route::get('/salesHistory', function () {
+        dd('Desenvolver tela de histórico de vendas');
+    })->name('sales.history');
+
+    Route::get('/openSales', function () {
+        dd('Desenvolver tela de pedidos abertos');
+    })->name('sales.open');
+
+    Route::get('/startSale', function () {
+        dd('Desenvolver tela de iniciar pedido');
+    })->name('sales.start');
+
 });
-
-
 
 Route::get("/contact")->name("contact");
 Route::get("/team")->name("team");
