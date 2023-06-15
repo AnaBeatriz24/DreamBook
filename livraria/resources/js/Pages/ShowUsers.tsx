@@ -1,8 +1,49 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import {Head, usePage} from '@inertiajs/react';
 import { PageProps } from '@/types';
+import BreadchumbSystem from "@/Components/BreadchumbSystem";
+import Pagination from "@/Components/Pagination";
+import TableUsers from "@/Components/TableUsers";
+import ButtonStatusBarGroup from "@/Components/ButtonStatusBarGroup";
 
 export default function ShowUsers({ auth }: PageProps) {
+    let {users, statusBar} = usePage().props;
+
+    let header:string[] =["Nome", "Função"];
+    let routes:string[] = ["user.show", "user.show", "user.show", "user.show", "user.show"]
+    let title:string[] = ["Todos os Usuários", "Vendedores", "Atendentes", "Compradores", "Clientes"]
+
+
+    let buttonText = () => {
+        if (statusBar === 1) {
+            return ['Histórico', 'Desativar']
+        } else if (statusBar === 3) {
+            return ['Histórico', 'Ativar']
+        } else {
+            return ['Histórico', 'Excluir']
+        }
+    }
+
+    let tabela = {
+        header: header,
+        data:users,
+        actions: buttonText(),
+    }
+
+    const ativosInativos = () => {
+        return statusBar === 1
+            ? "ativos"
+            : statusBar === 2
+                ? "não verificados"
+                : "desativados"
+    }
+    const rotas = [
+        {
+            'name': 'Ver Usuários',
+            'route': 'user.show',
+        }
+    ]
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -10,14 +51,21 @@ export default function ShowUsers({ auth }: PageProps) {
         >
             <Head title="Visualizar Usuários" />
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">Visualizar Usuários
-                        </div>
-                    </div>
-                </div>
+            <div className={"mt-8 ml-20"}>
+                <BreadchumbSystem rota={rotas} />
             </div>
+
+            <ButtonStatusBarGroup routes={routes} status={statusBar} title={title}/>
+
+            {users.data.length === 0
+                ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há usuários ${ativosInativos()}`}</p>
+                : <TableUsers props={tabela}></TableUsers>}
+
+            <div className={'fixed bottom-0 left-0 right-0 mb-4'}>
+                {users.last_page !== 1 ? <Pagination registries={users} /> : <></>}
+            </div>
+
+
         </AuthenticatedLayout>
     );
 }

@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Profiles;
 use App\Models\User;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use mysql_xdevapi\Table;
+
 class UserController extends Controller
 {
     /**
@@ -46,7 +50,11 @@ class UserController extends Controller
      */
     public function show()
     {
-        return Inertia::render('ShowUsers');
+        $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+            $joinClause->on('users.profiles_id', '=', 'profiles.id');
+        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(10);
+
+        return Inertia::render('ShowUsers', ['users' => $users]);
     }
 
     /**
@@ -70,6 +78,6 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        dd("Criar método de deleção de usuário");
     }
 }
