@@ -75,7 +75,7 @@ export default function WelcomeNavBar({ routes, header, children }: PropsWithChi
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink href={route('home')} active={route().current('home')}>
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
