@@ -58,8 +58,6 @@ Route::get('/home', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get("home")->name("home");
-
     Route::get("/cart")->name("cart");
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
