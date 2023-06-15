@@ -6,6 +6,7 @@ import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import {FormEventHandler} from "react";
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function CreateBook({ auth, books, genders}: PageProps) {
 
@@ -22,6 +23,11 @@ export default function CreateBook({ auth, books, genders}: PageProps) {
         valor_entrada:'',
         descricao:'',
     });
+
+    const onHandleChange = (event) => {
+        setData(event.target.name, event.target.value);
+    };
+
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -61,20 +67,139 @@ export default function CreateBook({ auth, books, genders}: PageProps) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 bg-teal-950 text-white grid grid-cols-2">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg ">
+                        <div className="p-6 bg-teal-950 text-white grid-cols-2">
                             <form onSubmit={submit}>
-                                <InputLabel htmlFor="isbn" value="ISBN" />
-                                <TextInput
-                                    id="isbn"
-                                    name="isbn"
-                                    value={data.isbn}
-                                    onChange={(e) => setData("isbn", e.target.value)}
-                                    onBlur={resp(data.isbn)}
-                                    className="mt-1 block w-full text-black"
-                                    autoComplete="isbn"
-                                    isFocused={true}
-                                    required/>
+                                <div className="flex flex-col mx-auto">
+                                    <InputLabel htmlFor="isbn" value="ISBN" />
+                                    <TextInput
+                                        id="isbn"
+                                        name="isbn"
+                                        value={data.isbn}
+                                        onChange={(e) => setData("isbn", e.target.value)}
+                                        onBlur={resp(data.isbn)}
+                                        className="mt-1 mb-2 block w-full text-black"
+                                        autoComplete="isbn"
+                                        isFocused={true}
+                                        required/>
+
+                                    <InputLabel htmlFor="titulo" value="Título" />
+                                    <TextInput
+                                        id="titulo"
+                                        name="titulo"
+                                        value={data.titulo}
+                                        onChange={(e) => setData("titulo", e.target.value)}
+                                        onBlur={resp(data.titulo)}
+                                        className="mt-1 mb-2 block w-full text-black"
+                                        autoComplete="titulo"
+                                        isFocused={true}
+                                        required/>
+
+                                    <InputLabel htmlFor="autor" value="Autor" />
+                                    <TextInput
+                                        id="autor"
+                                        name="autor"
+                                        value={data.autor}
+                                        onChange={(e) => setData("autor", e.target.value)}
+                                        onBlur={resp(data.autor)}
+                                        className="mt-1 mb-2 block w-full text-black"
+                                        autoComplete="titulo"
+                                        isFocused={true}
+                                        required/>
+
+                                    <InputLabel htmlFor="genders" value="Selecione o gênero" />
+                                        <select id="genders"
+                                                name="genders"
+                                                data-dropdown-toggle="roleSelect"
+                                                data-dropdown-trigger="hover"
+                                                className="w-52 mb-2 lg:w-full sm:w-72 text-black border-amber-900 focus:border-amber-900 focus:ring-amber-900 rounded-[10px] shadow-sm"
+                                                onChange={(e) => setData("genders", e.target.value)}
+                                        >
+                                            {
+                                                genders.map((e) => {
+                                                    return (
+                                                        <option value={e.id}>{e.name}</option>
+                                                    )})
+                                            }
+                                        </select>
+
+                                    <InputLabel htmlFor="editora" value="Editora" />
+                                    <TextInput
+                                        id="editora"
+                                        name="editora"
+                                        value={data.editora}
+                                        onChange={(e) => setData("editora", e.target.value)}
+                                        onBlur={resp(data.editora)}
+                                        className="mt-1 mb-2 block w-full text-black"
+                                        autoComplete="editora"
+                                        isFocused={true}
+                                        required/>
+
+                                    <InputLabel htmlFor="fornecedor" value="Fornecedor" />
+                                    <TextInput
+                                        id="fornecedor"
+                                        name="fornecedor"
+                                        value={data.fornecedor}
+                                        onChange={(e) => setData("fornecedor", e.target.value)}
+                                        onBlur={resp(data.fornecedor)}
+                                        className="mt-1 mb-2 block w-full text-black"
+                                        autoComplete="fornecedor"
+                                        isFocused={true}
+                                        required/>
+
+                                    <InputLabel htmlFor="quantidade" value="Quantidade" />
+                                    <TextInput
+                                        id="quantidade"
+                                        name="quantidade"
+                                        value={data.quantidade}
+                                        onChange={(e) => setData("quantidade", e.target.value)}
+                                        onBlur={resp(data.quantidade)}
+                                        className="mt-1 mb-2 block w-full text-black"
+                                        autoComplete="quantidade"
+                                        isFocused={true}
+                                        required/>
+
+                                    <InputLabel htmlFor="cnpj_fornecedor" value="CNPJ do Fornecedor" />
+                                    <TextInput
+                                        id="cnpj_fornecedor"
+                                        name="cnpj_fornecedor"
+                                        value={data.cnpj_fornecedor}
+                                        onChange={(e) => setData("cnpj_fornecedor", e.target.value)}
+                                        onBlur={resp(data.cnpj_fornecedor)}
+                                        className="mt-1 mb-2 block w-full text-black"
+                                        autoComplete="cnpj_fornecedor"
+                                        isFocused={true}
+                                        required/>
+
+                                    <InputLabel htmlFor="valor_entrada" value="Valor de Entrada" />
+                                    <TextInput
+                                        id="valor_entrada"
+                                        name="valor_entrada"
+                                        value={data.valor_entrada}
+                                        onChange={(e) => setData("valor_entrada", e.target.value)}
+                                        onBlur={resp(data.valor_entrada)}
+                                        className="mt-1 mb-2 block w-full text-black"
+                                        autoComplete="valor_entrada"
+                                        isFocused={true}
+                                        required/>
+
+                                    <InputLabel className={"text-white "} forInput="text" value="Digite a sua mensagem:" />
+                                    <textarea id="message" rows="6" name={"message"}
+                                              className="mb-2 block p-2.5 w-full rounded-lg border
+                                      border-amber-900 focus:ring-amber-900 focus:border-amber-900 text-black"
+                                              onChange={onHandleChange}
+                                    ></textarea>
+
+                                    <div className="flex items-center justify-center mt-4">
+                                        <PrimaryButton className="ml-4">
+                                            Cadastrar
+                                        </PrimaryButton>
+                                    </div>
+
+
+
+                                </div>
+
 
                             </form>
                         </div>
