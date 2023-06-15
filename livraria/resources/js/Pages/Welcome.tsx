@@ -1,8 +1,8 @@
 import { Head } from '@inertiajs/react';
 import WelcomeNavBar from "@/Components/WelcomeNavBar";
-import SecondaryButton from "@/Components/SecondaryButton";
 import Contact from "@/Components/Contact";
 import Team from "@/Components/Team";
+import Books from "@/Components/Books";
 
 export default function Welcome({livrosMaisVendidos}) {
 
@@ -24,41 +24,18 @@ export default function Welcome({livrosMaisVendidos}) {
     return (
         <WelcomeNavBar routes={routes}>
             <Head title="Welcome" />
-            <div className={"flex items-center flex-col mt-16 pb-16 space-y-16"}>
-                <section className={"bg-teal-950 w-3/4 h-[80vh] rounded-lg flex flex-col gap-y-16 justify-center items-center"}>
-                    <p className={"text-2xl font-bold text-white"}>Livros mais vendidos!</p>
-                    <div className={"flex gap-x-16"}>
-                        {
-                            livrosMaisVendidos.map(
-                                (livro:object): any => {
-
-                                    return <div className="max-w-[256px]">
-                                        <div className="bg-gray-800 p-6 rounded-lg w-full">
-                                            <p className={"text-2xl font-bold text-white w-full break-words text-center flex items-center h-16"}>
-                                                {livro["name"]}
-                                            </p>
-                                        </div>
-                                        <div className={""}>
-                                            <img src={`${livro["path"]}`} alt="Imagem de livro"/>
-                                        </div>
-                                        <div className={"bg-gray-800 p-6 rounded-lg w-full"}>
-                                            <SecondaryButton className={"w-full justify-center"}>
-                                                Adicionar
-                                            </SecondaryButton>
-                                        </div>
-                                    </div>
-                                }
-                            )
-                        }
-                    </div>
+            <div className={"flex flex-col items-center mt-6 pb-6 space-y-16"}>
+                <section className={"bg-teal-950 rounded-lg w-[90vw] lg:w-3/4 lg:min-h-[80vh] flex flex-col items-center pb-6 justify-center"}>
+                    <p className={"text-2xl font-bold text-white mt-6"}>Livros mais vendidos!</p>
+                    <Books livrosMaisVendidos={livrosMaisVendidos}/>
                 </section>
 
-                <section className={"bg-teal-950 w-3/4 h-[80vh] rounded-lg flex flex-col gap-y-16 justify-center items-center"}>
-                    <p className={"text-2xl font-bold text-white"}>Nosso Time</p>
+                <section className={"bg-teal-950 w-[90vw] lg:w-3/4 lg:min-h-[80vh] rounded-lg flex flex-col items-center justify-center space-y-6"}>
+                    <p className={"text-2xl font-bold text-white mt-6"}>Nosso Time</p>
                     <Team />
                 </section>
 
-                <section className={"bg-teal-950 w-3/4 h-[80vh] rounded-lg flex flex-col gap-y-16 justify-center items-center"}>
+                <section className={"bg-teal-950 w-[90vw] lg:w-3/4 lg:h-[80vh] rounded-lg flex flex-col items-center space-y-6"}>
                     <Contact/>
                 </section>
             </div>

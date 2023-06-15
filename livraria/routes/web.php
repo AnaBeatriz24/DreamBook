@@ -29,15 +29,15 @@ Route::get('/', function () {
         /*TODO: Fazer a seleção dos livros mais vendidos pelo banco de dados */
         'livrosMaisVendidos' => [
             0 => [
-                "name" => "O diário de Anne Frank",
+                "name" => "Harry Potter e o Cálice de Fogo",
                 "path" => "books/HarryPotterCaliceFogo.png"
             ],
             1 => [
-                "name" => "A temperatura entre você e eu",
+                "name" => "O diário de Anne Frank",
                 "path" => "books/DiarioAnne.png"
             ],
             2 => [
-                "name" => "Harry Potter e o Cálice de Fogo",
+                "name" => "A temperatura entre você e eu",
                 "path" => "books/TemperaturaVoceEu.png"
             ],
         ],
@@ -57,6 +57,11 @@ Route::get('/home', function () {
 })->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
+
+    Route::get("home")->name("home");
+
+    Route::get("/cart")->name("cart");
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

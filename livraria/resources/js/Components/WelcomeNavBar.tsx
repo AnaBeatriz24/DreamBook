@@ -3,10 +3,10 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
-import cart from "svg-icons/cart.svg";
-import profile from "svg-icons/profile.svg";
+import Cart from '@/Logos/Cart'
+import Profile from "@/Logos/Profile";
 
-export default function WelcomeNavBar({ header, children, routes }: PropsWithChildren<{ header?: ReactNode }>) {
+export default function WelcomeNavBar({ routes, header, children }: PropsWithChildren<{ header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -32,14 +32,16 @@ export default function WelcomeNavBar({ header, children, routes }: PropsWithChi
                                     )
                                 }
                             </div>
+                        </div>
 
-                            <div className="hidden sm:flex sm:items-center sm:ml-6">
-                                <div className="ml-3 relative">
-                                    <Link href={route("cart")}>
-                                        {cart}
+                        <div className="hidden sm:flex sm:items-center sm:ml-6">
+                            <div className="ml-3 relative">
+                                <div className={"flex space-x-8"}>
+                                    <Link href={route('cart')}>
+                                        <Cart/>
                                     </Link>
-                                    <Link href={route("profile")}>
-                                        {profile}
+                                    <Link href={route('login')}>
+                                        <Profile/>
                                     </Link>
                                 </div>
                             </div>
@@ -48,7 +50,7 @@ export default function WelcomeNavBar({ header, children, routes }: PropsWithChi
                         <div className="-mr-2 flex items-center sm:hidden">
                             <button
                                 onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-200 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-200 transition duration-150 ease-in-out"
+                                className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-400 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-400 transition duration-150 ease-in-out"
                             >
                                 <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path
@@ -79,12 +81,21 @@ export default function WelcomeNavBar({ header, children, routes }: PropsWithChi
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
-                        <ResponsiveNavLink href={route("cart")}>
-                            {cart}
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route("profile")}>
-                            {profile}
-                        </ResponsiveNavLink>
+                        <div className="px-4">
+                            <div className="font-medium text-base text-gray-800">
+                                user.name
+                            </div>
+                            <div className="font-medium text-sm text-gray-500">user.email</div>
+                        </div>
+
+                        <div className="mt-3 space-y-1">
+                            <ResponsiveNavLink href={route('cart')}>
+                                <Cart/>
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('login')}>
+                                <Profile/>
+                            </ResponsiveNavLink>
+                        </div>
                     </div>
                 </div>
             </nav>
