@@ -97,7 +97,7 @@ const buttons = (profile:number) => {
     }
 }
 
-export default function GridHome(props){
+export default function GridHome(props:{props:number}){
 
     return (
         <div className={`${colunas(props.props)} lg:gap-y-20  sm:grid sm:grid-cols-1 sm:gap-y-10 sm:items-center sm:mt-4`}>
