@@ -58,7 +58,9 @@ Route::get('/home', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get("/cart")->name("cart");
+    Route::get("/cart", function () {
+        dd("carrinho");
+    })->name("cart");
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
