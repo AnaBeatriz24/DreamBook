@@ -21,35 +21,34 @@ export default function Contact() {
 
     return(
         <>
-            <div className="flex flex-col m-auto space-y-16 items-center">
-                <img src="/LogoSistema.png" className={"w-64"} alt=""/>
+            <div className="flex flex-col m-auto space-y-2 items-center">
+                <img src="/LogoSistema.png" className={"w-32 lg:w-64"} alt=""/>
                 <form onSubmit={submit} method={"post"}>
                     <div className="flex flex-col mx-auto">
                         <div className="flex gap-4 justify-center">
-                            <div className="mt-4 w-[43vw]">
+                            <div className="mt-4 w-full lg:w-[60vw]">
                                 <InputLabel className={"text-white"} forInput="name" value="Nome" />
 
                                 <TextInput
                                     id="name"
                                     name="name"
                                     type={"text"}
-                                    className="mt-1 lg:w-full"
+                                    className="mt-1 w-full"
                                     autoComplete="name"
                                     handleChange={onHandleChange}
                                     required={true}
-                                    isFocused={true}
                                 />
                             </div>
                         </div>
                         <div className="flex flex-col  items-center">
-                            <div className="mt-4 w-[43vw]">
+                            <div className="mt-4 w-full">
                                 <InputLabel className={"text-white"} forInput="email" value="E-mail" />
 
                                 <TextInput
                                     id="email"
                                     name="email"
                                     type={"text"}
-                                    className="mt-1 lg:w-full"
+                                    className="mt-1 w-full"
                                     autoComplete="email"
                                     handleChange={onHandleChange}
                                     required={true}
@@ -57,7 +56,7 @@ export default function Contact() {
                             </div>
                         </div>
                         <div className="flex flex-col  items-center">
-                            <div className="mt-4 w-[43vw]">
+                            <div className="mt-4 w-full">
                                 <InputLabel className={"text-white"} forInput="assunto" value="Assunto" />
 
                                 <TextInput
@@ -65,7 +64,7 @@ export default function Contact() {
                                     name="assunto"
                                     type={"text"}
                                     value={data.assunto}
-                                    className="mt-1 lg:w-full"
+                                    className="mt-1 w-full"
                                     autoComplete="assunto"
                                     handleChange={onHandleChange}
                                     required={true}
@@ -74,7 +73,7 @@ export default function Contact() {
                         </div>
 
                         <div className="flex flex-col items-center mb-10">
-                            <div className="mt-4 w-[43vw] align-text-top whitespace-normal p-1 rows=5">
+                            <div className="mt-4 w-full align-text-top whitespace-normal p-1 rows=5">
                                 <InputLabel className={"text-white"} forInput="text" value="Digite a sua mensagem:" />
                                 <textarea id="message" rows="6" name={"message"}
                                           className="block p-2.5 w-full rounded-lg border border-gray-300 focus:border-amber-900 focus:ring-amber-900 rounded-md shadow-sm"
