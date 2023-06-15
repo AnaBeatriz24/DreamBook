@@ -13,11 +13,11 @@ export default function Welcome({livrosMaisVendidos}) {
         },
         {
             name: "Entre em contato",
-            route: "contact"
+            route: "contact.index"
         },
         {
             name: "Nosso time",
-            route: "team"
+            route: "team.index"
         },
     ]
 
