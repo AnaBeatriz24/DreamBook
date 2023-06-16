@@ -71,9 +71,6 @@ const buttons = (profile:number) => {
             <Link href={route("sales.open")}>
                 <ButtonHome opt="openSales" />
             </Link>
-            <Link href={route("sales.start")}>
-                <ButtonHome opt="startSale" />
-            </Link>
         </>
 
     } else if(profile === 4){
