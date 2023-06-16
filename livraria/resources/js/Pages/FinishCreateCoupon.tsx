@@ -37,7 +37,7 @@ export default function FinishCreateCoupon({ auth }: PageProps) {
                 </h2>
             </div>
             <div className="mt-60 flex gap-4 justify-around">
-                <Link href={route('coupon.show')}>
+                <Link href={route('coupon.showActive')}>
                     <SecondaryButton className="ml-4 lg:w-auto bg-zinc-500 hover:bg-zinc-700" type={'button'}>
                         Ver cupons cadastrados
                     </SecondaryButton>

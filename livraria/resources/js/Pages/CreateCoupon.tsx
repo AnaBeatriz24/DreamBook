@@ -6,6 +6,7 @@ import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import { Head, useForm } from '@inertiajs/react';
 import SecondaryButton from "@/Components/SecondaryButton";
+import {FormEventHandler} from "react";
 
 export default function CreateCoupon({ auth }: PageProps) {
 
@@ -16,15 +17,19 @@ export default function CreateCoupon({ auth }: PageProps) {
         }
     ]
 
-    const { data, setData, post, processing, errors, reset } = useForm({
-        nome: '',
-        desconto: '',
+    const { data, setData, post, processing, errors } = useForm({
+        name: '',
+        discount: '',
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         post(route('coupon.store'));
+    };
+
+    const onHandleChange = (event) => {
+        setData(event.target.name, event.target.value);
     };
 
     // TODO: Finalizar a estilização da página
@@ -54,7 +59,7 @@ export default function CreateCoupon({ auth }: PageProps) {
                                 className="mt-1 block w-full"
                                 autoComplete="name"
                                 isFocused={true}
-                                onChange={(e) => setData('name', e.target.value)}
+                                onChange={onHandleChange}
                             />
 
                             <InputError message={errors.name} className="mt-2" />
@@ -70,7 +75,7 @@ export default function CreateCoupon({ auth }: PageProps) {
                                 value={data.discount}
                                 className="mt-1 block w-full"
                                 autoComplete="discount"
-                                onChange={(e) => setData('discount', e.target.value)}
+                                onChange={onHandleChange}
                             />
 
                             <InputError message={errors.discount} className="mt-2" />

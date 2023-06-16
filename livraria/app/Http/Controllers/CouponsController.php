@@ -108,7 +108,7 @@ class CouponsController extends Controller
 
         foreach ($coupons as $coupon) {
             $coupon->status = $coupon->status == 0 ? "Desativado" : "Ativo";
-            $coupon->discount = "R$ $coupon->discount";
+            $coupon->discount = "$coupon->discount %";
         }
 
         return $coupons;
