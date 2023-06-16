@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Coupons;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\In;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use function Termwind\render;
 
@@ -53,7 +53,27 @@ class CouponsController extends Controller
      */
     public function show(Coupons $coupons)
     {
-        return Inertia::render('ShowCoupons');
+        $coupons = $this->editViewDataCoupons(1);
+        return Inertia::render('ShowCoupons', [
+            "coupons" => $coupons,
+            "statusBar" => 1
+        ]);
+    }
+
+    public function showInactives(Coupons $coupons)
+    {
+        $coupons = $this->editViewDataCoupons(0);
+        return Inertia::render('ShowCoupons', [
+            "coupons" => $coupons,
+            "statusBar" => 0
+        ]);
+    }
+
+    public function editStatus(Coupons $coupon)
+    {
+        $coupon->status = !$coupon->status;
+        $coupon->save();
+        return redirect()->route($coupon->status ? "coupon.showActive" : "coupon.showInactive");
     }
 
     /**
@@ -78,5 +98,20 @@ class CouponsController extends Controller
     public function destroy(Coupons $coupons)
     {
         //
+    }
+
+    protected function editViewDataCoupons($status): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        $coupons = DB::table('coupons')
+            ->select('id', 'name', 'discount', 'status')
+            ->where('status', '=', $status)
+            ->paginate(7);
+
+        foreach ($coupons as $coupon) {
+            $coupon->status = $coupon->status == 0 ? "Desativado" : "Ativo";
+            $coupon->discount = "R$ $coupon->discount";
+        }
+
+        return $coupons;
     }
 }

@@ -12,11 +12,8 @@ class Profiles extends Model
 
     protected $table = "profiles";
     protected $fillable = [
+        "id",
         'role'
-    ];
-
-    protected $hidden = [
-        "id"
     ];
 
     public function users(): HasMany

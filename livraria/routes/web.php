@@ -25,34 +25,74 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+
+        /*TODO: Fazer a seleção dos livros mais vendidos pelo banco de dados */
+        'livrosMaisVendidos' => [
+            0 => [
+                "name" => "Harry Potter e o Cálice de Fogo",
+                "path" => "books/HarryPotterCaliceFogo.png"
+            ],
+            1 => [
+                "name" => "O diário de Anne Frank",
+                "path" => "books/DiarioAnne.png"
+            ],
+            2 => [
+                "name" => "A temperatura entre você e eu",
+                "path" => "books/TemperaturaVoceEu.png"
+            ],
+        ],
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', ['generos' => \App\Models\Genders::all()]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/contact', function () {
+    dd('Desenvolver tela de entre em contato');
+})->name('contact.index');
+
+Route::get('/team', function () {
+    dd('Desenvolver tela de time/sobre nós');
+})->name('team.index');
+
+Route::get('/home', function () {
+    return Inertia::render('Home', ['generos' => \App\Models\Genders::all()]);
+})->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
+
+    Route::get("/cart", function () {
+        dd("carrinho");
+    })->name("cart");
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/createUsers', [UserController::class, 'create'])->name('user.create');
+    Route::post('/createUsers', [UserController::class, 'store'])->name('user.store');
     Route::get('/showUsers', [UserController::class, 'show'])->name('user.show');
 
-    Route::get('/createCoupons', [CouponsController::class, 'create'])->name('coupon.create');
-    Route::post('/createCoupons', [CouponsController::class, 'store'])->name('coupon.store');
+    Route::get('/coupons/createCoupons', [CouponsController::class, 'create'])->name('coupon.create');
 
-    Route::get("/createdCoupons", [CouponsController::class, 'createCouponFinish'])
-        ->name("coupon.success");
+    Route::get('/coupons/showActiveCoupons', [CouponsController::class, 'show'])->name('coupon.showActive');
 
-    Route::get('/showCoupons', [CouponsController::class, 'show'])->name('coupon.show');
+    Route::get('/coupons/showInactiveCoupons', [CouponsController::class, 'showInactives'])->name('coupon.showInactive');
+
+    Route::post("/coupons/{coupon}", [CouponsController::class, 'editStatus'])->name("coupons.editStatus");
+
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
     Route::get('/showBooks', [BooksController::class, 'searchBooks'])->name('book.search');
+
+    Route::get('/salesHistory', function () {
+        dd('Desenvolver tela de histórico de vendas');
+    })->name('sales.history');
+
+    Route::get('/openSales', function () {
+        dd('Desenvolver tela de pedidos abertos');
+    })->name('sales.open');
+
+    Route::get('/startSale', function () {
+        dd('Desenvolver tela de iniciar pedido');
+    })->name('sales.start');
+
 });
-
-Route::get("home")
-    ->middleware(['auth', 'verified'])->name("home");
-
 require __DIR__.'/auth.php';
