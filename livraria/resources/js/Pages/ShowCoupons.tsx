@@ -15,7 +15,7 @@ export default function ShowCoupons({ auth }: PageProps, ) {
     let title = ["Ativos", "Desativados"]
 
     let buttonText = () => {
-        if (statusBar === 1) {
+        if (statusBar === 0) {
             return ['Ativar']
         } else {
             return ['Desativar']
