@@ -33,8 +33,8 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table("users")->insert([
-            'name' => "atendente",
-            'email' => "atendente@mail.com.br",
+            'name' => "caixa",
+            'email' => "caixa@mail.com.br",
             'password' => Hash::make("123"),
             'email_verified_at' => now(),
 
