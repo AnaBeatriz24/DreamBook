@@ -70,8 +70,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/createUsers', [UserController::class, 'store'])->name('user.store');
     Route::get('/showUsers', [UserController::class, 'show'])->name('user.show');
 
-    Route::get('/createCoupons', [CouponsController::class, 'create'])->name('coupon.create');
-    Route::get('/showCoupons', [CouponsController::class, 'show'])->name('coupon.show');
+    Route::get('/coupons/createCoupons', [CouponsController::class, 'create'])->name('coupon.create');
+
+    Route::get('/coupons/showActiveCoupons', [CouponsController::class, 'show'])->name('coupon.showActive');
+
+    Route::get('/coupons/showInactiveCoupons', [CouponsController::class, 'showInactives'])->name('coupon.showInactive');
+
+    Route::post("/coupons/{coupon}", [CouponsController::class, 'editStatus'])->name("coupons.editStatus");
+
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
     Route::get('/showBooks', [BooksController::class, 'searchBooks'])->name('book.search');
