@@ -30,7 +30,21 @@ class CouponsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*
+         * TODO: Adicionar as validações sobre o request quando houver pasta lang
+         */
+
+        $newCoupon = new Coupons();
+        $newCoupon->name = $request->name;
+        $newCoupon->discount = $request->discount;
+        $newCoupon->save();
+
+        return redirect()->route('coupon.success');
+    }
+
+    public function createCouponFinish()
+    {
+        return Inertia::render("FinishCreateCoupon");
     }
 
     /**
@@ -94,7 +108,7 @@ class CouponsController extends Controller
 
         foreach ($coupons as $coupon) {
             $coupon->status = $coupon->status == 0 ? "Desativado" : "Ativo";
-            $coupon->discount = "R$ $coupon->discount";
+            $coupon->discount = "$coupon->discount %";
         }
 
         return $coupons;
