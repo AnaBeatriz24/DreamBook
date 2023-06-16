@@ -33,7 +33,7 @@ const buttons = (profile:number) => {
             <Link href={route("book.search")}>
                 <ButtonHome opt="searchBook" />
             </Link>
-            <Link href={route("coupon.show")}>
+            <Link href={route("coupon.showActive")}>
                 <ButtonHome opt="viewCoupon" />
             </Link>
         </>
