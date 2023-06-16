@@ -52,7 +52,7 @@ class UserController extends Controller
     {
         $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
             $joinClause->on('users.profiles_id', '=', 'profiles.id');
-        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(10);
+        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(4);
 
         return Inertia::render('ShowUsers', ['users' => $users]);
     }

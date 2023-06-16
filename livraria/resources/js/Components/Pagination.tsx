@@ -18,7 +18,7 @@ export default function Pagination({registries, top= true, bottom= false}) {
 
     const pags = (links, current, last) => {
         if(current === 1){
-            const num = numbers(links, current)
+            const num = numbers(links, current, last)
             return num.map(({url, label, active}) => (
                 <>
                     {active
@@ -44,7 +44,7 @@ export default function Pagination({registries, top= true, bottom= false}) {
                 </>
             ))
         } else {
-            const num = numbers(links, current)
+            const num = numbers(links, current, last)
             return num.map(({url, label, active}) => (
                 <>
                     {active

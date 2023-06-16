@@ -14,7 +14,7 @@ export default function ShowUsers({ auth }: PageProps) {
     let title:string[] = ["Todos os Usuários", "Vendedores", "Atendentes", "Compradores", "Clientes"]
 
 
-    let buttonText = () => {
+    let buttonText = ():[string, string] => {
         if (statusBar === 1) {
             return ['Histórico', 'Desativar']
         } else if (statusBar === 3) {
