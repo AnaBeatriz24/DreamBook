@@ -4,13 +4,14 @@ import { PageProps } from '@/types';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
-import {FormEventHandler, useEffect, useState} from "react";
+import {FormEventHandler, ReactComponentElement, ReactElement, useEffect, useState} from "react";
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import PrimaryButton from "@/Components/PrimaryButton";
 import RegistrationSupplier from "@/Components/RegistrationSupplier";
 import SecondaryButton from "@/Components/SecondaryButton";
+import Book from "@/Components/Book";
 
-export default function CreateBook({ auth, books, genders, suppliers}: PageProps) {
+export default function CreateBook({ auth, genders, suppliers}: PageProps) {
     const rotas = [
         {
             'name': 'Adicionar Livro',
@@ -36,7 +37,7 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
         status: true,
     });
 
-    const [authors, setAuthors] = useState([])
+    const [books, setBooks] = useState([]);
 
     const onHandleChange = (event) => {
         setData(event.target.name, event.target.value);
@@ -49,80 +50,38 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
 
 
     useEffect(() => {
-        if(data.isbn?.length === 10) {
-            console.log(data.isbn);
-            resp10();
-        }
-        if(data.isbn?.length === 13){
-            console.log(data.isbn);
-            resp13();
+        if(data.isbn.length === 10 || data.isbn.length === 13){
+            console.log(data);
+            if(data.titulo === "")
+                resp();
         }
     }, [data.isbn])
 
-    useEffect(() => {
-        if(authors.length > 0){
-            console.log(authors);
-            respAuthors();
-        }
-    }, [authors])
-
-    const [autores, setAutores] = useState([]);
-    const respAuthors: () => void = async ():Promise<void> => {
-        let aut = [];
-        authors.map(async (author) => {
-            console.log(author.key)
-            const respo = await fetch(`https://openlibrary.org${author.key}.json`);
-            if (!respo.ok) {
-                throw new Error("autor não localizado");
-            }
-            const dataResp = await respo.json();
-            console.log(dataResp);
-            aut.push(dataResp.name);
-            console.log(aut);
-            console.log(aut.toString());
-            console.log(aut.length);
-            if(aut.length > 0) {
-                let au = "";
-                aut.map((a) => au + ";" + a);
-                data.autor = au;
-                alert(data.autor);
-                alert(au);
-            }
-        })
-
-    }
-
-    const resp13: () => void = async ():Promise<void> => {
-        const response = await fetch(`https://openlibrary.org/isbn/${data.isbn}.json`)
+    const resp: () => Promise<void> = async ():Promise<void> => {
+        //https://www.googleapis.com/books/v1/volumes?q=isbn:
+        const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${data.isbn}`)
         if (!response.ok) {
             throw new Error("livro não localizado");
         } else {
             const dataResponse = await response.json();
             // setAuthors(dataResponse.authors);
-            if(dataResponse.by_statement !== undefined){
-                data.autor = dataResponse.by_statement;
+            alert("livro localizado");
+            if(dataResponse.items[0].volumeInfo.authors?.length > 0){
+                data.autor = dataResponse.items[0].volumeInfo.authors.toString();
             }
-            data.titulo = dataResponse.title + (dataResponse.subtitle.length > 0 ? dataResponse.subtitle : "");
-            data.editora = dataResponse.publishers[0];
-        }
-    }
-
-    const resp10: () => void = async ():Promise<void> => {
-        const response = await fetch(`https://openlibrary.org/isbn/${data.isbn}.json`)
-        if (!response.ok) {
-            throw new Error("livro não localizado");
-        } else {
-            const dataResponse = await response.json();
-            // setAuthors(dataResponse.authors);
-            if(dataResponse.by_statement !== undefined){
-                data.autor = dataResponse.by_statement;
-            }
-            data.titulo = dataResponse.title + (dataResponse.subtitle.length > 0 ? dataResponse.subtitle : "");
-            data.editora = dataResponse.publishers[0];
+            console.log(dataResponse);
+            data.titulo = dataResponse.items[0].volumeInfo.title + (dataResponse.items[0].volumeInfo.subtitle?.length > 0 ? dataResponse.items[0].volumeInfo.subtitle : "");
+            data.editora = dataResponse.items[0].volumeInfo.publisher ?? "";
+            data.descricao = dataResponse.items[0].volumeInfo.description ?? "";
             console.log(data);
+            setBooks([...books, <Book data={{
+                titulo: dataResponse.items[0].volumeInfo.title + (dataResponse.items[0].volumeInfo.subtitle?.length > 0 ? dataResponse.items[0].volumeInfo.subtitle : ""),
+                editora: dataResponse.items[0].volumeInfo.publisher ?? "",
+                descricao: dataResponse.items[0].volumeInfo.description ?? "",
+                autor: dataResponse.items[0].volumeInfo.authors.toString()
+            }} onHandle={setData}/>]);
         }
     }
-
 
     return (
 
@@ -161,51 +120,13 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                                         autoComplete="isbn"
                                         isFocused={true}
                                         required/>
-                                    <div hidden={false}>
+                                    <div id="booksList">
 
                                         <div hidden={preenchimento.status}>
                                             <svg className="animate-spin bg-white h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
                                         </div>
 
-                                        <InputLabel htmlFor="titulo" value="Título" />
-                                        <TextInput
-                                            id="titulo"
-                                            name="titulo"
-                                            value={data.titulo}
-                                            onChange={(e) => setData("titulo", e.target.value)}
-                                            className="mt-1 mb-2 block w-full text-black"
-                                            autoComplete="titulo"
-                                            isFocused={true}
-                                            required/>
-
-                                        <InputLabel htmlFor="autor" value="Autor" />
-                                        <TextInput
-                                            id="autor"
-                                            name="autor"
-                                            value={data.autor}
-                                            onChange={(e) => setData("autor", e.target.value)}
-                                            className="mt-1 mb-2 block w-full text-black"
-                                            autoComplete="titulo"
-                                            isFocused={true}
-                                            required/>
-
-                                        <InputLabel htmlFor="editora" value="Editora" />
-                                        <TextInput
-                                            id="editora"
-                                            name="editora"
-                                            value={data.editora}
-                                            onChange={(e) => setData("editora", e.target.value)}
-                                            className="mt-1 mb-2 block w-full text-black"
-                                            autoComplete="editora"
-                                            isFocused={true}
-                                            required/>
-
-                                        <InputLabel className={"text-white "} forInput="text" value="Descrição do livro:" />
-                                        <textarea id="message" rows="6" name={"message"}
-                                                  className="mb-2 block p-2.5 w-full rounded-lg border
-                                          border-amber-900 focus:ring-amber-900 focus:border-amber-900 text-black"
-                                                  onChange={onHandleChange}
-                                        ></textarea>
+                                        {...books}
 
 
                                         <InputLabel htmlFor="genders" value="Selecione o gênero" />
