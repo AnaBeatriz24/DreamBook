@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sale;
+use App\Models\Sales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class SalesController extends Controller
 {
@@ -20,7 +23,19 @@ class SalesController extends Controller
      */
     public function create()
     {
-        //
+        // nome do livro
+        // isbn do livro
+        // amount do livro
+        // quantidade de livros
+
+        $results = DB::table('sales_books')
+            ->join('books', 'sales_books.books_id', '=', 'books.id')
+            ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
+            ->select('books.title', 'books.isbn', 'sales.*')
+            ->where('sales.users_id', '=', Auth::id())
+            ;
+
+        return Inertia::render("Cart");
     }
 
     /**
