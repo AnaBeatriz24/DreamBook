@@ -128,6 +128,12 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                                 <div className="flex flex-col mx-auto">
                                     <RegistrationSupplier suppliers={suppliers} />
 
+                                    <div className="justify-center flex ">
+                                        <PrimaryButton>
+                                            Adicionar Livro
+                                        </PrimaryButton>
+                                    </div>
+
                                     <InputLabel htmlFor="isbn" value="ISBN" />
                                     <TextInput
                                         id="isbn"
