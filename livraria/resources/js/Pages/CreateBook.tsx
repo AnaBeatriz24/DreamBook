@@ -30,17 +30,6 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
         descricao:'',
     });
 
-    const [dados, setDados] = useState({
-        isbn: '',
-        titulo: '',
-        autor:'',
-        genero:genders[0].id,
-        editora:'',
-        quantidade:'',
-        imgcapa:'',
-        valor_entrada:'',
-        descricao:''
-    })
 
     const [preenchimento, setPreenchimento] = useState({
         status: false,
