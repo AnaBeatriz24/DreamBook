@@ -5,6 +5,7 @@ use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
+use App\Models\Genders;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,6 +43,7 @@ Route::get('/', function () {
                 "path" => "books/TemperaturaVoceEu.png"
             ],
         ],
+        'genders' => Genders::all()
     ]);
 });
 
