@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Books;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class BooksController extends Controller
 {
-    public function searchBooks()
-    {
-        return Inertia::render('SearchBooks');
-    }
     /**
      * Display a listing of the resource.
      */
@@ -41,7 +38,15 @@ class BooksController extends Controller
      */
     public function show(Books $books)
     {
-        //
+        $books = DB::table('books')->select("id", "title")->get();
+
+        foreach ($books as $book) {
+             $book->path = "$book->title.png";
+        }
+
+        return Inertia::render('ShowBooks', [
+            'books' => $books,
+        ]);
     }
 
     /**

@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             SuppliersSeeder::class,
             PublisersSeeder::class,
             BooksSeeder::class,
-            StocksSeeder::class,
-            SalesSeeder::class,
+//            StocksSeeder::class,
+//            SalesSeeder::class,
         ]);
     }
 }
