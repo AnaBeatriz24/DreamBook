@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, useForm} from '@inertiajs/react';
+import {Head, Link, useForm} from '@inertiajs/react';
 import { PageProps } from '@/types';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
@@ -8,6 +8,7 @@ import {FormEventHandler, useEffect, useState} from "react";
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import PrimaryButton from "@/Components/PrimaryButton";
 import RegistrationSupplier from "@/Components/RegistrationSupplier";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function CreateBook({ auth, books, genders, suppliers}: PageProps) {
     const rotas = [
@@ -23,9 +24,7 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
         autor:'',
         genero:genders[0].id,
         editora:'',
-        fornecedor:'',
         quantidade:'',
-        cnpj_fornecedor:'',
         imgcapa:'',
         valor_entrada:'',
         descricao:'',
@@ -37,9 +36,7 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
         autor:'',
         genero:genders[0].id,
         editora:'',
-        fornecedor:'',
         quantidade:'',
-        cnpj_fornecedor:'',
         imgcapa:'',
         valor_entrada:'',
         descricao:''
@@ -92,9 +89,7 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
             console.log(autores)
             setDados({
                 autor: autores[0],
-                cnpj_fornecedor: "",
                 descricao: "",
-                fornecedor: "",
                 genero: undefined,
                 imgcapa: "",
                 isbn: data.isbn,
@@ -109,6 +104,7 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
 
 
     return (
+
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Adicionar Livro</h2>}
@@ -129,9 +125,9 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                                     <RegistrationSupplier suppliers={suppliers} />
 
                                     <div className="justify-center flex ">
-                                        <PrimaryButton>
-                                            Adicionar Livro
-                                        </PrimaryButton>
+                                            <SecondaryButton className="ml-4" type={'button'}>
+                                                Adicionar Livro
+                                            </SecondaryButton>
                                     </div>
 
                                     <InputLabel htmlFor="isbn" value="ISBN" />
@@ -145,6 +141,7 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                                         isFocused={true}
                                         required/>
                                     <div hidden={preenchimento.status}>
+
                                         <InputLabel htmlFor="titulo" value="Título" />
                                         <TextInput
                                             id="titulo"
