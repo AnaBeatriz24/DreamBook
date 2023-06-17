@@ -6,12 +6,7 @@ export default function Guest({ children }: PropsWithChildren) {
     return (
         <div className="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0 bg-gray-100">
 
-            <div className="w-full justify-center sm:max-w-md mt-6 px-6 py-4 bg-teal-950 shadow-md overflow-hidden sm:rounded-lg">
-                <div className="align-self-center justify-self-center">
-                    <Link href="/">
-                        <img src="/LogoSistema.png" className={"w-32 lg:w-64 self-center"} alt=""/>
-                    </Link>
-                </div>
+            <div className="w-full content-center flex flex-col sm:max-w-md mt-6 px-6 py-4 bg-teal-950 shadow-md overflow-hidden sm:rounded-lg">
                 {children}
             </div>
         </div>

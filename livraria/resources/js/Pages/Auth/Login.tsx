@@ -31,6 +31,11 @@ export default function Login({ status, canResetPassword }: { status?: string, c
             <Head title="Log in" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            <div className="justify-center flex">
+                <Link href="/">
+                    <img src="/LogoSistema.png" className={"w-32 lg:w-64 flex flex-col"} alt=""/>
+                </Link>
+            </div>
 
             <form onSubmit={submit}>
                 <div>
