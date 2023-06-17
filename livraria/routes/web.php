@@ -68,7 +68,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/createUsers', [UserController::class, 'create'])->name('user.create');
     Route::post('/createUsers', [UserController::class, 'store'])->name('user.store');
-    Route::get('/showUsers', [UserController::class, 'show'])->name('user.show');
+    Route::post('/deleteUser/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    //Visualização da tabela de usuários
+    Route::get('/showUsers', [UserController::class, 'showAllUsers'])->name('user.showAll');
+    Route::get('/showSellers', [UserController::class, 'showSellersUsers'])->name('user.showSellers');
+    Route::get('/showAttendants', [UserController::class, 'showAttendantsUsers'])->name('user.showAttendants');
+    Route::get('/showBuyers', [UserController::class, 'showBuyersUsers'])->name('user.showBuyers');
+    Route::get('/showCustomers', [UserController::class, 'showCustomersUsers'])->name('user.showCustomers');
+
 
     Route::get('/coupons/createCoupon', [CouponsController::class, 'create'])->name('coupon.create');
 
@@ -94,10 +102,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/openSales', function () {
         dd('Desenvolver tela de pedidos abertos');
     })->name('sales.open');
-
-    Route::get('/startSale', function () {
-        dd('Desenvolver tela de iniciar pedido');
-    })->name('sales.start');
 
 });
 require __DIR__.'/auth.php';

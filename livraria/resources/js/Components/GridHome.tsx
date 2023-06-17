@@ -27,7 +27,7 @@ const buttons = (profile:number) => {
             <Link href={route("coupon.create")}>
                 <ButtonHome opt="addCoupon" />
             </Link>
-            <Link href={route("user.show")} >
+            <Link href={route("user.showAll")} >
                 <ButtonHome opt="viewUser" />
             </Link>
             <Link href={route("book.search")}>
@@ -43,7 +43,7 @@ const buttons = (profile:number) => {
             <Link href={route("user.create")}>
                 <ButtonHome opt="addUser" />
             </Link>
-            <Link href={route("user.show")} >
+            <Link href={route("user.showAll")} >
                 <ButtonHome opt="viewUser" />
             </Link>
             <Link href={route("book.search")}>
@@ -59,7 +59,7 @@ const buttons = (profile:number) => {
             <Link href={route("user.create")}>
                 <ButtonHome opt="addUser" />
             </Link>
-            <Link href={route("user.show")} >
+            <Link href={route("user.showAll")} >
                 <ButtonHome opt="viewUser" />
             </Link>
             <Link href={route("book.search")}>
