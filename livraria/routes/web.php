@@ -68,7 +68,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/createUsers', [UserController::class, 'create'])->name('user.create');
     Route::post('/createUsers', [UserController::class, 'store'])->name('user.store');
-    Route::delete('deleteUser', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('/deleteUser/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 
     //Visualização da tabela de usuários
     Route::get('/showUsers', [UserController::class, 'showAllUsers'])->name('user.showAll');

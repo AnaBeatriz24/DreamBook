@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use mysql_xdevapi\Table;
+use stdClass;
 
 class UserController extends Controller
 {
@@ -50,18 +51,22 @@ class UserController extends Controller
      */
     public function showAllUsers()
     {
-        $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
-            $joinClause->on('users.profiles_id', '=', 'profiles.id');
-        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(4);
+        if (Auth::user()->profiles_id != 1) {
+            return redirect()->route('user.showCustomers');
+        } else {
+            $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+                $joinClause->on('users.profiles_id', '=', 'profiles.id');
+            })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(7);
 
-        return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 1]);
+            return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 1]);
+        }
     }
 
     public function showSellersUsers()
     {
         $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
             $joinClause->on('users.profiles_id', '=', 'profiles.id');
-        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 2)->paginate(4);
+        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 2)->paginate(7);
 
         return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 2]);
     }
@@ -70,7 +75,7 @@ class UserController extends Controller
     {
         $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
             $joinClause->on('users.profiles_id', '=', 'profiles.id');
-        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 3)->paginate(4);
+        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 3)->paginate(7);
 
         return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 3]);
     }
@@ -79,16 +84,22 @@ class UserController extends Controller
     {
         $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
             $joinClause->on('users.profiles_id', '=', 'profiles.id');
-        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 4)->paginate(4);
+        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 4)->paginate(7);
 
         return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 4]);
     }
 
     public function showCustomersUsers()
     {
-        $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
-            $joinClause->on('users.profiles_id', '=', 'profiles.id');
-        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 5)->paginate(4);
+        if (Auth::user()->profiles_id != 1) {
+            $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+                $joinClause->on('users.profiles_id', '=', 'profiles.id');
+            })->selectRaw('users.id, users.name, users.email')->where('users.profiles_id', '=', 5)->paginate(7);
+        } else {
+            $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+                $joinClause->on('users.profiles_id', '=', 'profiles.id');
+            })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 5)->paginate(7);
+        }
 
         return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 5]);
     }
@@ -112,8 +123,15 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        dd("Criar método de deleção de usuário");
+        DB::table('users')->where("id", '=', $user->id)->delete();
+        $user->destroy($user->id);
+
+        $userEmail = new stdClass();
+        $userEmail->name = $user->name;
+        $userEmail->email = $user->email;
+        $userEmail->id = base64_encode($user->id);
+
     }
 }

@@ -4,42 +4,24 @@ import { PageProps } from '@/types';
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import Pagination from "@/Components/Pagination";
 import TableUsers from "@/Components/TableUsers";
-import ButtonStatusBarGroup from "@/Components/ButtonStatusBarGroup";
+import BarGroupViewUsers from "@/Components/BarGroupViewUsers";
 
 export default function ShowUsers({ auth }: PageProps) {
     let {users, statusBar} = usePage().props;
-    console.log(statusBar)
 
-    let header:string[] =["Nome", "Função"];
-    let routes:string[] = ["user.showAll", "user.showSellers", "user.showAttendants", "user.showBuyers", "user.showCustomers"]
-    let title:string[] = ["Todos os Usuários", "Vendedores", "Caixas", "Compradores", "Clientes"]
-
-
-    let buttonText = ():[string, string] => {
-        if (statusBar === 1) {
-            return ['Histórico', 'Desativar']
-        } else if (statusBar === 3) {
-            return ['Histórico', 'Ativar']
-        } else {
-            return ['Histórico', 'Excluir']
-        }
+    let actions = ():[string[], string[], string[], string[]] => {
+        return auth.user.profiles_id === 1
+        ? [["Nome", "Função"], ["user.showAll", "user.showSellers", "user.showAttendants", "user.showBuyers", "user.showCustomers"],
+                ["Todos os Usuários", "Vendedores", "Caixas", "Compradores", "Clientes"], ['Histórico', 'Deletar']]
+            : [["Nome", "E-mail"], ["user.showCustomers"], ["Clientes"], ["Histórico"]]
     }
-
-    console.log(buttonText())
 
     let tabela = {
-        header: header,
+        header: actions()[0],
         data:users,
-        actions: ['Histórico', 'Deletar'],
+        actions: actions()[3],
     }
 
-    const ativosInativos = () => {
-        return statusBar === 1
-            ? "ativos"
-            : statusBar === 2
-                ? "não verificados"
-                : "desativados"
-    }
     const rotas = [
         {
             'name': 'Ver Usuários',
@@ -58,10 +40,10 @@ export default function ShowUsers({ auth }: PageProps) {
                 <BreadchumbSystem rota={rotas} />
             </div>
 
-            <ButtonStatusBarGroup routes={routes} status={statusBar} title={title}/>
+            <BarGroupViewUsers routes={actions()[1]} status={statusBar} title={actions()[2]}/>
 
             {users.data.length === 0
-                ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há usuários ${ativosInativos()}`}</p>
+                ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há usuários cadastrados`}</p>
                 : <TableUsers props={tabela}></TableUsers>}
 
             <div className={'fixed bottom-0 left-0 right-0 mb-4'}>

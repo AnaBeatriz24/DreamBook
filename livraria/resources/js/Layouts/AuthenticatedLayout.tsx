@@ -20,7 +20,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
             case 2:
                 return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"]];
             case 3:
-                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Pedidos Abertos", "sales.open"], ["Iniciar pedido", "sales.start"]];
+                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Pedidos Abertos", "sales.open"]];
             case 4:
                 return [["Home", "home"], ["Adicionar Livro", "book.create"], ["Pesquisar Livros", "book.search"],];
             case 5:
