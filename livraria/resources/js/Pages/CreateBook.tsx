@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, useForm} from '@inertiajs/react';
+import {Head, Link, useForm} from '@inertiajs/react';
 import { PageProps } from '@/types';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
@@ -7,6 +7,8 @@ import InputError from "@/Components/InputError";
 import {FormEventHandler, useEffect, useState} from "react";
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import PrimaryButton from "@/Components/PrimaryButton";
+import RegistrationSupplier from "@/Components/RegistrationSupplier";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function CreateBook({ auth, books, genders, suppliers}: PageProps) {
     const rotas = [
@@ -123,6 +125,7 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
 
 
     return (
+
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Adicionar Livro</h2>}
