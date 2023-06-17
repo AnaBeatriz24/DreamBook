@@ -7,7 +7,6 @@ import InputError from "@/Components/InputError";
 import {FormEventHandler, useEffect, useState} from "react";
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import PrimaryButton from "@/Components/PrimaryButton";
-import {exists} from "fs";
 
 export default function CreateBook({ auth, books, genders, suppliers}: PageProps) {
     const rotas = [
@@ -46,13 +45,6 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
         post(route('book.store'));
     };
 
-    const localizaCNPJ: (cnpj:string) => void = (cnpj:string): void => {
-        suppliers.map((s) => {
-            if(s.cnpj === cnpj){
-                setData("fornecedor", s.name)
-            }
-        })
-    }
 
     useEffect(() => {
         if(data.isbn?.length === 10) {
@@ -148,32 +140,12 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                         <div className="p-6 bg-teal-950 text-white grid-cols-2">
                             <form onSubmit={submit}>
                                 <div className="flex flex-col mx-auto">
-                                    <div className={"grid grid-cols-2 gap-4"}>
-                                        <div>
-                                            <InputLabel htmlFor="cnpj_fornecedor" value="CNPJ do Fornecedor"/>
-                                            <TextInput
-                                                id="cnpj_fornecedor"
-                                                name="cnpj_fornecedor"
-                                                value={data.cnpj_fornecedor}
-                                                onChange={(e) => setData("cnpj_fornecedor", e.target.value)}
-                                                onBlur={(e) => localizaCNPJ(e.target.value)}
-                                                className="mt-1 mb-2 block w-full text-black"
-                                                autoComplete="cnpj_fornecedor"
-                                                isFocused={true}
-                                                required/>
-                                        </div>
-                                        <div>
-                                            <InputLabel htmlFor="fornecedor" value="Fornecedor"/>
-                                            <TextInput
-                                                id="fornecedor"
-                                                name="fornecedor"
-                                                value={data.fornecedor}
-                                                onChange={(e) => setData("fornecedor", e.target.value)}
-                                                className="mt-1 mb-2 block w-full text-black"
-                                                autoComplete="fornecedor"
-                                                isFocused={true}
-                                                required/>
-                                        </div>
+                                    <RegistrationSupplier suppliers={suppliers} />
+
+                                    <div className="justify-center flex ">
+                                            <SecondaryButton className="ml-4" type={'button'}>
+                                                Adicionar Livro
+                                            </SecondaryButton>
                                     </div>
 
                                     <InputLabel htmlFor="isbn" value="ISBN" />
@@ -201,7 +173,6 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                                             className="mt-1 mb-2 block w-full text-black"
                                             autoComplete="titulo"
                                             isFocused={true}
-                                            readonly="readonly"
                                             required/>
 
                                         <InputLabel htmlFor="autor" value="Autor" />
