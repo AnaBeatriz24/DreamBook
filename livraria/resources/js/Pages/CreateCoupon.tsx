@@ -46,7 +46,8 @@ export default function CreateCoupon({ auth }: PageProps) {
             </div>
 
             <div className={"flex justify-center mt-12"}>
-                <div className={"p-10 bg-teal-950 w-3/4"}>
+                <div className={"p-12 bg-teal-950 w-2/6 sm:rounded-lg "}>
+
                     <form onSubmit={submit}>
                         <div>
                             <InputLabel htmlFor="name" className={"text-white"} value="Nome" />

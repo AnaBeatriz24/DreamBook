@@ -82,20 +82,32 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                     </label>
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex items-center grid grid-cols-1 justify-center mt-4 ">
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="underline text-sm text-white hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="underline text-sm text-white mb-4 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Esqueceu sua senha?
                         </Link>
                     )}
 
-                    <PrimaryButton className="ml-4" disabled={processing}>
+                    <Link
+                        href={route('register')}
+                        className="underline text-sm text-white hover:text-gray-900 rounded-md"
+                    >
+                        Ainda não é cliente? Registre-se agora!
+                    </Link>
+
+                </div>
+
+                <div className="justify-center flex mt-4 ">
+                    <PrimaryButton className="" disabled={processing}>
                         Entrar
                     </PrimaryButton>
                 </div>
+
+
             </form>
         </GuestLayout>
     );
