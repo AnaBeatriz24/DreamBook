@@ -7,6 +7,7 @@ import InputError from "@/Components/InputError";
 import {FormEventHandler, useEffect, useState} from "react";
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import PrimaryButton from "@/Components/PrimaryButton";
+import {exists} from "fs";
 
 export default function CreateBook({ auth, books, genders, suppliers}: PageProps) {
     const rotas = [
@@ -30,23 +31,9 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
         descricao:'',
     });
 
-    const [dados, setDados] = useState({
-        isbn: '',
-        titulo: '',
-        autor:'',
-        genero:genders[0].id,
-        editora:'',
-        fornecedor:'',
-        quantidade:'',
-        cnpj_fornecedor:'',
-        imgcapa:'',
-        valor_entrada:'',
-        descricao:''
-    })
-
     const [preenchimento, setPreenchimento] = useState({
-        status: false,
-    })
+        status: true,
+    });
 
     const [authors, setAuthors] = useState([])
 
@@ -68,48 +55,77 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
     }
 
     useEffect(() => {
-        if(data.isbn.length === 13) {
+        if(data.isbn?.length === 10) {
             console.log(data.isbn);
-            resp();
+            resp10();
+        }
+        if(data.isbn?.length === 13){
+            console.log(data.isbn);
+            resp13();
         }
     }, [data.isbn])
 
+    useEffect(() => {
+        if(authors.length > 0){
+            console.log(authors);
+            respAuthors();
+        }
+    }, [authors])
 
-    const resp: () => void = async ():Promise<void> =>
-    {
+    const [autores, setAutores] = useState([]);
+    const respAuthors: () => void = async ():Promise<void> => {
+        let aut = [];
+        authors.map(async (author) => {
+            console.log(author.key)
+            const respo = await fetch(`https://openlibrary.org${author.key}.json`);
+            if (!respo.ok) {
+                throw new Error("autor não localizado");
+            }
+            const dataResp = await respo.json();
+            console.log(dataResp);
+            aut.push(dataResp.name);
+            console.log(aut);
+            console.log(aut.toString());
+            console.log(aut.length);
+            if(aut.length > 0) {
+                let au = "";
+                aut.map((a) => au + ";" + a);
+                data.autor = au;
+                alert(data.autor);
+                alert(au);
+            }
+        })
+
+    }
+
+    const resp13: () => void = async ():Promise<void> => {
         const response = await fetch(`https://openlibrary.org/isbn/${data.isbn}.json`)
         if (!response.ok) {
             throw new Error("livro não localizado");
         } else {
             const dataResponse = await response.json();
-            let title = dataResponse.title;
-            let editora = dataResponse.publishers[0];
-            let autores:string[] = []
-            dataResponse.authors.map(async (author) => {
-                console.log(`https://openlibrary.org${author.key}.json`);
+            // setAuthors(dataResponse.authors);
+            if(dataResponse.by_statement !== undefined){
+                data.autor = dataResponse.by_statement;
+            }
+            data.titulo = dataResponse.title + (dataResponse.subtitle.length > 0 ? dataResponse.subtitle : "");
+            data.editora = dataResponse.publishers[0];
+        }
+    }
 
-                const respo = await fetch(`https://openlibrary.org${author.key}.json`);
-                if (!respo.ok) {
-                    throw new Error("autor não localizado");
-                }
-                const dataResp = await respo.json();
-                autores.push(dataResp.personal_name);
-            })
-            console.log(autores)
-            setDados({
-                autor: autores[0],
-                cnpj_fornecedor: "",
-                descricao: "",
-                fornecedor: "",
-                genero: undefined,
-                imgcapa: "",
-                isbn: data.isbn,
-                quantidade: "",
-                valor_entrada: "",
-                titulo: title,
-                editora: editora
-            });
-            console.log(dados);
+    const resp10: () => void = async ():Promise<void> => {
+        const response = await fetch(`https://openlibrary.org/isbn/${data.isbn}.json`)
+        if (!response.ok) {
+            throw new Error("livro não localizado");
+        } else {
+            const dataResponse = await response.json();
+            // setAuthors(dataResponse.authors);
+            if(dataResponse.by_statement !== undefined){
+                data.autor = dataResponse.by_statement;
+            }
+            data.titulo = dataResponse.title + (dataResponse.subtitle.length > 0 ? dataResponse.subtitle : "");
+            data.editora = dataResponse.publishers[0];
+            console.log(data);
         }
     }
 
@@ -132,8 +148,6 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                         <div className="p-6 bg-teal-950 text-white grid-cols-2">
                             <form onSubmit={submit}>
                                 <div className="flex flex-col mx-auto">
-
-
                                     <div className={"grid grid-cols-2 gap-4"}>
                                         <div>
                                             <InputLabel htmlFor="cnpj_fornecedor" value="CNPJ do Fornecedor"/>
@@ -166,29 +180,35 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                                     <TextInput
                                         id="isbn"
                                         name="isbn"
-                                        value={dados.isbn}
+                                        value={data.isbn}
                                         onChange={(e) => setData("isbn", e.target.value)}
                                         className="mt-1 mb-2 block w-full text-black"
                                         autoComplete="isbn"
                                         isFocused={true}
                                         required/>
-                                    <div hidden={preenchimento.status}>
+                                    <div hidden={false}>
+
+                                        <div hidden={preenchimento.status}>
+                                            <svg className="animate-spin bg-white h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
+                                        </div>
+
                                         <InputLabel htmlFor="titulo" value="Título" />
                                         <TextInput
                                             id="titulo"
                                             name="titulo"
-                                            value={dados.titulo}
+                                            value={data.titulo}
                                             onChange={(e) => setData("titulo", e.target.value)}
                                             className="mt-1 mb-2 block w-full text-black"
                                             autoComplete="titulo"
                                             isFocused={true}
+                                            readonly="readonly"
                                             required/>
 
                                         <InputLabel htmlFor="autor" value="Autor" />
                                         <TextInput
                                             id="autor"
                                             name="autor"
-                                            value={dados.autor}
+                                            value={data.autor}
                                             onChange={(e) => setData("autor", e.target.value)}
                                             className="mt-1 mb-2 block w-full text-black"
                                             autoComplete="titulo"
@@ -199,7 +219,7 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                                         <TextInput
                                             id="editora"
                                             name="editora"
-                                            value={dados.editora}
+                                            value={data.editora}
                                             onChange={(e) => setData("editora", e.target.value)}
                                             className="mt-1 mb-2 block w-full text-black"
                                             autoComplete="editora"
