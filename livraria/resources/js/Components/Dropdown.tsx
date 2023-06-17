@@ -53,7 +53,10 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
 
     if (width === '48') {
         widthClasses = 'w-48';
+    } else {
+        widthClasses = 'w-full';
     }
+
 
     return (
         <>
@@ -71,7 +74,7 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
                     className={`absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`}
                     onClick={() => setOpen(false)}
                 >
-                    <div className={`rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses}>{children}</div>
+                    <div className={` rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses}>{children}</div>
                 </div>
             </Transition>
         </>
