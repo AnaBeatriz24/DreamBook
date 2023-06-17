@@ -4,8 +4,9 @@ import Contact from "@/Components/Contact";
 import Team from "@/Components/Team";
 import Books from "@/Components/Books";
 import ButtonHome from "@/Components/ButtonHome";
+import {loadConfigFromFile} from "vite";
 
-export default function Welcome({livrosMaisVendidos}) {
+export default function Welcome({livrosMaisVendidos, genders}) {
 
     const routes:object[] = [
         {
@@ -23,7 +24,7 @@ export default function Welcome({livrosMaisVendidos}) {
     ]
 
     return (
-        <WelcomeNavBar routes={routes}>
+        <WelcomeNavBar routes={routes} genders={genders}>
             <Head title="Welcome" />
             <div className={"flex flex-col items-center mt-6 pb-6 space-y-16"}>
                 <div className={"grid grid-cols-2 space-x-16"}>
