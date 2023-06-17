@@ -86,7 +86,7 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="underline text-sm text-white mb-4 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="underline text-sm text-white mb-4 hover:text-gray-400 rounded-md focus:outline-none focus:none focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Esqueceu sua senha?
                         </Link>
@@ -94,7 +94,7 @@ export default function Login({ status, canResetPassword }: { status?: string, c
 
                     <Link
                         href={route('register')}
-                        className="underline text-sm text-white hover:text-gray-900 rounded-md"
+                        className="underline text-sm text-white hover:text-gray-400 rounded-md"
                     >
                         Ainda não é cliente? Registre-se agora!
                     </Link>
