@@ -25,6 +25,22 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+
+        /*TODO: Fazer a seleção dos livros mais vendidos pelo banco de dados */
+        'livrosMaisVendidos' => [
+            0 => [
+                "name" => "Harry Potter e o Cálice de Fogo",
+                "path" => "books/HarryPotterCaliceFogo.png"
+            ],
+            1 => [
+                "name" => "O diário de Anne Frank",
+                "path" => "books/DiarioAnne.png"
+            ],
+            2 => [
+                "name" => "A temperatura entre você e eu",
+                "path" => "books/TemperaturaVoceEu.png"
+            ],
+        ],
     ]);
 });
 
@@ -41,16 +57,40 @@ Route::get('/home', function () {
 })->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
+
+    Route::get("/cart", function () {
+        dd("carrinho");
+    })->name("cart");
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/createUsers', [UserController::class, 'create'])->name('user.create');
     Route::post('/createUsers', [UserController::class, 'store'])->name('user.store');
-    Route::get('/showUsers', [UserController::class, 'show'])->name('user.show');
+    Route::post('/deleteUser/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 
-    Route::get('/createCoupons', [CouponsController::class, 'create'])->name('coupon.create');
-    Route::get('/showCoupons', [CouponsController::class, 'show'])->name('coupon.show');
+    //Visualização da tabela de usuários
+    Route::get('/showUsers', [UserController::class, 'showAllUsers'])->name('user.showAll');
+    Route::get('/showSellers', [UserController::class, 'showSellersUsers'])->name('user.showSellers');
+    Route::get('/showAttendants', [UserController::class, 'showAttendantsUsers'])->name('user.showAttendants');
+    Route::get('/showBuyers', [UserController::class, 'showBuyersUsers'])->name('user.showBuyers');
+    Route::get('/showCustomers', [UserController::class, 'showCustomersUsers'])->name('user.showCustomers');
+
+
+    Route::get('/coupons/createCoupon', [CouponsController::class, 'create'])->name('coupon.create');
+
+    Route::post('/coupons/createCoupon', [CouponsController::class, 'store'])->name('coupon.store');
+
+    Route::get('coupons/createdCoupon', [CouponsController::class, 'createCouponFinish'])
+    ->name('coupon.success');
+
+    Route::get('/coupons/showActiveCoupons', [CouponsController::class, 'show'])->name('coupon.showActive');
+
+    Route::get('/coupons/showInactiveCoupons', [CouponsController::class, 'showInactives'])->name('coupon.showInactive');
+
+    Route::post("/coupons/{coupon}", [CouponsController::class, 'editStatus'])->name("coupons.editStatus");
+
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
     Route::get('/showBooks', [BooksController::class, 'searchBooks'])->name('book.search');
@@ -63,10 +103,5 @@ Route::middleware('auth')->group(function () {
         dd('Desenvolver tela de pedidos abertos');
     })->name('sales.open');
 
-    Route::get('/startSale', function () {
-        dd('Desenvolver tela de iniciar pedido');
-    })->name('sales.start');
-
 });
-
 require __DIR__.'/auth.php';
