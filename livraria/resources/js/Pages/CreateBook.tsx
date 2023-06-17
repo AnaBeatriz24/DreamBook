@@ -9,6 +9,7 @@ import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import PrimaryButton from "@/Components/PrimaryButton";
 import RegistrationSupplier from "@/Components/RegistrationSupplier";
 import SecondaryButton from "@/Components/SecondaryButton";
+import AddAuthor from "@/Components/AddAuthor";
 
 export default function CreateBook({ auth, books, genders, suppliers}: PageProps) {
     const rotas = [
@@ -17,6 +18,13 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
             'route': 'book.create',
         }
     ]
+    const [rows, setRows] = useState(0)
+    const [rowsState, setRowsState] = useState([])
+    const addAutor=() =>{
+        if(rows <=1){
+            setRowsState([...rowsState, <AddAuthor/> ])
+        }
+    }
 
     const { data, setData, post, processing, errors, reset } = useForm({
         isbn: '',
@@ -146,9 +154,10 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                                     <RegistrationSupplier suppliers={suppliers} />
 
                                     <div className="justify-center flex ">
-                                            <SecondaryButton className="ml-4" type={'button'}>
+                                            <SecondaryButton className="ml-4" type={'button'} >
                                                 Adicionar Livro
                                             </SecondaryButton>
+
                                     </div>
 
                                     <InputLabel htmlFor="isbn" value="ISBN" />
@@ -178,16 +187,14 @@ export default function CreateBook({ auth, books, genders, suppliers}: PageProps
                                             isFocused={true}
                                             required/>
 
-                                        <InputLabel htmlFor="autor" value="Autor" />
-                                        <TextInput
-                                            id="autor"
-                                            name="autor"
-                                            value={data.autor}
-                                            onChange={(e) => setData("autor", e.target.value)}
-                                            className="mt-1 mb-2 block w-full text-black"
-                                            autoComplete="titulo"
-                                            isFocused={true}
-                                            required/>
+                                        <div className="bg-teal-950 my-4">
+                                            <div className={" gap-4"}>
+                                                <AddAuthor/>
+                                                    <PrimaryButton className="mx-auto" onClick={addAutor} >
+                                                        Adicionar mais um autor
+                                                    </PrimaryButton>
+                                                </div>
+                                            </div>
 
                                         <InputLabel htmlFor="editora" value="Editora" />
                                         <TextInput
