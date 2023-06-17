@@ -48,13 +48,49 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function showAllUsers()
     {
         $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
             $joinClause->on('users.profiles_id', '=', 'profiles.id');
         })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(4);
 
-        return Inertia::render('ShowUsers', ['users' => $users]);
+        return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 1]);
+    }
+
+    public function showSellersUsers()
+    {
+        $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+            $joinClause->on('users.profiles_id', '=', 'profiles.id');
+        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 2)->paginate(4);
+
+        return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 2]);
+    }
+
+    public function showAttendantsUsers()
+    {
+        $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+            $joinClause->on('users.profiles_id', '=', 'profiles.id');
+        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 3)->paginate(4);
+
+        return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 3]);
+    }
+
+    public function showBuyersUsers()
+    {
+        $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+            $joinClause->on('users.profiles_id', '=', 'profiles.id');
+        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 4)->paginate(4);
+
+        return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 4]);
+    }
+
+    public function showCustomersUsers()
+    {
+        $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+            $joinClause->on('users.profiles_id', '=', 'profiles.id');
+        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 5)->paginate(4);
+
+        return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 5]);
     }
 
     /**

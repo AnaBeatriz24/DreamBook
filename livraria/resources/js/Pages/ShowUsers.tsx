@@ -8,10 +8,11 @@ import ButtonStatusBarGroup from "@/Components/ButtonStatusBarGroup";
 
 export default function ShowUsers({ auth }: PageProps) {
     let {users, statusBar} = usePage().props;
+    console.log(statusBar)
 
     let header:string[] =["Nome", "Função"];
-    let routes:string[] = ["user.show", "user.show", "user.show", "user.show", "user.show"]
-    let title:string[] = ["Todos os Usuários", "Vendedores", "Atendentes", "Compradores", "Clientes"]
+    let routes:string[] = ["user.showAll", "user.showSellers", "user.showAttendants", "user.showBuyers", "user.showCustomers"]
+    let title:string[] = ["Todos os Usuários", "Vendedores", "Caixas", "Compradores", "Clientes"]
 
 
     let buttonText = ():[string, string] => {
@@ -24,10 +25,12 @@ export default function ShowUsers({ auth }: PageProps) {
         }
     }
 
+    console.log(buttonText())
+
     let tabela = {
         header: header,
         data:users,
-        actions: buttonText(),
+        actions: ['Histórico', 'Deletar'],
     }
 
     const ativosInativos = () => {
@@ -40,7 +43,7 @@ export default function ShowUsers({ auth }: PageProps) {
     const rotas = [
         {
             'name': 'Ver Usuários',
-            'route': 'user.show',
+            'route': 'user.showAll',
         }
     ]
 

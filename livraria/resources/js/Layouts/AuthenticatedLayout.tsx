@@ -14,13 +14,13 @@ export default function Authenticated({ user, header, children }: PropsWithChild
         // @ts-ignore
         switch(user.profiles_id) {
             case 1:
-                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.show"], ["Adicionar Livro", "book.create"], ["Pesquisar Livros", "book.search"],
+                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Adicionar Livro", "book.create"], ["Pesquisar Livros", "book.search"],
                     ["Adicionar Cupons", "coupon.create"],
                     ["Cupons Disponíveis", "coupon.showActive"],];
             case 2:
-                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.show"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"]];
+                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"]];
             case 3:
-                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.show"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Pedidos Abertos", "sales.open"], ["Iniciar pedido", "sales.start"]];
+                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Pedidos Abertos", "sales.open"], ["Iniciar pedido", "sales.start"]];
             case 4:
                 return [["Home", "home"], ["Adicionar Livro", "book.create"], ["Pesquisar Livros", "book.search"],];
             case 5:

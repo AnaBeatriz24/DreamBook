@@ -22,7 +22,7 @@ export default function Pagination({registries, top= true, bottom= false}) {
             return num.map(({url, label, active}) => (
                 <>
                     {active
-                        ? <a href={url} aria-current="page" className="z-10 bg-zinc-50 border-amber-400
+                        ? <a href={url} aria-current="page" className="z-10 bg-zinc-50 border-teal-400
                         text-zinc-700 relative inline-flex items-center px-4 py-2 border text-sm
                         font-medium"> {label} </a>
                         : <a href={url} className="bg-white border-gray-500 text-zinc-500 hover:bg-zinc-200 transition ease-in-out duration-150
@@ -35,7 +35,7 @@ export default function Pagination({registries, top= true, bottom= false}) {
             return num.map(({url, label, active}) => (
                 <>
                     {active
-                        ? <a href={url} aria-current="page" className="z-10 bg-zinc-50 border-amber-400
+                        ? <a href={url} aria-current="page" className="z-10 bg-zinc-50 border-teal-400
                         text-zinc-600 relative inline-flex items-center px-4 py-2 border text-sm
                         font-medium"> {label} </a>
                         : <a href={url} className="bg-white border-gray-500 text-zinc-700 hover:bg-zinc-200 transition ease-in-out duration-150
@@ -48,7 +48,7 @@ export default function Pagination({registries, top= true, bottom= false}) {
             return num.map(({url, label, active}) => (
                 <>
                     {active
-                        ? <a href={url} aria-current="page" className="z-10 bg-zinc-50 border-amber-400
+                        ? <a href={url} aria-current="page" className="z-10 bg-zinc-50 border-teal-400
                         text-zinc-600 relative inline-flex items-center px-4 py-2 border text-sm
                         font-medium"> {label} </a>
                         : <a href={url} className="bg-white border-gray-500 text-zinc-700 hover:bg-zinc-200 transition ease-in-out duration-150
