@@ -7,18 +7,20 @@ export default function AddAuthor({authors}:Array<string>){
         autor:'',
     });
 
+
     return(
-        <div>
-            <InputLabel htmlFor="autor" value="Autor" />
-            <TextInput
-                id="autor"
-                name="autor"
-                value={data.autor}
-                onChange={(e) => setData("autor", e.target.value)}
-                className="mt-1 mb-2 block w-full text-black"
-                autoComplete="titulo"
-                isFocused={true}
-                required/>
-        </div>
+    <div className="bg-teal-950 justify-center my-4">
+                <InputLabel htmlFor="autor" value="Autor" />
+                <TextInput
+                    id="autor"
+                    name="autor"
+                    value={data.autor}
+                    onChange={(e) => setData("autor", e.target.value)}
+                    className="block w-full text-black"
+                    autoComplete="titulo"
+                    isFocused={true}
+                    required/>
+    </div>
+
     )
 }

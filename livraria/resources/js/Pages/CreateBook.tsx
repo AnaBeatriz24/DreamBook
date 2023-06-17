@@ -9,6 +9,7 @@ import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import PrimaryButton from "@/Components/PrimaryButton";
 import RegistrationSupplier from "@/Components/RegistrationSupplier";
 import SecondaryButton from "@/Components/SecondaryButton";
+import AddAuthor from "@/Components/AddAuthor";
 import Book from "@/Components/Book";
 
 export default function CreateBook({ auth, genders, suppliers}: PageProps) {
@@ -18,6 +19,13 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
             'route': 'book.create',
         }
     ]
+    const [rows, setRows] = useState(0)
+    const [rowsState, setRowsState] = useState([])
+    const addAutor=() =>{
+        if(rows <=1){
+            setRowsState([...rowsState, <AddAuthor/> ])
+        }
+    }
 
     const { data, setData, post, processing, errors, reset } = useForm({
         isbn: '',
@@ -105,9 +113,10 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
                                     <RegistrationSupplier suppliers={suppliers} />
 
                                     <div className="justify-center flex ">
-                                            <SecondaryButton className="ml-4" type={'button'}>
+                                            <SecondaryButton className="ml-4" type={'button'} >
                                                 Adicionar Livro
                                             </SecondaryButton>
+
                                     </div>
 
                                     <InputLabel htmlFor="isbn" value="ISBN" />
