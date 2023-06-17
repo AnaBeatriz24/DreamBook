@@ -86,7 +86,7 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
                 titulo: dataResponse.items[0].volumeInfo.title + (dataResponse.items[0].volumeInfo.subtitle?.length > 0 ? dataResponse.items[0].volumeInfo.subtitle : ""),
                 editora: dataResponse.items[0].volumeInfo.publisher ?? "",
                 descricao: dataResponse.items[0].volumeInfo.description ?? "",
-                autor: dataResponse.items[0].volumeInfo.authors.toString()
+                autor: dataResponse.items[0].volumeInfo.authors?.toString() ?? ""
             }} onHandle={setData}/>]);
         }
     }

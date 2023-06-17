@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
+import AddAuthor from "@/Components/AddAuthor";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function Book({data = {titulo: String, autor: String, editora: String, descricao: String}, onHandle = () => {}}){
-    alert(data.titulo);
-    alert(data.autor);
-    alert(data.editora);
+
+    let autores: Array<String> = data.autor.split(",");
+
+    const [listAutores, setListAutores] = useState([
+        autores.map((autor) => {
+            return <AddAuthor data={{author: autor}} onHandle={onHandle}/>;
+        })
+    ]);
 
     return <>
         <InputLabel htmlFor="titulo" value="Título" />
@@ -18,16 +25,13 @@ export default function Book({data = {titulo: String, autor: String, editora: St
             isFocused={true}
             required/>
 
-        <InputLabel htmlFor="autor" value="Autor" />
-        <TextInput
-            id="autor"
-            name="autor"
-            value={data.autor}
-            onChange={onHandle}
-            className="mt-1 mb-2 block w-full text-black"
-            autoComplete="titulo"
-            isFocused={true}
-            required/>
+        {...listAutores}
+
+        <SecondaryButton className="ml-4" type={'button'} onClick={() => {
+            setListAutores([...listAutores, <AddAuthor data={{author: ""}} onHandle={onHandle}/>]);
+        }}>
+            Adicionar autor
+        </SecondaryButton>
 
         <InputLabel htmlFor="editora" value="Editora" />
         <TextInput
