@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, useForm, usePage} from '@inertiajs/react';
+import {Head, Link, useForm, usePage} from '@inertiajs/react';
 import { PageProps } from '@/types';
 import SearchBooks from "@/Components/SearchBooks";
 import Dropdown from "@/Components/Dropdown";
@@ -8,7 +8,7 @@ export default function ShowBooks({ auth }: PageProps) {
 
     const {books, genders} = usePage().props
 
-    const {data, setData, post} = useForm({
+    const {post} = useForm({
         genderId: 0
     });
 
@@ -38,12 +38,17 @@ export default function ShowBooks({ auth }: PageProps) {
                             </button>
                         </span>
                                 </Dropdown.Trigger>
-                                <Dropdown.Content align={'left'} width={'96'} contentClasses={'lg:grid lg:grid-cols-4 md:grid md:grid-cols-2 py-1 rounded-lg bg-teal-600'}>
-                                    {
-                                        genders.map((gender) => {
-                                            return <button className={"lg:flex lg:flex-row bg-teal-600 hover:bg-teal-700 text-white font-bold block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 transition duration-150 ease-in-out"} id={gender.id} type={"submit"} onClick={submit}>{gender.name}</button>
-                                        })
-                                    }
+                                <Dropdown.Content align={'left'} width={'96'} contentClasses={'rounded-lg bg-teal-600 divide-y devide-white'}>
+                                    <Link href={route('book.search')}>
+                                        <p className={"lg:flex lg:flex-row bg-teal-600 hover:bg-teal-700 text-white font-bold block w-full px-4 py-2 text-left text-sm leading-5 transition duration-150 ease-in-out rounded-lg"}>Todas</p>
+                                    </Link>
+                                    <div className={"lg:grid lg:grid-cols-4 md:grid md:grid-cols-2 py-1 "}>
+                                        {
+                                            genders.map((gender) => {
+                                                return <button className={"lg:flex lg:flex-row bg-teal-600 hover:bg-teal-700 text-white font-bold block w-full px-4 py-2 text-left text-sm leading-5 transition duration-150 ease-in-out"} id={gender.id} type={"submit"} onClick={submit}>{gender.name}</button>
+                                            })
+                                        }
+                                    </div>
                     </Dropdown.Content>
                 </Dropdown>
             </div>
