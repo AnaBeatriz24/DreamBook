@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sales;
+use App\Models\SalesBooks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,7 @@ class SalesController extends Controller
             ->join('users', 'sales.users_id', '=', 'users.id')
             ->join('sales_books', 'sales_books.sales_id', '=', 'sales.id')
             ->select('sales_books.sales_id', 'users.name', 'sales_books.amount')
-            ->where('users.profiles_id','=', 3)
+            ->where('users.profiles_id','<', 4)
             ->where('sales.status','=', 0)->paginate(7);
 
         return Inertia::render('ShowOpenSales', ['sales' => $sales]);
