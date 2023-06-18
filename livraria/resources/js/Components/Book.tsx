@@ -36,14 +36,11 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
         }
         data.autor = aut;
         data.imgcapa = document.getElementById("imgcapa").files[0];
-        console.log(data.imgcapa);
         if(data.imgcapa === undefined){
             alert("Selecione uma capa");
             return
         }
         if(data.genero.length > 0) {
-
-            //console.log(data);
             status.current.status = true;
             book.current.amount = data.valor_entrada;
             book.current.quantity = data.quantidade;
