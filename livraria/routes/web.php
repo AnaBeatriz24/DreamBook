@@ -96,6 +96,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
     Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
 
+    Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
+
     Route::get('/salesHistory', function () {
         dd('Desenvolver tela de histórico de vendas');
     })->name('sales.history');

@@ -7,17 +7,12 @@ use App\Models\Genders;
 use App\Models\Publisher;
 use App\Models\Suppliers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\Models\Authors;
 
 class BooksController extends Controller
 {
-    public function searchBooks()
-    {
-        return Inertia::render('SearchBooks');
-    }
     /**
      * Display a listing of the resource.
      */
@@ -82,16 +77,30 @@ class BooksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Books $books)
+    public function show(Books $books, Genders $gender)
     {
-        $books = DB::table('books')->select("id", "title")->get();
+        if (!empty($gender->id)) {
+            $queryGender = trim($gender->id);
+
+            $gender = Genders::find($queryGender);
+
+            $books = DB::table('books_genders')
+                ->join('books', 'books_genders.books_id', '=', 'books.id')
+                ->where('genders_id', '=', $gender->id)
+                ->get();
+        } else {
+            $books = DB::table('books')->get();
+        }
+
+        $genders = DB::table('genders')->get();
 
         foreach ($books as $book) {
              $book->path = "$book->title.png";
         }
 
-        return Inertia::render('TableBook', [
+        return Inertia::render('ShowBooks', [
             'books' => $books,
+            'genders' => $genders,
         ]);
     }
 

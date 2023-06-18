@@ -31,5 +31,17 @@ class BooksSeeder extends Seeder
             "isbn" => "978-85-507-0060-1",
             "publishers_id" => 2
         ]);
+        DB::table('books')->insert([
+           "title" => "Você pode tudo - persistência, paixão e apetite para transformar sonhos em realidade",
+            "description" => "Aprenda a ser homem",
+            "isbn" => "978-65-5881-141-1",
+            "publishers_id" => 2
+        ]);
+        DB::table('books')->insert([
+           "title" => "Sapiens (Edição em quadrinhos) - Os pilares da civilização",
+            "description" => "História do balacobaco",
+            "isbn" => "978-65-5921-299-6",
+            "publishers_id" => 1
+        ]);
     }
 }
