@@ -19,13 +19,8 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
             'route': 'book.create',
         }
     ]
-    const [rows, setRows] = useState(0)
-    const [rowsState, setRowsState] = useState([])
-    const addAutor=() =>{
-        if(rows <=1){
-            setRowsState([...rowsState, <AddAuthor/> ])
-        }
-    }
+
+
 
     const { data, setData, post, processing, errors, reset } = useForm({
         isbn: '',
@@ -112,12 +107,6 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
                                 <div className="flex flex-col mx-auto">
                                     <RegistrationSupplier suppliers={suppliers} />
 
-                                    <div className="justify-center flex ">
-                                            <SecondaryButton className="ml-4" type={'button'} >
-                                                Adicionar Livro
-                                            </SecondaryButton>
-
-                                    </div>
 
                                     <InputLabel htmlFor="isbn" value="ISBN" />
                                     <TextInput

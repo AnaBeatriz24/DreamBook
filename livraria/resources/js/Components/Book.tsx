@@ -14,6 +14,16 @@ export default function Book({data = {titulo: String, autor: String, editora: St
         })
     ]);
 
+    const addLine = () => {
+            setListAutores([...listAutores, <AddAuthor data={{author: ""}} onHandle={onHandle}/>]);
+    }
+
+    const removeAuthors = () =>{
+        let array = listAutores
+        array.pop()
+        setListAutores([...array])
+    }
+
     return <>
         <InputLabel htmlFor="titulo" value="Título" />
         <TextInput
@@ -27,11 +37,18 @@ export default function Book({data = {titulo: String, autor: String, editora: St
 
         {...listAutores}
 
-        <SecondaryButton className="ml-4" type={'button'} onClick={() => {
-            setListAutores([...listAutores, <AddAuthor data={{author: ""}} onHandle={onHandle}/>]);
-        }}>
+        <SecondaryButton className="ml-4" type={'button'} onClick={addLine}>
             Adicionar autor
         </SecondaryButton>
+
+        {
+            listAutores.length==1 ? <>
+            </> : <SecondaryButton className="ml-4" type={'button'} onClick={removeAuthors}>
+                Remover autor
+            </SecondaryButton>
+        }
+
+
 
         <InputLabel htmlFor="editora" value="Editora" />
         <TextInput
