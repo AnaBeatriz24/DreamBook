@@ -4,13 +4,14 @@ import { PageProps } from '@/types';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
-import {createRef, FormEventHandler, ReactComponentElement, ReactElement, useEffect, useState} from "react";
+import {createRef, FormEventHandler, ReactComponentElement, ReactElement, useEffect, useRef, useState} from "react";
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import PrimaryButton from "@/Components/PrimaryButton";
 import RegistrationSupplier from "@/Components/RegistrationSupplier";
 import SecondaryButton from "@/Components/SecondaryButton";
 import AddAuthor from "@/Components/AddAuthor";
 import Book from "@/Components/Book";
+import {unmountComponentAtNode} from "react-dom";
 
 export default function CreateBook({ auth, genders, suppliers}: PageProps) {
     const rotas = [
@@ -20,7 +21,7 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
         }
     ]
 
-    const dados = createRef();
+    const book_insert = useRef({status: false});
 
 
 
@@ -61,6 +62,17 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
         }
     }, [data.isbn])
 
+    useEffect(() => {
+        if(book_insert.current.status === true){
+            console.log(book_insert);
+            let isbn = books.pop();
+            console.log(isbn);
+            data.isbn = "";
+            setPreenchimento({status: true});
+            book_insert.current.status = false;
+        }
+    }, [book_insert.current.status])
+
     const resp: () => Promise<void> = async ():Promise<void> => {
         //https://www.googleapis.com/books/v1/volumes?q=isbn:
         const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${data.isbn}`)
@@ -83,7 +95,7 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
                 editora: dataResponse.items[0].volumeInfo.publisher ?? "",
                 descricao: dataResponse.items[0].volumeInfo.description ?? "",
                 autor: dataResponse.items[0].volumeInfo.authors?.length > 0 ? dataResponse.items[0].volumeInfo.authors.toString() : ""
-            }} genders={genders}/>]);
+            }} genders={genders} status={book_insert}/>]);
         }
     }
 

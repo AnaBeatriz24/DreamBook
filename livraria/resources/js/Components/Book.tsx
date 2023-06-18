@@ -5,15 +5,15 @@ import AddAuthor from "@/Components/AddAuthor";
 import SecondaryButton from "@/Components/SecondaryButton";
 import {useForm} from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
+import {unmountComponentAtNode} from "react-dom";
 
-export default function Book( {dataBook = {isbn: string, titulo: string, autor: string, editora: string, descricao: string}, genders= []}){
-    const onHandleChange = (event) => setData(event.target.name, event.target.value);
+export default function Book( {dataBook = {isbn: string, titulo: string, autor: string, editora: string, descricao: string}, genders= [], status= {current: {status:boolean}}}){
 
-    const [listAutores, setListAutores] = useState([
+    const [listAutores, setListAutores] = useState(
         dataBook.autor.split(",").map((a) => {
             return <AddAuthor dataAuthor={{author: a}}/>;
         })
-    ]);
+    );
 
     const { data, setData, post, processing, errors, reset } = useForm({
         isbn: dataBook.isbn,
@@ -28,16 +28,20 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
     });
 
     const submit: FormEventHandler = (e) => {
-        if(data.autor.length === document.getElementsByName("autor").length){
-            e.preventDefault();
-            data.imgcapa = document.getElementById("imgcapa").files[0];
-            //console.log(data);
-            post(route('book.store'));
+        let aut = [];
+        for(let i = 0; i < document.getElementsByName("autor").length; i++){
+            aut.push(document.getElementsByName("autor")[i].value);
         }
+        data.autor = aut;
+        e.preventDefault();
+        data.imgcapa = document.getElementById("imgcapa").files[0];
+        //console.log(data);
+        post(route('book.store'));
+        status.current.status = true;
     };
 
     const addLine = () => {
-            setListAutores([...listAutores, <AddAuthor data={{author: ""}} onHandle={onHandle}/>]);
+            setListAutores([...listAutores, <AddAuthor dataAuthor={{author: ""}} />]);
     }
 
     const removeAuthors = () =>{
@@ -46,9 +50,7 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
         setListAutores([...array])
     }
 
-    return <>
-
-        <form onSubmit={submit} enctype="multipart/form-data">
+    return <form id="book_cad" onSubmit={submit} enctype="multipart/form-data">
         <InputLabel htmlFor="titulo" value="Título" />
         <TextInput
             id="titulo"
@@ -62,18 +64,16 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
 
         {...listAutores}
 
-        <SecondaryButton className="ml-4" type={'button'} onClick={() => {
-            setListAutores([...listAutores, <AddAuthor dataAuthor={{author: ""}} onHandle={() => {}}/>]);
-        }}>
+
         <SecondaryButton className="ml-4" type={'button'} onClick={addLine}>
             Adicionar autor
         </SecondaryButton>
 
         {
-            listAutores.length==1 ? <>
-            </> : <SecondaryButton className="ml-4" type={'button'} onClick={removeAuthors}>
-                Remover autor
-            </SecondaryButton>
+            (listAutores.length===1) ? <>
+             </> : <SecondaryButton className="ml-4" type={'button'} onClick={removeAuthors}>
+                 Remover autor
+             </SecondaryButton>
         }
 
 
@@ -148,5 +148,4 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
                 Salvar Livro
             </PrimaryButton>
         </form>
-    </>
 }
