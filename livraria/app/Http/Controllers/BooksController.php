@@ -7,17 +7,12 @@ use App\Models\Genders;
 use App\Models\Publisher;
 use App\Models\Suppliers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\Models\Authors;
 
 class BooksController extends Controller
 {
-    public function searchBooks()
-    {
-        return Inertia::render('SearchBooks');
-    }
     /**
      * Display a listing of the resource.
      */

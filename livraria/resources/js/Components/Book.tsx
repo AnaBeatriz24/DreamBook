@@ -92,6 +92,7 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
 
 
 
+
         <InputLabel htmlFor="editora" value="Editora" />
         <TextInput
             id="editora"

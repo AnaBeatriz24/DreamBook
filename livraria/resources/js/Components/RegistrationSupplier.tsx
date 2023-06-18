@@ -4,6 +4,7 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import SecondaryButton from "@/Components/SecondaryButton";
+import React from "react";
 
 
 export default function RegistrationSupplier({suppliers}:Array<String>){
@@ -22,6 +23,7 @@ export default function RegistrationSupplier({suppliers}:Array<String>){
             }
         })
     }
+
 
     return(
         <div className="bg-teal-950  justify-center my-4">
