@@ -145,6 +145,7 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
                                                 data-dropdown-trigger="hover"
                                                 className="w-52 mb-2 lg:w-full sm:w-72 text-black border-amber-900 focus:border-amber-900 focus:ring-amber-900 rounded-[10px] shadow-sm"
                                                 onChange={(e) => setData("genders", e.target.value)}
+                                                multiple
                                         >
                                             {
                                                 genders.map((e) => {
