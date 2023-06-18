@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Books;
+use App\Models\Genders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -36,9 +37,22 @@ class BooksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Books $books)
+    public function show(Books $books, Genders $gender)
     {
-        $books = DB::table('books')->select("id", "title")->get();
+        if (!empty($gender->id)) {
+            $queryGender = trim($gender->id);
+
+            $gender = Genders::find($queryGender);
+
+            $books = DB::table('books_genders')
+                ->join('books', 'books_genders.books_id', '=', 'books.id')
+                ->where('genders_id', '=', $gender->id)
+                ->get();
+        } else {
+            $books = DB::table('books')->get();
+        }
+
+        $genders = DB::table('genders')->get();
 
         foreach ($books as $book) {
              $book->path = "$book->title.png";
@@ -46,6 +60,7 @@ class BooksController extends Controller
 
         return Inertia::render('ShowBooks', [
             'books' => $books,
+            'genders' => $genders,
         ]);
     }
 
