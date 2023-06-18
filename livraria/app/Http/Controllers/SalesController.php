@@ -23,7 +23,7 @@ class SalesController extends Controller
             ->where('users.profiles_id','=', 3)
             ->where('sales.status','=', 0)->paginate(7);
 
-        return Inertia::render('ShowOpenSales', ['sales' => $sales, 'statusBar' => 1]);
+        return Inertia::render('ShowOpenSales', ['sales' => $sales]);
     }
     /**
      * Display a listing of the resource.

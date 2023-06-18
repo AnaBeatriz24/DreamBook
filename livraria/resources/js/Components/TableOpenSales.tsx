@@ -1,4 +1,4 @@
-import {useForm} from "@inertiajs/react";
+// import {useForm} from "@inertiajs/react";
 import OptionsTable from "@/Components/OptionsTable";
 
 export default function TableOpenSales(props) {
@@ -20,17 +20,12 @@ export default function TableOpenSales(props) {
     let head = props.props.header;
     let body = props.props.data.data;
 
-    const {post} = useForm();
-
-    const submit = (e) => {
-        post(route("coupons.editStatus", [e.target.value]))
-    }
-
     const dataAction = (item, id) => {
         switch (item) {
             case 'Fechar pedido':
                 return (
-                    <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 rounded-md font-semibold text-xs text-white tracking-widest hover:bg-amber-950 active:bg-amber-950 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 text-white text-sm rounded border border-amber-950 transition" type={"submit"}>{item}</button>
+                    // TODO: Criar tela de finalizar pedido
+                    <button /*{href={route("", [id])}}*/ className="inline-flex items-center px-4 py-2 bg-amber-900 rounded-md font-semibold text-xs text-white tracking-widest hover:bg-amber-950 active:bg-amber-950 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 border border-amber-950 transition" type={"submit"}>{item}</button>
                 )
         }
     }
