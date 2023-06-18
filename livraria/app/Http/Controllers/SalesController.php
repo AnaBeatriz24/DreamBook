@@ -52,10 +52,19 @@ class SalesController extends Controller
                 ]);
             }
             $stock = Stocks::where("books_id", $request->idLivro)->first();
-            if($stock->quantity > 0)
-                $cart->books()->attach([$request->idLivro => ["quantity" => 1, "amount" => $stock->amount]]);
 
-            return ;
+            $saleAdd = DB::table('sales_books')->where('books_id', $stock->books_id)->first();
+
+            if (is_null($saleAdd)) {
+                if($stock->quantity > 0)
+                    $cart->books()->attach([$request->idLivro => ["quantity" => 1, "amount" => $stock->amount]]);
+            } else {
+                DB::table('sales_books')
+                    ->where('books_id', $saleAdd->books_id)
+                    ->update([
+                    'quantity' => $saleAdd->quantity + 1
+                ]);
+            }
         }
     }
 

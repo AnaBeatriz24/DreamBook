@@ -34,6 +34,7 @@ export default function SearchBooks({books}: string[object]) {
     const submit = (e) => {
         e.preventDefault();
         data.idLivro = e.target.value;
+        alert("Livro adicionado ao carrinho")
         post(route("cart.store"));
     }
 
