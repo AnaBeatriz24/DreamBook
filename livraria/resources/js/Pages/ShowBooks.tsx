@@ -40,7 +40,7 @@ export default function ShowBooks({ auth }: PageProps) {
                                 </Dropdown.Trigger>
                                 <Dropdown.Content align={'left'} width={'96'} contentClasses={'rounded-lg bg-teal-600 divide-y devide-white'}>
                                     <Link href={route('book.search')}>
-                                        <p className={"lg:flex lg:flex-row bg-teal-600 hover:bg-teal-700 text-white font-bold block w-full px-4 py-2 text-left text-sm leading-5 transition duration-150 ease-in-out rounded-lg"}>Todas</p>
+                                        <p className={"lg:flex lg:flex-row bg-teal-600 hover:bg-teal-700 text-white font-bold block w-full px-4 py-2 text-left text-sm leading-5 transition duration-150 ease-in-out rounded-lg"}>Todos</p>
                                     </Link>
                                     <div className={"lg:grid lg:grid-cols-4 md:grid md:grid-cols-2 py-1 "}>
                                         {
