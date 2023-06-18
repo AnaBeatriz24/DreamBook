@@ -50,6 +50,7 @@ export default function Book({data = {titulo: String, autor: String, editora: St
 
 
 
+
         <InputLabel htmlFor="editora" value="Editora" />
         <TextInput
             id="editora"
