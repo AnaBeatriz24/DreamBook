@@ -98,6 +98,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
     Route::post('/createEntry', [EntriesController::class, 'store'])->name('entry.store');
 
+    Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
+
     Route::get('/salesHistory', function () {
         dd('Desenvolver tela de histórico de vendas');
     })->name('sales.history');
