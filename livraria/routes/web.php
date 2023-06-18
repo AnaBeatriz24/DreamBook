@@ -95,7 +95,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
     Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
     Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
-    Route::post('/deleteBook/{book}', [BooksController::class, 'destroy'])->name('book.destroy');
 
     Route::get('/salesHistory', function () {
         dd('Desenvolver tela de histórico de vendas');
