@@ -55,8 +55,14 @@ export default function ShowBooks({ auth }: PageProps) {
             </form>
             <div className={"flex flex-col items-center mt-6 pb-6 space-y-16"}>
             <section className={"bg-teal-950 rounded-lg w-[90vw] lg:w-3/4 lg:min-h-[80vh] flex flex-col items-center pb-6 justify-center"}>
-                <p className={"text-2xl font-bold text-white mt-6"}>Catálogo</p>
-                <SearchBooks books={books}/>
+                {
+                    books.length === 0
+                        ? <p className={"text-2xl font-bold text-white mt-6"}>{`Não há nenhum livro com a categoria selecionada`}</p>
+                        : <>
+                        <p className={"text-2xl font-bold text-white mt-6"}>Catálogo</p>
+                        <SearchBooks books={books}/>
+                    </>
+                }
             </section>
 
             </div>
