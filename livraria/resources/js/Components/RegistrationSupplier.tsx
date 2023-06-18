@@ -3,6 +3,7 @@ import {useForm} from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 
 export default function RegistrationSupplier({suppliers}:Array<String>){
@@ -21,9 +22,10 @@ export default function RegistrationSupplier({suppliers}:Array<String>){
             }
         })
     }
+    const desabilita = (data.cnpj==='' || data.fornecedor==='');
 
     return(
-        <div className="bg-teal-950 flex flex-row justify-center my-4">
+        <div className="bg-teal-950  justify-center my-4">
             <div className={"grid grid-cols-2 gap-4 w-full"}>
                 <div>
                     <InputLabel htmlFor="cnpj" value="CNPJ do Fornecedor"/>
@@ -51,7 +53,15 @@ export default function RegistrationSupplier({suppliers}:Array<String>){
                         required/>
                 </div>
             </div>
+
+            <div className="justify-center flex ">
+                <SecondaryButton className="ml-4" type={'button'} disabled={desabilita}>
+                    Adicionar Livro
+                </SecondaryButton>
+
+            </div>
         </div>
+
 
     )
 }

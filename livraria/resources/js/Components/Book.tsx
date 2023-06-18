@@ -36,6 +36,16 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
         }
     };
 
+    const addLine = () => {
+            setListAutores([...listAutores, <AddAuthor data={{author: ""}} onHandle={onHandle}/>]);
+    }
+
+    const removeAuthors = () =>{
+        let array = listAutores
+        array.pop()
+        setListAutores([...array])
+    }
+
     return <>
 
         <form onSubmit={submit} enctype="multipart/form-data">
@@ -55,8 +65,18 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
         <SecondaryButton className="ml-4" type={'button'} onClick={() => {
             setListAutores([...listAutores, <AddAuthor dataAuthor={{author: ""}} onHandle={() => {}}/>]);
         }}>
+        <SecondaryButton className="ml-4" type={'button'} onClick={addLine}>
             Adicionar autor
         </SecondaryButton>
+
+        {
+            listAutores.length==1 ? <>
+            </> : <SecondaryButton className="ml-4" type={'button'} onClick={removeAuthors}>
+                Remover autor
+            </SecondaryButton>
+        }
+
+
 
         <InputLabel htmlFor="editora" value="Editora" />
         <TextInput

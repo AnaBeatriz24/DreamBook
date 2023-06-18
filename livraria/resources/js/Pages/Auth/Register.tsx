@@ -30,9 +30,15 @@ export default function Register() {
         <GuestLayout>
             <Head title="Register" />
 
+            <div className="justify-center flex">
+                <Link href="/">
+                    <img src="/LogoSistema.png" className={"w-32 lg:w-64 flex flex-col"} alt=""/>
+                </Link>
+            </div>
+
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Nome" />
 
                     <TextInput
                         id="name"
@@ -66,7 +72,7 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value="Senha" />
 
                     <TextInput
                         id="password"
@@ -83,7 +89,7 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
+                    <InputLabel htmlFor="password_confirmation" value="Confirmar Senha" />
 
                     <TextInput
                         id="password_confirmation"
@@ -102,13 +108,13 @@ export default function Register() {
                 <div className="flex items-center justify-end mt-4">
                     <Link
                         href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="underline text-sm text-white hover:text-gray-400 rounded-md focus:outline-none focus:none focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Already registered?
+                        Já possui cadastro?
                     </Link>
 
                     <PrimaryButton className="ml-4" disabled={processing}>
-                        Register
+                        Cadastrar
                     </PrimaryButton>
                 </div>
             </form>

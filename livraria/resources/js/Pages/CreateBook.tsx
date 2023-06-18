@@ -22,6 +22,8 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
 
     const dados = createRef();
 
+
+
     const { data, setData, post, processing, errors, reset } = useForm({
         isbn: '',
         titulo: '',

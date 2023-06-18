@@ -3,7 +3,9 @@
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
+use App\Models\Genders;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -58,9 +60,7 @@ Route::get('/home', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get("/cart", function () {
-        dd("carrinho");
-    })->name("cart");
+    Route::get("/cart", [SalesController::class, 'create'])->name("cart");
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -93,8 +93,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
+    Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
     Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
-    Route::get('/showBooks', [BooksController::class, 'searchBooks'])->name('book.search');
 
     Route::get('/salesHistory', function () {
         dd('Desenvolver tela de histórico de vendas');
