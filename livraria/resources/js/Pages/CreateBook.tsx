@@ -4,13 +4,14 @@ import { PageProps } from '@/types';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
-import {FormEventHandler, ReactComponentElement, ReactElement, useEffect, useState} from "react";
+import {createRef, FormEventHandler, ReactComponentElement, ReactElement, useEffect, useRef, useState} from "react";
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import PrimaryButton from "@/Components/PrimaryButton";
 import RegistrationSupplier from "@/Components/RegistrationSupplier";
 import SecondaryButton from "@/Components/SecondaryButton";
 import AddAuthor from "@/Components/AddAuthor";
 import Book from "@/Components/Book";
+import {unmountComponentAtNode} from "react-dom";
 
 export default function CreateBook({ auth, genders, suppliers}: PageProps) {
     const rotas = [
@@ -20,12 +21,14 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
         }
     ]
 
+    const book_insert = useRef({status: false});
+
 
 
     const { data, setData, post, processing, errors, reset } = useForm({
         isbn: '',
         titulo: '',
-        autor:'',
+        autor:[],
         genero:genders[0].id,
         editora:'',
         fornecedor:'',
@@ -54,11 +57,21 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
 
     useEffect(() => {
         if(data.isbn.length === 10 || data.isbn.length === 13){
-            console.log(data);
             if(data.titulo === "")
                 resp();
         }
     }, [data.isbn])
+
+    useEffect(() => {
+        if(book_insert.current.status === true){
+            console.log(book_insert);
+            let isbn = books.pop();
+            console.log(isbn);
+            data.isbn = "";
+            setPreenchimento({status: true});
+            book_insert.current.status = false;
+        }
+    }, [book_insert.current.status])
 
     const resp: () => Promise<void> = async ():Promise<void> => {
         //https://www.googleapis.com/books/v1/volumes?q=isbn:
@@ -69,20 +82,20 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
             const dataResponse = await response.json();
             // setAuthors(dataResponse.authors);
             alert("livro localizado");
+
             if(dataResponse.items[0].volumeInfo.authors?.length > 0){
-                data.autor = dataResponse.items[0].volumeInfo.authors.toString();
+                data.autor = dataResponse.items[0].volumeInfo.authors;
             }
-            console.log(dataResponse);
             data.titulo = dataResponse.items[0].volumeInfo.title + (dataResponse.items[0].volumeInfo.subtitle?.length > 0 ? dataResponse.items[0].volumeInfo.subtitle : "");
             data.editora = dataResponse.items[0].volumeInfo.publisher ?? "";
             data.descricao = dataResponse.items[0].volumeInfo.description ?? "";
-            console.log(data);
-            setBooks([...books, <Book data={{
+            setBooks([...books, <Book dataBook={{
+                isbn: data.isbn,
                 titulo: dataResponse.items[0].volumeInfo.title + (dataResponse.items[0].volumeInfo.subtitle?.length > 0 ? dataResponse.items[0].volumeInfo.subtitle : ""),
                 editora: dataResponse.items[0].volumeInfo.publisher ?? "",
                 descricao: dataResponse.items[0].volumeInfo.description ?? "",
-                autor: dataResponse.items[0].volumeInfo.authors?.toString() ?? ""
-            }} onHandle={setData}/>]);
+                autor: dataResponse.items[0].volumeInfo.authors?.length > 0 ? dataResponse.items[0].volumeInfo.authors.toString() : ""
+            }} genders={genders} status={book_insert}/>]);
         }
     }
 
@@ -107,69 +120,34 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
                                 <div className="flex flex-col mx-auto">
                                     <RegistrationSupplier suppliers={suppliers} />
 
+                                    <div className="justify-center flex ">
+                                            <SecondaryButton className="ml-4" type={'button'} onClick={() => {
+                                                setPreenchimento({status: false})
+                                            }}>
+                                                Adicionar Livro
+                                            </SecondaryButton>
+                                    </div>
 
-                                    <InputLabel htmlFor="isbn" value="ISBN" />
-                                    <TextInput
-                                        id="isbn"
-                                        name="isbn"
-                                        value={data.isbn}
-                                        onChange={(e) => setData("isbn", e.target.value)}
-                                        className="mt-1 mb-2 block w-full text-black"
-                                        autoComplete="isbn"
-                                        isFocused={true}
-                                        required/>
+                                    <div hidden={preenchimento.status}>
+                                        {/*<svg className="animate-spin bg-white h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>*/}
+                                        <InputLabel htmlFor="isbn" value="ISBN" />
+                                        <TextInput
+                                            id="isbn"
+                                            name="isbn"
+                                            value={data.isbn}
+                                            onChange={onHandleChange}
+                                            className="mt-1 mb-2 block w-full text-black"
+                                            autoComplete="isbn"
+                                            isFocused={true}
+                                            required/>
+
+                                    </div>
+
                                     <div id="booksList">
 
-                                        <div hidden={preenchimento.status}>
-                                            <svg className="animate-spin bg-white h-5 w-5 mr-3" viewBox="0 0 24 24"></svg>
-                                        </div>
+
 
                                         {...books}
-
-
-                                        <InputLabel htmlFor="genders" value="Selecione o gênero" />
-                                        <select id="genders"
-                                                name="genders"
-                                                data-dropdown-toggle="roleSelect"
-                                                data-dropdown-trigger="hover"
-                                                className="w-52 mb-2 lg:w-full sm:w-72 text-black border-amber-900 focus:border-amber-900 focus:ring-amber-900 rounded-[10px] shadow-sm"
-                                                onChange={(e) => setData("genders", e.target.value)}
-                                                multiple
-                                        >
-                                            {
-                                                genders.map((e) => {
-                                                    return (
-                                                        <option value={e.id}>{e.name}</option>
-                                                    )})
-                                            }
-                                        </select>
-
-
-                                        <InputLabel htmlFor="quantidade" value="Quantidade" />
-                                        <TextInput
-                                            id="quantidade"
-                                            name="quantidade"
-                                            value={data.quantidade}
-                                            onChange={(e) => setData("quantidade", e.target.value)}
-                                            className="mt-1 mb-2 block w-full text-black"
-                                            autoComplete="quantidade"
-                                            isFocused={true}
-                                            required/>
-
-
-
-                                        <InputLabel htmlFor="valor_entrada" value="Valor de Entrada" />
-                                        <TextInput
-                                            id="valor_entrada"
-                                            name="valor_entrada"
-                                            value={data.valor_entrada}
-                                            onChange={(e) => setData("valor_entrada", e.target.value)}
-                                            className="mt-1 mb-2 block w-full text-black"
-                                            autoComplete="valor_entrada"
-                                            isFocused={true}
-                                            required/>
-
-
 
                                     </div>
                                     <div className="flex items-center justify-center mt-4">

@@ -23,7 +23,6 @@ export default function RegistrationSupplier({suppliers}:Array<String>){
             }
         })
     }
-    const desabilita = (data.cnpj==='' || data.fornecedor==='');
 
 
     return(
@@ -54,13 +53,6 @@ export default function RegistrationSupplier({suppliers}:Array<String>){
                         isFocused={true}
                         required/>
                 </div>
-            </div>
-
-            <div className="justify-center flex ">
-                <SecondaryButton className="ml-4" type={'button'} disabled={desabilita}>
-                    Adicionar Livro
-                </SecondaryButton>
-
             </div>
         </div>
 

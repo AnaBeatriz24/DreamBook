@@ -43,7 +43,6 @@ Route::get('/', function () {
                 "path" => "books/TemperaturaVoceEu.png"
             ],
         ],
-        'genders' => Genders::all()
     ]);
 });
 
@@ -95,6 +94,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
     Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
+    Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
 
     Route::get('/salesHistory', function () {
         dd('Desenvolver tela de histórico de vendas');
