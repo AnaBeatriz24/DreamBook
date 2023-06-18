@@ -95,6 +95,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
     Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
 
+    Route::get('/showBooks/{gender}', [BooksController::class, 'show'])->name('book.s');
     Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
 
     Route::get('/salesHistory', function () {
