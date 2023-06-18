@@ -6,7 +6,7 @@ import Books from "@/Components/Books";
 import ButtonHome from "@/Components/ButtonHome";
 import {loadConfigFromFile} from "vite";
 
-export default function Welcome({livrosMaisVendidos, genders}) {
+export default function Welcome({livrosMaisVendidos}) {
 
     const routes:object[] = [
         {
@@ -24,7 +24,7 @@ export default function Welcome({livrosMaisVendidos, genders}) {
     ]
 
     return (
-        <WelcomeNavBar routes={routes} genders={genders}>
+        <WelcomeNavBar routes={routes}>
             <Head title="Welcome" />
             <div className={"flex flex-col items-center mt-6 pb-6 space-y-16"}>
                 <div className={"grid grid-cols-2 space-x-16"}>
