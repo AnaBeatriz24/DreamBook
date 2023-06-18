@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Books;
 use App\Models\Genders;
+use App\Models\Publisher;
+use App\Models\Suppliers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use App\Models\Authors;
 
 class BooksController extends Controller
 {
@@ -23,7 +26,7 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CreateBook');
+        return Inertia::render('CreateBook',["genders" => Genders::all(), "suppliers" => Suppliers::all(), "books" => Books::all()]);
     }
 
     /**
@@ -31,7 +34,43 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+//        dd($request);
+        if(Books::where("isbn", $request->isbn)->count() === 0){
+            $autores = [];
+            foreach ($request->autor as $autor){
+                $at = Authors::where("name", '=', $autor)->count();
+                if($at === 0)
+                    array_push($autores, Authors::create(["name" => $autor]));
+                else {
+                    $at = Authors::where("name", '=', $autor)->get();
+                    array_push($autores, $at);
+                }
+
+            }
+            $editora = Publisher::create(["name" => $request->editora])->id;
+
+            if($request->file()){
+                $fileName = time().'.'.$request->file()["imgcapa"]->getClientOriginalExtension();
+                $filePath = $request->file()["imgcapa"]->storeAs('books', $fileName, 'public');
+            }
+
+            $book = Books::create([
+                "title" => $request->titulo,
+                "isbn" => $request->isbn,
+                "description" => $request->descricao,
+                "publishers_id" => $editora,
+                "img" => $filePath
+            ]);
+            foreach ($autores as $autor){
+                $book->authors()->attach($autor);
+            }
+            foreach ($request->genero as $genero){
+                $gen = Genders::find($genero);
+                $book->genders()->attach($gen);
+            }
+        }
+
     }
 
     /**

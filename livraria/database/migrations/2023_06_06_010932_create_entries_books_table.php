@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('entries_books', function (Blueprint $table) {
             $table->unsignedBigInteger("entries_id");
             $table->unsignedBigInteger("books_id");
-            $table->integer("quantity");
-            $table->float("amount");
+            $table->integer("quantity")->nullable();
+            $table->float("amount")->nullable();
             $table->timestamps();
 
             $table->foreign('entries_id')
