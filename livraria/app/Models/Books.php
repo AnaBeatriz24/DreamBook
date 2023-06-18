@@ -19,6 +19,7 @@ class Books extends Model
         'title',
         'description',
         'isbn',
+        'img',
         'publishers_id'
     ];
 
@@ -26,9 +27,9 @@ class Books extends Model
         "id"
     ];
 
-    public function stocks():BelongsTo
+    public function stocks():HasOne
     {
-        return $this->belongsTo(Stocks::class, "books_id");
+        return $this->hasOne(Stocks::class, "books_id", "id");
     }
 
     public function publishers():HasMany

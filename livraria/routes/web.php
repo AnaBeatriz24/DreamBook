@@ -93,6 +93,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
+    Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
     Route::get('/showBooks', [BooksController::class, 'searchBooks'])->name('book.search');
 
     Route::get('/salesHistory', function () {
