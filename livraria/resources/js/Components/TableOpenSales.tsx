@@ -10,15 +10,15 @@ export default function TableOpenSales(props) {
 
     const dataText = (items) => {
         return Object.values(items).map((item, index: Number) => {
-            return index === 0 ?
-                null :
-                <div className="px-2 py-3 break-words font-medium text-white text-sm rounded">
+            return <div className="px-2 py-3 break-words font-medium text-white text-sm rounded">
                     {item}
-                </div>
+                   </div>
         })
     }
     let head = props.props.header;
-    let body = props.props.data.data;
+    let body = props.props.data;
+    console.log(body)
+
 
     const dataAction = (item, id) => {
         switch (item) {
