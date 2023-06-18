@@ -23,17 +23,16 @@ class SalesController extends Controller
      */
     public function create()
     {
-        // nome do livro
-        // isbn do livro
-        // amount do livro
-        // quantidade de livros
-
-        $results = DB::table('sales_books')
-            ->join('books', 'sales_books.books_id', '=', 'books.id')
-            ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
-            ->select('books.title', 'books.isbn', 'sales.*')
-            ->where('sales.users_id', '=', Auth::id())
-            ;
+        //        $userId = Auth::id();
+        //
+        //        $books = DB::table('sales_books')
+        //            ->join('books', 'sales_books.books_id', '=', 'books.id')
+        //            ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
+        //            ->where('users_id', '=', $userId)
+        //            ->get()
+        //        ;
+        //
+        //        dd($books);
 
         return Inertia::render("Cart");
     }
