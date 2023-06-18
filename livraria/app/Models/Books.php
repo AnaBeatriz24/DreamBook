@@ -19,16 +19,14 @@ class Books extends Model
         'title',
         'description',
         'isbn',
-        'publishers_id'
-    ];
-
-    protected $hidden = [
+        'img',
+        'publishers_id',
         "id"
     ];
 
-    public function stocks():BelongsTo
+    public function stocks():HasOne
     {
-        return $this->belongsTo(Stocks::class, "books_id");
+        return $this->hasOne(Stocks::class, "books_id", "id");
     }
 
     public function publishers():HasMany
@@ -48,7 +46,7 @@ class Books extends Model
 
     public function entries():BelongsToMany
     {
-        return $this->belongsToMany(Entries::class, "entries_books", "books_id", "entries_id")->using(EntryBook::class);
+        return $this->belongsToMany(Entries::class, 'entries_books', 'entries_id', 'books_id', "id", 'id')->withPivot("quantity", "amount");
     }
 
     public function sales():BelongsToMany

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genders;
 use App\Models\Suppliers;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SuppliersController extends Controller
 {
@@ -20,7 +22,7 @@ class SuppliersController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('RegistrationSupplier',["suppliers"=>Suppliers::all()]);
     }
 
     /**
