@@ -62,6 +62,7 @@ Route::get('/home', function () {
 Route::middleware('auth')->group(function () {
 
     Route::get("/cart", [SalesController::class, 'create'])->name("cart");
+    Route::post("/cart", [SalesController::class, 'store'])->name("cart.store");
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

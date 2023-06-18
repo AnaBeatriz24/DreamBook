@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sales;
+use App\Models\Stocks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +44,20 @@ class SalesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::user()->profiles_id === 5){
+            if(Sales::where("users_id", Auth::user()->id)->where("status", 0)->count() > 0){
+                $cart = Sales::where("users_id", Auth::user()->id)->where("status", 0)->first();
+            } else {
+                $cart = Sales::create([
+                    "users_id" => Auth::user()->id
+                ]);
+            }
+            $stock = Stocks::where("books_id", $request->idLivro)->first();
+            if($stock->quantity > 0)
+                $cart->books()->attach([$request->idLivro => ["quantity" => 1, "amount" => $stock->amount]]);
+
+            return ;
+        }
     }
 
     /**
