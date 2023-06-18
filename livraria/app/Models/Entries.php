@@ -15,13 +15,9 @@ class Entries extends Model
     protected $table = "entries";
 
     protected $fillable = [
-        'suppliers_id',
         'dateBuy',
         'users_id',
-        "suppliers_id"
-    ];
-
-    protected $hidden = [
+        "suppliers_id",
         "id"
     ];
 
@@ -37,7 +33,7 @@ class Entries extends Model
 
     public function books():BelongsToMany
     {
-        return $this->belongsToMany(Books::class, 'entries_books', 'entries_id', 'books_id')->using(EntryBook::class);
+        return $this->belongsToMany(Books::class, 'entries_books', 'entries_id', 'books_id', "id", 'id')->withPivot("quantity", "amount");
     }
 
 }

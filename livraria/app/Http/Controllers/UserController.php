@@ -43,7 +43,7 @@ class UserController extends Controller
         $user->profiles_id = $request->role;
         $user->email_verified_at = now();
         $user->save();
-        return Inertia::render("ShowCoupons");
+        return Inertia::render("ConfirmCreateUser");
     }
 
     /**

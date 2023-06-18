@@ -18,6 +18,13 @@ return new class extends Migration
             set @quantidade = 0;
             select stocks.quantity into @quantidade from stocks where stocks.books_id = new.books_id;
 	        update stocks set quantity = (@quantidade + new.quantity) where books_id = new.books_id;
+	        set @valor = 0;
+            select stocks.amount into @valor from stocks where stocks.books_id = new.books_id;
+            if @valor = 0 then
+                update stocks set amount = (new.amount * 2.5) where books_id = new.books_id;
+            else
+	            update stocks set amount = (((@valor + new.amount)/2)*2.5) where books_id = new.books_id;
+	        end if;
         END
         ");
     }

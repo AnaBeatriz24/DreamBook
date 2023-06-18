@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -22,8 +23,8 @@ class Stocks extends Model
         "id"
     ];
 
-    public function books():HasOne
+    public function books():BelongsTo
     {
-        return $this->hasOne(Books::class, "books_id");
+        return $this->belongsTo(Books::class, "books_id");
     }
 }

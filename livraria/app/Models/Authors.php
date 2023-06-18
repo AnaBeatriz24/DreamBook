@@ -12,12 +12,8 @@ class Authors extends Model
 
     protected $table = "authors";
     protected $fillable = [
-        'name',
-        'lastname'
-    ];
-
-    protected $hidden = [
         "id",
+        'name',
     ];
 
     public function books():BelongsToMany

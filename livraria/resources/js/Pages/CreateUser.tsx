@@ -7,6 +7,7 @@ import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Dropdown from "@/Components/Dropdown";
+import BreadchumbSystem from "@/Components/BreadchumbSystem";
 
 export default function CreateUser({ auth, profiles }: PageProps) {
 
@@ -29,6 +30,13 @@ export default function CreateUser({ auth, profiles }: PageProps) {
         post(route('user.store'));
     };
 
+    const rotas = [
+        {
+            'name': 'Adicionar Usuário',
+            'route': 'user.store',
+        }
+    ]
+
     const valida:boolean = !(data.password === data.password_confirmation) || (data.password === '' || data.password_confirmation === '');
 
     return (
@@ -36,7 +44,12 @@ export default function CreateUser({ auth, profiles }: PageProps) {
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Adicionar Usuário</h2>}>
 
+            <div className="mt-8 ml-20">
+                <BreadchumbSystem rota={rotas}/>
+            </div>
+
             <Head title="Adicionar Usuário" />
+
 
             <div className="py-12 items-center">
                 <div className="max-w-3xl h-auto mx-auto sm:px-6 lg:px-8">
