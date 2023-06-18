@@ -90,7 +90,7 @@ class BooksController extends Controller
              $book->path = "$book->title.png";
         }
 
-        return Inertia::render('ShowBooks', [
+        return Inertia::render('TableBook', [
             'books' => $books,
         ]);
     }
