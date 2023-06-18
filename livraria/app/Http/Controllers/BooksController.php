@@ -64,6 +64,10 @@ class BooksController extends Controller
         ]);
     }
 
+    public function showAdd(Books $books){
+        return Inertia::render('ShowBookList');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
