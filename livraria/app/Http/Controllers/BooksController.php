@@ -41,41 +41,40 @@ class BooksController extends Controller
     {
 
 //        dd($request);
-        $autores = [];
-        foreach ($request->autor as $autor){
-            $at = Authors::where("name", '=', $autor)->count();
-            if($at === 0)
-                array_push($autores, Authors::create(["name" => $autor]));
-            else {
-                $at = Authors::where("name", '=', $autor)->get();
-                array_push($autores, $at);
+        if(Books::where("isbn", $request->isbn)->count() === 0){
+            $autores = [];
+            foreach ($request->autor as $autor){
+                $at = Authors::where("name", '=', $autor)->count();
+                if($at === 0)
+                    array_push($autores, Authors::create(["name" => $autor]));
+                else {
+                    $at = Authors::where("name", '=', $autor)->get();
+                    array_push($autores, $at);
+                }
+
+            }
+            $editora = Publisher::create(["name" => $request->editora])->id;
+
+            if($request->file()){
+                $fileName = time().'.'.$request->file()["imgcapa"]->getClientOriginalExtension();
+                $filePath = $request->file()["imgcapa"]->storeAs('books', $fileName, 'public');
             }
 
+            $book = Books::create([
+                "title" => $request->titulo,
+                "isbn" => $request->isbn,
+                "description" => $request->descricao,
+                "publishers_id" => $editora,
+                "img" => $filePath
+            ]);
+            foreach ($autores as $autor){
+                $book->authors()->attach($autor);
+            }
+            foreach ($request->genero as $genero){
+                $gen = Genders::find($genero);
+                $book->genders()->attach($gen);
+            }
         }
-        $editora = Publisher::create(["name" => $request->editora])->id;
-
-        if($request->file()){
-            $fileName = time().'.'.$request->file()["imgcapa"]->getClientOriginalExtension();
-            $filePath = $request->file()["imgcapa"]->storeAs('books', $fileName, 'public');
-        }
-
-        $book = Books::create([
-            "title" => $request->titulo,
-            "isbn" => $request->isbn,
-            "description" => $request->descricao,
-            "publishers_id" => $editora,
-            "img" => $filePath
-        ]);
-        foreach ($autores as $autor){
-            $book->authors()->attach($autor);
-        }
-        foreach ($request->genero as $genero){
-            $gen = Genders::find($genero);
-            $book->genders()->attach($gen);
-        }
-        $book->stocks->amount = $request->valor_entrada;
-        $book->stocks->quantity = $request->quantidade;
-        $book->stocks->save();
 
     }
 

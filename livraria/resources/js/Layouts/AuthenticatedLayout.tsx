@@ -14,7 +14,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
         // @ts-ignore
         switch(user.profiles_id) {
             case 1:
-                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Adicionar Livro", "book.create"], ["Pesquisar Livros", "book.search"],
+                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Adicionar Compra", "book.create"], ["Pesquisar Livros", "book.search"],
                     ["Adicionar Cupons", "coupon.create"],
                     ["Cupons Disponíveis", "coupon.showActive"],];
             case 2:
@@ -22,7 +22,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
             case 3:
                 return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Pedidos Abertos", "sales.open"]];
             case 4:
-                return [["Home", "home"], ["Adicionar Livro", "book.create"], ["Pesquisar Livros", "book.search"],];
+                return [["Home", "home"], ["Adicionar Compra", "book.create"], ["Pesquisar Livros", "book.search"],];
             case 5:
                 return [["Home", "home"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Entre em Contato", "contact.index"], ["Sobre nós", "team.index"]];
         }};

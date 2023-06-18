@@ -20,10 +20,7 @@ class Books extends Model
         'description',
         'isbn',
         'img',
-        'publishers_id'
-    ];
-
-    protected $hidden = [
+        'publishers_id',
         "id"
     ];
 
@@ -49,7 +46,7 @@ class Books extends Model
 
     public function entries():BelongsToMany
     {
-        return $this->belongsToMany(Entries::class, "entries_books", "books_id", "entries_id")->using(EntryBook::class);
+        return $this->belongsToMany(Entries::class, 'entries_books', 'entries_id', 'books_id', "id", 'id')->withPivot("quantity", "amount");
     }
 
     public function sales():BelongsToMany

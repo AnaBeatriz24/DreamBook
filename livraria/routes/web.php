@@ -5,6 +5,7 @@ use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EntriesController;
 use App\Models\Genders;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -82,7 +83,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/coupons/createCoupon', [CouponsController::class, 'store'])->name('coupon.store');
 
-    Route::get('coupons/createdCoupon', [CouponsController::class, 'createCouponFinish'])
+    Route::get('/coupons/createdCoupon', [CouponsController::class, 'createCouponFinish'])
     ->name('coupon.success');
 
     Route::get('/coupons/showActiveCoupons', [CouponsController::class, 'show'])->name('coupon.showActive');
@@ -95,6 +96,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
     Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
     Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
+    Route::post('/createEntry', [EntriesController::class, 'store'])->name('entry.store');
 
     Route::get('/salesHistory', function () {
         dd('Desenvolver tela de histórico de vendas');

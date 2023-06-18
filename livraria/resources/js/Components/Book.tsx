@@ -7,7 +7,7 @@ import {useForm} from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import {unmountComponentAtNode} from "react-dom";
 
-export default function Book( {dataBook = {isbn: string, titulo: string, autor: string, editora: string, descricao: string}, genders= [], status= {current: {status:boolean}}}){
+export default function Book( {dataBook = {isbn: string, titulo: string, autor: string, editora: string, descricao: string}, genders= [], status= {current: {status:boolean}}, book = {current: {quantity: number, amount: number, isbn: string}}}){
 
     const [listAutores, setListAutores] = useState(
         dataBook.autor.split(",").map((a) => {
@@ -27,17 +27,31 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
         descricao: dataBook.descricao,
     });
 
+
     const submit: FormEventHandler = (e) => {
+        e.preventDefault();
         let aut = [];
         for(let i = 0; i < document.getElementsByName("autor").length; i++){
             aut.push(document.getElementsByName("autor")[i].value);
         }
         data.autor = aut;
-        e.preventDefault();
         data.imgcapa = document.getElementById("imgcapa").files[0];
-        //console.log(data);
-        post(route('book.store'));
-        status.current.status = true;
+        console.log(data.imgcapa);
+        if(data.imgcapa === undefined){
+            alert("Selecione uma capa");
+            return
+        }
+        if(data.genero.length > 0) {
+
+            //console.log(data);
+            status.current.status = true;
+            book.current.amount = data.valor_entrada;
+            book.current.quantity = data.quantidade;
+            book.current.isbn = data.isbn;
+            post(route('book.store'));
+        } else {
+            alert("Selecione os gêneros")
+        }
     };
 
     const addLine = () => {
@@ -102,7 +116,8 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
                   className="mb-2 block p-2.5 w-full rounded-lg border
                                           border-amber-900 focus:ring-amber-900 focus:border-amber-900 text-black"
                   onChange={(e) => setData("descricao", e.target.value)}
-        >{data.descricao}</textarea>
+                  defaultValue={data.descricao}
+        ></textarea>
 
         <InputLabel htmlFor="genders" value="Selecione o gênero" />
         <select id="genders"
@@ -147,5 +162,6 @@ export default function Book( {dataBook = {isbn: string, titulo: string, autor: 
             <PrimaryButton className="ml-4" onClick={submit} type={"button"}>
                 Salvar Livro
             </PrimaryButton>
+
         </form>
 }

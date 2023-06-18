@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("title");
             $table->longText("description")->nullable();
             $table->string("isbn");
-            $table->longText("img");
+            $table->longText("img")->nullable();
             $table->unsignedBigInteger("publishers_id");
             $table->timestamps();
 
