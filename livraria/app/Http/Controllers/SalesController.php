@@ -7,9 +7,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class SalesController extends Controller
 {
+    /*
+     * Show the table of sales not finalized, created by sellers
+     * */
+    public function showOpenSales(): Response
+    {
+        $sales = DB::table('sales')
+            ->join('users', 'sales.users_id', '=', 'users.id')
+            ->join('sales_books', 'sales_books.sales_id', '=', 'sales.id')
+            ->select('sales_books.sales_id', 'users.name', 'sales_books.amount')
+            ->where('users.profiles_id','=', 3)
+            ->where('sales.status','=', 0)->paginate(7);
+
+        return Inertia::render('ShowOpenSales', ['sales' => $sales, 'statusBar' => 1]);
+    }
     /**
      * Display a listing of the resource.
      */
