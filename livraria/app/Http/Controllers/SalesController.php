@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sales;
-use App\Models\SalesBooks;
+use App\Models\Stocks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -60,17 +60,16 @@ class SalesController extends Controller
      */
     public function create()
     {
-        // nome do livro
-        // isbn do livro
-        // amount do livro
-        // quantidade de livros
-
-        $results = DB::table('sales_books')
-            ->join('books', 'sales_books.books_id', '=', 'books.id')
-            ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
-            ->select('books.title', 'books.isbn', 'sales.*')
-            ->where('sales.users_id', '=', Auth::id())
-            ;
+        //        $userId = Auth::id();
+        //
+        //        $books = DB::table('sales_books')
+        //            ->join('books', 'sales_books.books_id', '=', 'books.id')
+        //            ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
+        //            ->where('users_id', '=', $userId)
+        //            ->get()
+        //        ;
+        //
+        //        dd($books);
 
         return Inertia::render("Cart");
     }
@@ -80,7 +79,29 @@ class SalesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::user()->profiles_id === 5){
+            if(Sales::where("users_id", Auth::user()->id)->where("status", 0)->count() > 0){
+                $cart = Sales::where("users_id", Auth::user()->id)->where("status", 0)->first();
+            } else {
+                $cart = Sales::create([
+                    "users_id" => Auth::user()->id
+                ]);
+            }
+            $stock = Stocks::where("books_id", $request->idLivro)->first();
+
+            $saleAdd = DB::table('sales_books')->where('books_id', $stock->books_id)->first();
+
+            if (is_null($saleAdd)) {
+                if($stock->quantity > 0)
+                    $cart->books()->attach([$request->idLivro => ["quantity" => 1, "amount" => $stock->amount]]);
+            } else {
+                DB::table('sales_books')
+                    ->where('books_id', $saleAdd->books_id)
+                    ->update([
+                    'quantity' => $saleAdd->quantity + 1
+                ]);
+            }
+        }
     }
 
     /**
