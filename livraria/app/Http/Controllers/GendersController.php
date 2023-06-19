@@ -71,8 +71,6 @@ class GendersController extends Controller
      */
     public function destroy(Genders $gender)
     {
-        dd($gender);
-        DB::table('genders')->where("id", '=', $gender->id)->delete();
-        $gender->destroy($gender->id);
+
     }
 }

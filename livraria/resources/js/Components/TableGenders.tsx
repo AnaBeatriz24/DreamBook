@@ -29,15 +29,6 @@ export default function TableGenders(props){
                 return (
                     <Link href={route('sales.history', [id])} className="inline-flex items-center px-4 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-800 focus:outline-none focus:ring-offset-2 transition ease-in-out duration-150 " type={"submit"}>{item}</Link>
                 )
-            case 'Deletar':
-                const deleteComponentData = {
-                    routePost: "gender.destroy",
-                    item: "gênero",
-                    id: id
-                }
-                return (
-                    <ComponentDelete routePost={deleteComponentData.routePost} item={deleteComponentData.item} id={deleteComponentData.id}/>
-                )
         }
     }
 
