@@ -1,6 +1,7 @@
 import SecondaryButton from "@/Components/SecondaryButton";
-import React, { useState } from 'react';
+import React, {FormEvent, FormEventHandler, useState} from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
+import {useForm} from "@inertiajs/react";
 
 export default function SearchBooks({books}: string[object]) {
 
@@ -26,7 +27,16 @@ export default function SearchBooks({books}: string[object]) {
         setCurrentIndex(newIndex);
     };
 
+    const {data, setData, post, reset} = useForm({
+        idLivro: null
+    })
 
+    const submit = (e) => {
+        e.preventDefault();
+        data.idLivro = e.target.value;
+        alert("Livro adicionado ao carrinho")
+        post(route("cart.store"));
+    }
 
     return (
         <>
@@ -51,7 +61,7 @@ export default function SearchBooks({books}: string[object]) {
                                         <img src={`/books/${livro.path}`} alt="Imagem de livro"/>
                                     </div>
                                     <div className={"p-6 rounded-lg w-full"}>
-                                        <SecondaryButton className={"w-full justify-center"}>
+                                        <SecondaryButton className={"w-full justify-center"} onClick={submit} value={livro.id}>
                                             Adicionar
                                         </SecondaryButton>
                                     </div>
