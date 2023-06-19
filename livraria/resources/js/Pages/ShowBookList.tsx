@@ -18,7 +18,7 @@ export default function ShowBookList({ auth }: PageProps ) {
 
 
     let header=["Nome", "Quantidade", "Valor"];
-    let routes=["book.showActive", "coupon.showInactive"]
+    let routes=["book.showActive", "book.showActive"]
     let title=["Ativos", "Desativados"]
 
     const actions= () => {
@@ -73,6 +73,10 @@ export default function ShowBookList({ auth }: PageProps ) {
             {results.data.length === 0
                 ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há livros ${ativosInativos()}`}</p>
                 : <TableBook props={tabela}></TableBook>}
+
+            <div className={'fixed bottom-0 left-0 right-0 mb-4'}>
+                {results.last_page !== 1 ? <Pagination registries={results} /> : <></>}
+            </div>
         </AuthenticatedLayout>
     );
 }

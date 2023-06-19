@@ -108,16 +108,16 @@ class BooksController extends Controller
         ]);
     }
 
-    public function showAdd(Books $books, Stocks $stocks){
-
-
-        $results = DB::table('books')
-            ->join('stocks', 'books.id', '=', 'stocks.books_id')
-            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
-            ->get();
-
-        return Inertia::render('ShowBookList',["results"=>$results]);
-    }
+//    public function showAdd(Books $books, Stocks $stocks){
+//
+//
+//        $results = DB::table('books')
+//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+//            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+//            ->get();
+//
+//        return Inertia::render('ShowBookList',["results"=>$results]);
+//    }
 
     /**
      * Show the form for editing the specified resource.
@@ -129,14 +129,43 @@ class BooksController extends Controller
         return Inertia::render('EditBook',['book'=>$book]);
     }
 
-    public function showInactives(Books $book)
+    public function showtwo(Books $books, Stocks $stocks)
     {
-        $book = $this->editViewDataCoupons(0);
-        return Inertia::render('ShowCoupons', [
-            "coupons" => $coupons,
+        $status = $this->editViewDataBook(1);
+        $results = DB::table('books')
+            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+            ->get();
+
+        return Inertia::render('ShowBookList', [
+            "results" =>$results,
+            "status" => $status,
+            "statusBar" => 1
+        ]);
+    }
+    public function showInactives(Books $books)
+    {
+        $status = $this->editViewDataBook(0);
+        $results = DB::table('books')
+            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+            ->get();
+
+        return Inertia::render('ShowBookList', [
+            "results" =>$results,
+            "status" => $status,
             "statusBar" => 0
         ]);
     }
+
+
+    public function editStatus(Books $book)
+    {
+        $book->status = !$book->status;
+        $book->save();
+        return redirect()->route($book->status ? "book.showActive" : "book.showInactive");
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -152,7 +181,24 @@ class BooksController extends Controller
     public function destroy(Books $book)
 
     {
-        DB::table('books')->where("id", $book->id);
-        $book->destroy($book->id);
+        //
     }
+    protected function editViewDataBook($status): \Illuminate\Support\Collection
+    {
+//        $status= ('status','=',$status)
+        $results = DB::table('books')
+            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+            ->get();
+//        $books = DB::table('books')
+//            ->select('id', 'title', 'status')
+//            ->where('status', '=', $status)
+//               ->paginate(7)
+
+
+
+
+        return $results;
+    }
+
 }

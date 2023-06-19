@@ -89,10 +89,13 @@ Route::middleware('auth')->group(function () {
     ->name('coupon.success');
 
     Route::get('/coupons/showActiveCoupons', [CouponsController::class, 'show'])->name('coupon.showActive');
-
     Route::get('/coupons/showInactiveCoupons', [CouponsController::class, 'showInactives'])->name('coupon.showInactive');
-
     Route::post("/coupons/{coupon}", [CouponsController::class, 'editStatus'])->name("coupons.editStatus");
+
+
+    Route::get('/books/showActiveBooks', [BooksController::class, 'showtwo'])->name('book.showActive');
+    Route::get('/books/showInactiveBooks', [BooksController::class, 'showInactives'])->name('book.showInactive');
+    Route::post("/books/{book}", [BooksController::class, 'editStatus'])->name("book.editStatus");
 
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
@@ -100,7 +103,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
     Route::post('/createEntry', [EntriesController::class, 'store'])->name('entry.store');
 
-    Route::get('/ShowBookList',[BooksController::class, 'showAdd'])->name('book.show');
+   // Route::get('/ShowBookList',[BooksController::class, 'showAdd'])->name('book.show');
     Route::post('/ShowBookList/{book}',[BooksController::class, 'destroy'])->name('book.destroy');
     Route::get('/ShowBookList/EditBook/{book}',[BooksController::class, 'update'])->name('book.update');
 
