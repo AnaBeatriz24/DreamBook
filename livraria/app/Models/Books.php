@@ -55,6 +55,6 @@ class Books extends Model
 
     public function sales():BelongsToMany
     {
-        return $this->belongsToMany(Sales::class, "sales_book", "books_id", "sales_id")->using(SalesBooks::class);
+        return $this->belongsToMany(Sales::class, 'sales_books', 'sales_id', 'books_id', "id", 'id')->withPivot("quantity", "amount");
     }
 }
