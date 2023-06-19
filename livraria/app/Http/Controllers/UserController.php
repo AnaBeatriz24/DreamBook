@@ -50,7 +50,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showAllUsers()
+    public function showAllUsers(Request $request)
     {
         if (Auth::user()->profiles_id != 1) {
             return redirect()->route('user.showCustomers');
@@ -59,8 +59,8 @@ class UserController extends Controller
                 $query = trim($request->user);
 
                 $users = DB::table('users')
-                    ->where('name', $query)
-                    ->where('email', $query)
+                    ->where('name', 'like', '%'.$query.'%')
+                    ->orWhere('email', 'like', '%'.$query.'%')
                     ->leftJoin('profiles', function (JoinClause $joinClause) {
                     $joinClause->on('users.profiles_id', '=', 'profiles.id');
                 })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(7);

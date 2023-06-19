@@ -41,7 +41,7 @@ export default function ShowUsers({ auth }: PageProps) {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('user.search'));
+        post(route('user.search', [data.user]));
     };
 
     const onHandleChange = (event) => {
@@ -59,7 +59,7 @@ export default function ShowUsers({ auth }: PageProps) {
                 <BreadchumbSystem rota={rotas} />
             </div>
 
-            <div className={"flex justify-center mt-12"}>
+            <div className={"flex justify-center mt-12 mb-12"}>
                 <div className={"p-12 bg-teal-950 w-2/6 sm:rounded-lg "}>
 
                     <form onSubmit={submit}>
