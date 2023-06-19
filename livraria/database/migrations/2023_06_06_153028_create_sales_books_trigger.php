@@ -22,13 +22,13 @@ return new class extends Migration
                     update sales set paymentMethods_id = pagamento where id = idVenda;
                 else
                     update sales set paymentMethods_id = pagamento, parcels = parcelas where id = idVenda;
-                end if
+                end if;
             else
                 if parcelas = 0 then
                     update sales set paymentMethods_id = pagamento, coupons_id = @idCupom where id = idVenda;
                 else
                     update sales set paymentMethods_id = pagamento, parcels = parcelas, coupons_id = @idCupom where id = idVenda;
-                end if
+                end if;
             end if;
         end
         ");
