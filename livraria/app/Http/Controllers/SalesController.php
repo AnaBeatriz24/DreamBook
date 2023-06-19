@@ -3,13 +3,50 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sales;
+use App\Models\SalesBooks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class SalesController extends Controller
 {
+    /*
+     * Show the table of sales not finalized, created by sellers
+     * */
+    public function showOpenSales(): Response
+    {
+        $sales = Sales::where("status", 0)->get();
+
+        foreach ($sales as $sale){
+            if(!is_null($sale->attendant_id)) {
+                $sale->idVendedor = $sale->attendant->id;
+                $sale->nameVendedor = $sale->attendant->name;
+            }
+        }
+
+        foreach ($sales as $sale){
+            $sale->idUser = $sale->users->id;
+            $sale->nameUser = $sale->users->name;
+        }
+
+        foreach ($sales as $sale){
+            $total = 0;
+            foreach($sale->books as $book){
+                $total += ($book->pivot->amount * $book->pivot->quantity);
+            }
+            $sale->total = $total;
+        }
+
+        foreach ($sales as $sale){
+            if(!is_null($sale->attendant_id)){
+                $openSales[] = [$sale->id, $sale->nameVendedor,$sale->total];
+            }
+            }
+
+        return Inertia::render('ShowOpenSales', ['sales' => $openSales]);
+    }
     /**
      * Display a listing of the resource.
      */
