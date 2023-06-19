@@ -12,18 +12,31 @@ return new class extends Migration
      */
     public function up(): void
     {
-//        DB::unprepared("
-//        CREATE TRIGGER sales_books_after_insert before INSERT ON sales_books FOR EACH ROW
-//        BEGIN
-//            set @quantidade = 0;
-//            select stocks.quantity into @quantidade from stocks where stocks.books_id = new.books_id;
-//            if @quantidade >= new.quantity then
-//                update stocks set stocks.quantity = (@quantidade - new.quantity) where books_id = new.books_id;
-//            else
-//                signal sqlstate '45000' set message_text = 'quantidade fora de estoque';
-//            end if;
-//        END
-//        ");
+        DB::unprepared("
+        Create procedure finaliza_venda(idVenda int, cupom int, pagamento int, parcelas int)
+        begin
+            set @idCupom = 0;
+            select id into @idCupom from coupons where id = cupom and status = 1;
+            if @idCupom = 0 then
+                if parcelas = 0 then
+                    update sales set paymentMethods_id = pagamento where id = idVenda;
+                else
+                    update sales set paymentMethods_id = pagamento, parcels = parcelas where id = idVenda;
+                end if;
+            else
+                if parcelas = 0 then
+                    update sales set paymentMethods_id = pagamento, coupons_id = @idCupom where id = idVenda;
+                else
+                    update sales set paymentMethods_id = pagamento, parcels = parcelas, coupons_id = @idCupom where id = idVenda;
+                end if;
+            end if;
+        end
+        ");
+
+//        exemplo = DB::unprepared("call finaliza_venda(1, 0, 1, 0)"); sem cupom e sem parcelas
+//        exemplo = DB::unprepared("call finaliza_venda(1, 1, 3, 1)"); com cupom e parcelado em 1 vez
+//        exemplo = DB::unprepared("call finaliza_venda(1, 2, 3, 10)"); com cupom e parcelado em 10 vez
+//        exemplo = DB::unprepared("call finaliza_venda(1, 0, 3, 10)"); sem cupom e parcelado em 10 vez
     }
 
     /**
