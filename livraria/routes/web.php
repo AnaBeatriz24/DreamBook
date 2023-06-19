@@ -62,6 +62,7 @@ Route::get('/home', function () {
 Route::middleware('auth')->group(function () {
 
     Route::get("/cart", [SalesController::class, 'create'])->name("cart");
+    Route::get('/openSales', [SalesController::class, 'showOpenSales'])->name('sales.open');
     Route::post("/cart", [SalesController::class, 'store'])->name("cart.store");
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -107,10 +108,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/salesHistory', function () {
         dd('Desenvolver tela de histórico de vendas');
     })->name('sales.history');
-
-    Route::get('/openSales', function () {
-        dd('Desenvolver tela de pedidos abertos');
-    })->name('sales.open');
 
 });
 require __DIR__.'/auth.php';
