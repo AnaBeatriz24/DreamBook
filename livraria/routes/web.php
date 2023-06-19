@@ -75,6 +75,8 @@ Route::middleware('auth')->group(function () {
 
     //Visualização da tabela de usuários
     Route::get('/showUsers', [UserController::class, 'showAllUsers'])->name('user.showAll');
+    Route::post('/showUsers', [UserController::class, 'showAllUsers'])->name('user.search');
+
     Route::get('/showSellers', [UserController::class, 'showSellersUsers'])->name('user.showSellers');
     Route::get('/showAttendants', [UserController::class, 'showAttendantsUsers'])->name('user.showAttendants');
     Route::get('/showBuyers', [UserController::class, 'showBuyersUsers'])->name('user.showBuyers');
@@ -102,6 +104,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/showBooks/{gender}', [BooksController::class, 'show'])->name('book.searchGender');
     Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
+
+    Route::get("/showBook/{book}", [BooksController::class, 'index'])->name("book.index");
 
     Route::get('/salesHistory', function () {
         dd('Desenvolver tela de histórico de vendas');
