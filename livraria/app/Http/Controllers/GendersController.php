@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Genders;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class GendersController extends Controller
 {
@@ -28,7 +30,14 @@ class GendersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*
+        * TODO: Adicionar as validações sobre o request quando houver pasta lang
+        */
+
+        $newGender = new Genders();
+        $newGender->name = $request->name;
+        $newGender->save();
+
     }
 
     /**
@@ -36,7 +45,9 @@ class GendersController extends Controller
      */
     public function show(Genders $genders)
     {
-        //
+        $genders = DB::table('genders')->select('id', 'name')->paginate(6);
+
+        return Inertia::render('ShowGenders', ['genders' => $genders]);
     }
 
     /**
@@ -58,8 +69,10 @@ class GendersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Genders $genders)
+    public function destroy(Genders $gender)
     {
-        //
+        dd($gender);
+        DB::table('genders')->where("id", '=', $gender->id)->delete();
+        $gender->destroy($gender->id);
     }
 }

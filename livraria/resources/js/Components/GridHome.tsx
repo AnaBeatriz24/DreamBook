@@ -36,6 +36,12 @@ const buttons = (profile:number) => {
             <Link href={route("coupon.showActive")}>
                 <ButtonHome opt="viewCoupon" />
             </Link>
+            <Link href={route("gender.show")}>
+                <ButtonHome opt="viewGenders" />
+            </Link>
+            <Link href={route("coupon.showActive")}>
+                <ButtonHome opt="viewBooks" />
+            </Link>
         </>
 
     } else if(profile === 2){
@@ -80,6 +86,12 @@ const buttons = (profile:number) => {
             </Link>
             <Link href={route("book.search")}>
                 <ButtonHome opt="searchBook" />
+            </Link>
+            <Link href={route("gender.show")}>
+                <ButtonHome opt="viewGenders" />
+            </Link>
+            <Link href={route("coupon.showActive")}>
+                <ButtonHome opt="viewBooks" />
             </Link>
         </>
     } else if(profile === 5){

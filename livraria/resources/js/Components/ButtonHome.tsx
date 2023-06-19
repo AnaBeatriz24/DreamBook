@@ -58,9 +58,19 @@ const listImages: {[key:string]: ReactElement} = {
             <path strokeLinecap="round" strokeLinejoin="round"
                   d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-
-    </>
-        ,
+    </>,
+    "viewBooks": <>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1" stroke="currentColor" className="w-72 h-20 m-4 " >
+        <path strokeLinecap="round" strokeLinejoin="round"
+              d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+    </svg>
+    </>,
+    "viewGenders": <>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"
+         className="w-72 h-20 m-4">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5"/>
+    </svg>
+</>
 }
 
 const listText: { [key: string]: string } = {
@@ -72,6 +82,8 @@ const listText: { [key: string]: string } = {
     "viewCoupon": "Cupons Disponíveis",
     "myHistory": "Meu Histórico",
     "openSales": "Pedidos Abertos",
+    "viewBooks":"Livros Cadastrados",
+    "viewGenders":"Genêros Textuais",
 }
 
 export default function ButtonHome(opt:{opt:string}){
