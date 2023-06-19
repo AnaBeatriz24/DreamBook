@@ -74,6 +74,8 @@ Route::middleware('auth')->group(function () {
 
     //Visualização da tabela de usuários
     Route::get('/showUsers', [UserController::class, 'showAllUsers'])->name('user.showAll');
+    Route::post('/showUsers', [UserController::class, 'showAllUsers'])->name('user.search');
+
     Route::get('/showSellers', [UserController::class, 'showSellersUsers'])->name('user.showSellers');
     Route::get('/showAttendants', [UserController::class, 'showAttendantsUsers'])->name('user.showAttendants');
     Route::get('/showBuyers', [UserController::class, 'showBuyersUsers'])->name('user.showBuyers');

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use mysql_xdevapi\Table;
 use stdClass;
+use function Termwind\render;
 
 class UserController extends Controller
 {
@@ -54,9 +55,20 @@ class UserController extends Controller
         if (Auth::user()->profiles_id != 1) {
             return redirect()->route('user.showCustomers');
         } else {
-            $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
-                $joinClause->on('users.profiles_id', '=', 'profiles.id');
-            })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(7);
+            if (!empty($request->user)) {
+                $query = trim($request->user);
+
+                $users = DB::table('users')
+                    ->where('name', $query)
+                    ->where('email', $query)
+                    ->leftJoin('profiles', function (JoinClause $joinClause) {
+                    $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(7);
+            } else {
+                $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+                    $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(7);
+            }
 
             return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 1]);
         }
