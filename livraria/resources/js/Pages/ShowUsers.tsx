@@ -1,10 +1,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, usePage} from '@inertiajs/react';
+import {Head, useForm, usePage} from '@inertiajs/react';
 import { PageProps } from '@/types';
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import Pagination from "@/Components/Pagination";
 import TableUsers from "@/Components/TableUsers";
 import BarGroupViewUsers from "@/Components/BarGroupViewUsers";
+import {FormEventHandler} from "react";
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function ShowUsers({ auth }: PageProps) {
     let {users, statusBar} = usePage().props;
@@ -29,6 +34,20 @@ export default function ShowUsers({ auth }: PageProps) {
         }
     ]
 
+    const { data, setData, post, processing, errors } = useForm({
+        user: '',
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        post(route('user.search', [data.user]));
+    };
+
+    const onHandleChange = (event) => {
+        setData(event.target.name, event.target.value);
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -38,6 +57,34 @@ export default function ShowUsers({ auth }: PageProps) {
 
             <div className={"mt-8 ml-20"}>
                 <BreadchumbSystem rota={rotas} />
+            </div>
+
+            <div className={"flex justify-center mt-12 mb-12"}>
+                <div className={"p-12 bg-teal-950 w-2/6 sm:rounded-lg "}>
+
+                    <form onSubmit={submit}>
+                        <div>
+                            <InputLabel htmlFor="user" className={"text-white"} value="Pesquisar usuário" />
+
+                            <TextInput
+                                id="user"
+                                type="text"
+                                name="user"
+                                value={data.user}
+                                className="mt-1 block w-full"
+                                autoComplete="user"
+                                isFocused={true}
+                                onChange={onHandleChange}
+                            />
+                        </div>
+
+                        <div className="w-full flex justify-center mt-6">
+                            <SecondaryButton type={'submit'} className="ml-4" disabled={processing}>
+                                Pesquisar
+                            </SecondaryButton>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <BarGroupViewUsers routes={actions()[1]} status={statusBar} title={actions()[2]}/>

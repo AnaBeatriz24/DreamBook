@@ -21,9 +21,29 @@ class BooksController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Books $book)
     {
-        //
+        $publisher = DB::table('publishers')
+            ->where("id", $book->publishers_id)
+            ->first()
+        ;
+        $book->publisher = $publisher->name;
+
+        $author = DB::table('books_authors')
+            ->join('authors', 'books_authors.authors_id', '=', "authors.id")
+            ->where("books_id", $book->id)
+            ->first()
+        ;
+        $book->author = $author->name;
+
+        $stocks = DB::table('stocks')
+            ->where("books_id", $book->id)
+            ->first()
+        ;
+        $book->amount = $stocks->amount;
+
+
+        return Inertia::render("BookIndex", ['book' => $book]);
     }
 
     /**
