@@ -43,9 +43,9 @@ class Sales extends Model
         return $this->hasMany(Coupons::class, "coupons_id");
     }
 
-        public function users():HasMany
+        public function users():BelongsTo
     {
-        return $this->hasMany(User::class, "users_id");
+        return $this->BelongsTo(User::class, "users_id", "id");
     }
 
     public function addresses():HasOne
@@ -63,6 +63,6 @@ class Sales extends Model
 
     public function books():BelongsToMany
     {
-        return $this->belongsToMany(Books::class, "sales_books", "sales_id", "books_id", "id", "id")->withPivot("quantity", "amount");
+        return $this->belongsToMany(Books::class, 'sales_books', 'sales_id', 'books_id', "id", 'id')->withPivot("quantity", "amount");
     }
 }
