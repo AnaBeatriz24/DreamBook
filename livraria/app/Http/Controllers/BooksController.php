@@ -151,21 +151,22 @@ class BooksController extends Controller
 
     public function showtwo(Books $books, Stocks $stocks)
     {
-        $status = $this->editViewDataBook(1);
+//        $status = $this->editViewDataBook(1);
         $results = DB::table('books')
             ->join('stocks', 'books.id', '=', 'stocks.books_id')
+            ->where('status', '=', 1)
             ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
             ->get();
 
         return Inertia::render('ShowBookList', [
             "results" =>$results,
-            "status" => $status,
+//            "status" => $status,
             "statusBar" => 1
         ]);
     }
     public function showInactives(Books $books)
     {
-        $status = $this->editViewDataBook(0);
+//        $status = $this->editViewDataBook(0);
         $results = DB::table('books')
             ->join('stocks', 'books.id', '=', 'stocks.books_id')
             ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
@@ -173,7 +174,7 @@ class BooksController extends Controller
 
         return Inertia::render('ShowBookList', [
             "results" =>$results,
-            "status" => $status,
+//            "status" => $status,
             "statusBar" => 0
         ]);
     }

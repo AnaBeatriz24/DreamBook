@@ -22,6 +22,7 @@ export default function TableBook(props){
     let head = props.props.header;
     let body = props.props.data;
 
+
     const dataAction = (item:string, id:number) => {
         switch (item) {
             case 'Editar':
