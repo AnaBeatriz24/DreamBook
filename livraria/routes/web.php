@@ -97,7 +97,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
     Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
     Route::post('/createEntry', [EntriesController::class, 'store'])->name('entry.store');
+
     Route::get('/ShowBookList',[BooksController::class, 'showAdd'])->name('book.show');
+    Route::post('/ShowBookList/{book}',[BooksController::class, 'destroy'])->name('book.destroy');
+    Route::get('/ShowBookList/EditBook/{book}',[BooksController::class, 'update'])->name('book.update');
+
+
+    Route::get('/Edit/{book}', [BooksController::class, 'edit'])->name('books.edit');
+
+
 
     Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
 

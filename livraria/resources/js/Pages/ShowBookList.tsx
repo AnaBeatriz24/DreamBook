@@ -1,65 +1,65 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, usePage} from '@inertiajs/react';
+import {Head, Link, usePage} from '@inertiajs/react';
 import { PageProps } from '@/types';
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import Pagination from "@/Components/Pagination";
 import TableUsers from "@/Components/TableUsers";
 import BarGroupViewUsers from "@/Components/BarGroupViewUsers";
+import ComponentDelete from "@/Components/ComponentDelete";
+import TableAvailableCupons from "@/Components/TableAvailableCupons";
+import TableBook from "@/Components/TableBook";
+import Books from "@/Components/Books";
+import ButtonStatusBarGroup from "@/Components/ButtonStatusBarGroup";
 
-export default function ShowUsers({ auth }: PageProps) {
-    let {books, statusBar} = usePage().props;
+export default function ShowBookList({ auth }: PageProps ) {
 
-    let dataAction = (item, id, profile) => {
-        if (profile === 1) {
-            switch (item){
-                case "Alterar Adm": return <Link href={route("company.AlterAdm", [id])} className={"inline-flex items-center px-4 py-2 bg-zinc-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-zinc-500 active:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150 font-medium font-black hover:bg-zinc-800 text-white text-sm px-3 py-0.5 rounded border border-zinc-600"}>{item}</Link>
-                case 'Desativar':
-                    return (
-                        <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150 font-medium font-black hover:bg-red-800 text-white text-sm px-3 py-0.5 rounded border border-red-600" type={"submit"}>{item}</button>
-                    )
-                case 'Ativar':
-                    return (
-                        <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-800 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150 font-medium font-black hover:bg-green-800 text-white text-sm px-3 py-0.5 rounded border border-green-600" type={"submit"}>{item}</button>
-                    )
-                case 'Excluir':
-                    const deleteComponentData = {
-                        routePost: "company.delete",
-                        item: "empresa",
-                        id: id
-                    }
-                    return (
-                        <ComponentDelete routePost={deleteComponentData.routePost} item={deleteComponentData.item} id={deleteComponentData.id}/>
-                    )
 
-            }
+    let {results, statusBar} = usePage().props;
+
+
+    let header=["Nome", "Quantidade", "Valor"];
+    let routes=["book.showActive", "coupon.showInactive"]
+    let title=["Ativos", "Desativados"]
+
+    const actions= () => {
+        if (statusBar === 0) {
+            return ['Ativar']
         } else {
-            switch (item){
-                case "Alterar Adm": return <Link href={route("company.AlterAdm", [id])} className={"inline-flex items-center px-4 py-2 bg-zinc-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-zinc-500 active:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150 font-medium font-black hover:bg-zinc-800 text-white text-sm px-3 py-0.5 rounded border border-zinc-600"}>{item}</Link>
-            }
+            return ['Desativar']
+        }
+    }
+    const ativosInativos = (): string => {
+        return statusBar === 1
+            ? "ativos"
+            : "desativados"
+    }
+
+    let buttonText = () => {
+        if (statusBar === 0) {
+            return ['Ativar']
+        } else {
+            return ['Desativar']
         }
     }
 
-    let header=["Nome", "Quantidade", "Valor"];
-    let routes = ["books.show", "coupon.showInactive"]
-    let title = ["Ativos", "Desativados"]
 
-
-    let table = {
+    let tabela = {
         header: header,
-        data:books,
+        data:results,
+        actions: buttonText(),
     }
 
     const rotas = [
         {
-            'name': 'Ver livros cadastrados',
-            'route': 'book.show',
+            'name': 'Ver Livros Cadastrados',
+            'route': 'books.show',
         }
     ]
 
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Visualizar Usuários</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Visualizar Livros Cadastrados</h2>}
         >
             <Head title="Visualizar Usuários" />
 
@@ -67,8 +67,12 @@ export default function ShowUsers({ auth }: PageProps) {
                 <BreadchumbSystem rota={rotas} />
             </div>
 
+            <ButtonStatusBarGroup routes={routes} status={statusBar} title={title}/>
 
 
+            {results.data.length === 0
+                ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há livros ${ativosInativos()}`}</p>
+                : <TableBook props={tabela}></TableBook>}
         </AuthenticatedLayout>
     );
 }

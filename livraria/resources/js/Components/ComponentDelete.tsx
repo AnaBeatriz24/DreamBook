@@ -14,7 +14,8 @@ export default function ComponentDelete(props:{routePost:string, item:string, id
     // @ts-ignore
     const closeDeleteModal = (e) => {
         setConfirmingComponentDeletion(false);
-        post(route(props.routePost, [e.target.value]))
+
+        post(route(props.routePost, props.id))
     };
 
     const closeModal = () => {

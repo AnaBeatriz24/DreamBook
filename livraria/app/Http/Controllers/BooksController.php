@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Books;
+use App\Models\Company;
 use App\Models\Genders;
 use App\Models\Publisher;
+use App\Models\Stocks;
 use App\Models\Suppliers;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Models\Authors;
 
@@ -103,16 +108,34 @@ class BooksController extends Controller
         ]);
     }
 
-    public function showAdd(Books $books){
-        return Inertia::render('ShowBookList');
+    public function showAdd(Books $books, Stocks $stocks){
+
+
+        $results = DB::table('books')
+            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+            ->get();
+
+        return Inertia::render('ShowBookList',["results"=>$results]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Books $books)
+    public function edit(Books $book)
     {
-        //
+        //dd($books);
+
+        return Inertia::render('EditBook',['book'=>$book]);
+    }
+
+    public function showInactives(Books $book)
+    {
+        $book = $this->editViewDataCoupons(0);
+        return Inertia::render('ShowCoupons', [
+            "coupons" => $coupons,
+            "statusBar" => 0
+        ]);
     }
 
     /**
@@ -126,8 +149,10 @@ class BooksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Books $books)
+    public function destroy(Books $book)
+
     {
-        //
+        DB::table('books')->where("id", $book->id);
+        $book->destroy($book->id);
     }
 }

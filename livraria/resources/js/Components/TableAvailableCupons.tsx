@@ -1,22 +1,24 @@
 import {useForm} from "@inertiajs/react";
 import OptionsTable from "@/Components/OptionsTable";
 
-export default function TableAvailableCupons(props) {
-    const header = (item) => {
-        return <div className="px-8 py-3 font-medium font-black text-black text-sm">
-            {item}
-        </div>
-    }
 
-    const dataText = (items) => {
-        return Object.values(items).map((item, index: Number) => {
-            return index === 0 ?
-                null :
-                <div className="px-2 py-3 break-words font-medium font-medium text-white text-sm rounded">
-                    {item}
-                </div>
-        })
-    }
+const header = (item) => {
+    return <div className="px-8 py-3 font-medium font-black text-black text-sm">
+        {item}
+    </div>
+}
+
+const dataText = (items) => {
+    return Object.values(items).map((item, index: Number) => {
+        return index === 0 ?
+            null :
+            <div className="px-2 py-3 break-words font-medium font-medium text-white text-sm rounded">
+                {item}
+            </div>
+    })
+}
+export default function TableAvailableCupons(props) {
+
     let head = props.props.header;
     let body = props.props.data.data;
 

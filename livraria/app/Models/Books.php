@@ -24,6 +24,10 @@ class Books extends Model
         "id"
     ];
 
+    protected $hidden = [
+        'status'
+    ];
+
     public function stocks():HasOne
     {
         return $this->hasOne(Stocks::class, "books_id", "id");
