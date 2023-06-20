@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared("
-        Create procedure finaliza_venda(idVenda int, cupom int, pagamento int, parcelas int)
+        Create procedure if not exists finaliza_venda(idVenda int, cupom int, pagamento int, parcelas int)
         begin
             set @idCupom = 0;
             select id into @idCupom from coupons where id = cupom and status = 1;
