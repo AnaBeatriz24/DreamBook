@@ -16,8 +16,8 @@ export default function ShowBookList({ auth }: PageProps ) {
 
     let {results, statusBar} = usePage().props;
 
-    console.log(results)
-    console.log(statusBar)
+     console.log(results)
+     console.log(statusBar)
 
 
 
@@ -74,7 +74,7 @@ export default function ShowBookList({ auth }: PageProps ) {
             <ButtonStatusBarGroup routes={routes} status={statusBar} title={title}/>
 
 
-            {results.data.length === 0
+            {results.length
 
                 ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há livros ${ativosInativos()}`}</p>
                 : <TableBook props={tabela}></TableBook>}

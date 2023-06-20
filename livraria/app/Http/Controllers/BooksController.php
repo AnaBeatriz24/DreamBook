@@ -151,30 +151,28 @@ class BooksController extends Controller
 
     public function showtwo(Books $books, Stocks $stocks)
     {
-//        $status = $this->editViewDataBook(1);
-        $results = DB::table('books')
-            ->join('stocks', 'books.id', '=', 'stocks.books_id')
-            ->where('status', '=', 1)
-            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
-            ->get();
+        $results = $this->editViewDataBook(1);
+//        $results = DB::table('books')
+//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+//            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+//            ->get();
 
         return Inertia::render('ShowBookList', [
             "results" =>$results,
-//            "status" => $status,
             "statusBar" => 1
         ]);
     }
     public function showInactives(Books $books)
     {
-//        $status = $this->editViewDataBook(0);
-        $results = DB::table('books')
-            ->join('stocks', 'books.id', '=', 'stocks.books_id')
-            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
-            ->get();
+        $results = $this->editViewDataBook(1);
+
+//        $results = DB::table('books')
+//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+//            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+//            ->get();
 
         return Inertia::render('ShowBookList', [
             "results" =>$results,
-//            "status" => $status,
             "statusBar" => 0
         ]);
     }
@@ -182,9 +180,10 @@ class BooksController extends Controller
 
     public function editStatus(Books $book)
     {
-        $book->status = !$book->status;
-        $book->save();
-        return redirect()->route($book->status ? "book.showActive" : "book.showInactive");
+        $results = $book;
+        $results->status = !$results->status;
+        $results->save();
+        return redirect()->route($results->status ? "book.showActive" : "book.showInactive");
     }
 
 
@@ -204,12 +203,12 @@ class BooksController extends Controller
     {
         //
     }
-    protected function editViewDataBook($status): \Illuminate\Support\Collection
+    protected function editViewDataBook(Books $books, $status): \Illuminate\Support\Collection
     {
 //        $status= ('status','=',$status)
         $results = DB::table('books')
             ->join('stocks', 'books.id', '=', 'stocks.books_id')
-            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+            ->select("books.id", "books.title", "books.status", "stocks.quantity", "stocks.amount")
             ->get();
 //        $books = DB::table('books')
 //            ->select('id', 'title', 'status')

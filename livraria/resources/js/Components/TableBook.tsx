@@ -20,7 +20,7 @@ const dataText = (itens:object) => {
 
 export default function TableBook(props){
     let head = props.props.header;
-    let body = props.props.data;
+    let body = props.props.body;
 
 
     const dataAction = (item:string, id:number) => {

@@ -21,12 +21,10 @@ class Books extends Model
         'isbn',
         'img',
         'publishers_id',
-        "id"
-    ];
-
-    protected $hidden = [
+        "id",
         'status'
     ];
+
 
     public function stocks():HasOne
     {
