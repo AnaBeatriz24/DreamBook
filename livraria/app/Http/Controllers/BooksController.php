@@ -164,7 +164,7 @@ class BooksController extends Controller
     }
     public function showInactives(Books $books)
     {
-        $results = $this->editViewDataBook(1);
+        $results = $this->editViewDataBook(0);
 
 //        $results = DB::table('books')
 //            ->join('stocks', 'books.id', '=', 'stocks.books_id')
@@ -203,22 +203,22 @@ class BooksController extends Controller
     {
         //
     }
-    protected function editViewDataBook(Books $books, $status): \Illuminate\Support\Collection
+    protected function editViewDataBook($status): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-//        $status= ('status','=',$status)
-        $results = DB::table('books')
+        return DB::table('books')
+            ->where('status', '=', $status)
             ->join('stocks', 'books.id', '=', 'stocks.books_id')
             ->select("books.id", "books.title", "books.status", "stocks.quantity", "stocks.amount")
-            ->get();
+            ->paginate(7);
 //        $books = DB::table('books')
 //            ->select('id', 'title', 'status')
 //            ->where('status', '=', $status)
-//               ->paginate(7)
+//
 
 
 
 
-        return $results;
+
     }
 
 }

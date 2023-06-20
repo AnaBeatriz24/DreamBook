@@ -16,22 +16,12 @@ export default function ShowBookList({ auth }: PageProps ) {
 
     let {results, statusBar} = usePage().props;
 
-     console.log(results)
-     console.log(statusBar)
-
 
 
     let header=["Nome", "Quantidade", "Valor"];
     let routes=["book.showActive", "book.showInactive"]
     let title=["Ativos", "Desativados"]
 
-    const actions= () => {
-        if (statusBar === 0) {
-            return ['Ativar']
-        } else {
-            return ['Desativar']
-        }
-    }
     const ativosInativos = (): string => {
         return statusBar === 1
             ? "ativos"
@@ -40,9 +30,9 @@ export default function ShowBookList({ auth }: PageProps ) {
 
     let buttonText = () => {
         if (statusBar === 0) {
-            return ['Ativar']
+            return ['Ativar','Editar']
         } else {
-            return ['Desativar']
+            return ['Desativar','Editar']
         }
     }
 
@@ -74,7 +64,7 @@ export default function ShowBookList({ auth }: PageProps ) {
             <ButtonStatusBarGroup routes={routes} status={statusBar} title={title}/>
 
 
-            {results.length
+            {results.data.length === 0
 
                 ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há livros ${ativosInativos()}`}</p>
                 : <TableBook props={tabela}></TableBook>}

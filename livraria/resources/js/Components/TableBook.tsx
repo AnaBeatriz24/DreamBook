@@ -20,7 +20,7 @@ const dataText = (itens:object) => {
 
 export default function TableBook(props){
     let head = props.props.header;
-    let body = props.props.body;
+    let body = props.props.data.data;
 
 
     const dataAction = (item:string, id:number) => {
@@ -30,6 +30,10 @@ export default function TableBook(props){
                     <Link href={route('books.edit', [id])} className="inline-flex items-center px-4 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-800 focus:outline-none focus:ring-offset-2 transition ease-in-out duration-150 " >{item}</Link>
                 )
             case 'Desativar':
+                return (
+                    <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 rounded-md font-semibold text-xs text-white tracking-widest hover:bg-amber-950 active:bg-amber-950 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 text-white text-sm rounded border border-amber-950 transition" type={"submit"}>{item}</button>
+                )
+            case 'Ativar':
                 return (
                     <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 rounded-md font-semibold text-xs text-white tracking-widest hover:bg-amber-950 active:bg-amber-950 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 text-white text-sm rounded border border-amber-950 transition" type={"submit"}>{item}</button>
                 )
@@ -49,6 +53,7 @@ export default function TableBook(props){
         post(route("book.editStatus", [e.target.value]))
     }
 
+    console.log(body)
     return <>
 
         <div className="grid grid-flow-col grid-cols-4 gap-4 w-3/4 mx-auto">
