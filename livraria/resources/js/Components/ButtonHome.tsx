@@ -76,7 +76,7 @@ const listImages: {[key:string]: ReactElement} = {
 const listText: { [key: string]: string } = {
     "addUser": "Adicionar Usuários",
     "viewUser": "Visualizar Usuários",
-    "addBook": "Adicionar Livros",
+    "addBook": "Adicionar Compra de Livros",
     "searchBook": "Pesquisar Livros",
     "addCoupon": "Adicionar Cupons",
     "viewCoupon": "Cupons Disponíveis",

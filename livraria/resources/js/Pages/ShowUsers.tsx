@@ -1,18 +1,23 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, usePage} from '@inertiajs/react';
+import {Head, useForm, usePage} from '@inertiajs/react';
 import { PageProps } from '@/types';
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import Pagination from "@/Components/Pagination";
 import TableUsers from "@/Components/TableUsers";
 import BarGroupViewUsers from "@/Components/BarGroupViewUsers";
+import {FormEventHandler, useState} from "react";
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
+import SecondaryButton from "@/Components/SecondaryButton";
+import RadioButton from "@/Components/RadioButton";
 
 export default function ShowUsers({ auth }: PageProps) {
     let {users, statusBar} = usePage().props;
-
     let actions = ():[string[], string[], string[], string[]] => {
         return auth.user.profiles_id === 1
-        ? [["Nome", "Função"], ["user.showAll", "user.showSellers", "user.showAttendants", "user.showBuyers", "user.showCustomers"],
-                ["Todos os Usuários", "Vendedores", "Caixas", "Compradores", "Clientes"], ['Histórico', 'Deletar']]
+        ? [["Nome", "Função"], ["user.showAll", "user.showSellers", "user.showAttendants", "user.showBuyers", "user.showCustomers", "user.showInactives"],
+                ["Todos os Usuários", "Vendedores", "Caixas", "Compradores", "Clientes", "Desativados"], ['Histórico', (window.location.pathname.includes("showInactives")) ? 'Ativar' : 'Desativar']]
             : [["Nome", "E-mail"], ["user.showCustomers"], ["Clientes"], ["Histórico"]]
     }
 
@@ -29,6 +34,19 @@ export default function ShowUsers({ auth }: PageProps) {
         }
     ]
 
+    const { data, setData, post, processing, errors } = useForm({
+        value: '', type: "", profiles: 0
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(route('user.search'));
+    };
+
+    const onHandleChange = (event) => {
+        setData(event.target.name, event.target.value);
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -38,6 +56,49 @@ export default function ShowUsers({ auth }: PageProps) {
 
             <div className={"mt-8 ml-20"}>
                 <BreadchumbSystem rota={rotas} />
+            </div>
+
+            <div className={"flex justify-center mt-12 mb-12"}>
+                <div className={"p-12 bg-teal-950 text-white w-4/6 sm:rounded-lg "}>
+
+                    <form>
+                        <div>
+                            <InputLabel htmlFor="user" className={"text-white"} value="Pesquisar usuário por:" />
+                            <div className={"w-full grid grid-cols-3 gap-2"}>
+                                <RadioButton name="searchUser" onClick={() => {setData("type", "name")
+                                }}> Nome </RadioButton>
+                                <RadioButton name="searchUser" onClick={() => {setData("type", "email")
+                                }}> E-mail </RadioButton>
+                                <RadioButton name="searchUser" onClick={() => {setData("type", "profile")
+                                }} disabled={((statusBar > 1) && (statusBar < 6))} className={((statusBar > 1) && (statusBar < 6)) ? "opacity-50" : ""}> Função </RadioButton>
+                            </div>
+                            {(data.type === "profile") ? <>
+                                <RadioButton name="profiles" onClick={() => {
+                                    setData("profiles", 2)}}> Vendedores </RadioButton>
+                                <RadioButton name="profiles" onClick={() => {
+                                    setData("profiles", 3)}}> Caixas </RadioButton>
+                                <RadioButton name="profiles" onClick={() => {
+                                    setData("profiles", 4)}}> Compradores </RadioButton>
+                                <RadioButton name="profiles" onClick={() => {
+                                    setData("profiles", 5)}}> Clientes </RadioButton>
+                            </> : (data.type === "") ? <></> : <TextInput
+                                id="value"
+                                type="text"
+                                name="value"
+                                value={data.value}
+                                className="mt-1 block w-full text-black"
+                                isFocused={true}
+                                onChange={onHandleChange} />
+                            }
+                        </div>
+
+                        <div className="w-full flex justify-center mt-6">
+                            <SecondaryButton type={'button'} onClick={submit} className="ml-4" disabled={data.type === ""}>
+                                Pesquisar
+                            </SecondaryButton>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <BarGroupViewUsers routes={actions()[1]} status={statusBar} title={actions()[2]}/>

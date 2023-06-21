@@ -16,9 +16,29 @@ class BooksController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Books $book)
     {
-        //
+        $publisher = DB::table('publishers')
+            ->where("id", $book->publishers_id)
+            ->first()
+        ;
+        $book->publisher = $publisher->name;
+
+        $author = DB::table('books_authors')
+            ->join('authors', 'books_authors.authors_id', '=', "authors.id")
+            ->where("books_id", $book->id)
+            ->first()
+        ;
+        $book->author = $author->name;
+
+        $stocks = DB::table('stocks')
+            ->where("books_id", $book->id)
+            ->first()
+        ;
+        $book->amount = $stocks->amount;
+
+
+        return Inertia::render("BookIndex", ['book' => $book]);
     }
 
     /**
@@ -52,7 +72,7 @@ class BooksController extends Controller
 
             if($request->file()){
                 $fileName = time().'.'.$request->file()["imgcapa"]->getClientOriginalExtension();
-                $filePath = $request->file()["imgcapa"]->storeAs('books', $fileName, 'public');
+                $filePath = $request->file()["imgcapa"]->storeAs('/', $fileName, 'public');
             }
 
             $book = Books::create([
@@ -70,6 +90,8 @@ class BooksController extends Controller
                 $book->genders()->attach($gen);
             }
         }
+
+        return redirect()->route("book.search");
 
     }
 

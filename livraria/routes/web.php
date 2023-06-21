@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CouponsController;
-use App\Http\Controllers\GendersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
@@ -107,6 +106,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/showGenders', [GendersController::class, 'show'])->name('gender.show');
     Route::post('/showGenders', [GendersController::class, 'store'])->name('gender.store');
     Route::post('/showGenders/{gender}', [GendersController::class, 'edit'])->name('gender.edit');
+
+    Route::get("/showBook/{book}", [BooksController::class, 'index'])->name("book.index");
 
     Route::get('/salesHistory', function () {
         dd('Desenvolver tela de histórico de vendas');

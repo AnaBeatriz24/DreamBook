@@ -1,7 +1,7 @@
 import SecondaryButton from "@/Components/SecondaryButton";
 import React, {FormEvent, FormEventHandler, useState} from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
-import {useForm} from "@inertiajs/react";
+import {Link, useForm} from "@inertiajs/react";
 
 export default function SearchBooks({books}: string[object]) {
 
@@ -51,15 +51,18 @@ export default function SearchBooks({books}: string[object]) {
                     {
                         novoArray[currentIndex].map(
                             (livro:string[object]): any => {
+                                console.log(livro);
                                 return <div className="max-w-[256px] bg-gray-800 ">
-                                    <div className="p-6 rounded-lg w-full">
-                                        <p className={"text-xl font-bold text-white w-full text-center h-8 truncate ..."}>
-                                            {livro.title}
-                                        </p>
-                                    </div>
-                                    <div className={"h-[380px] flex items-center"}>
-                                        <img src={`/books/${livro.path}`} alt="Imagem de livro"/>
-                                    </div>
+                                    <Link href={route("book.index", [livro.id])}>
+                                        <div className="p-6 rounded-lg w-full">
+                                            <p className={"text-xl font-bold text-white w-full text-center h-8 truncate ..."}>
+                                                {livro.title}
+                                            </p>
+                                        </div>
+                                        <div className={"h-[380px] flex items-center"}>
+                                            <img src={`${window.location.origin}/storage/${livro.img}`} alt="Imagem de livro"/>
+                                        </div>
+                                    </Link>
                                     <div className={"p-6 rounded-lg w-full"}>
                                         <SecondaryButton className={"w-full justify-center"} onClick={submit} value={livro.id}>
                                             Adicionar
