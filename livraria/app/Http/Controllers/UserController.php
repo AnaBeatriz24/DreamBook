@@ -52,22 +52,41 @@ class UserController extends Controller
      */
     public function showAllUsers(Request $request)
     {
-        if (Auth::user()->profiles_id != 1) {
+        if (Auth::user()->profiles_id !== 1) {
             return redirect()->route('user.showCustomers');
         } else {
-            if (!empty($request->user)) {
-                $query = trim($request->user);
-
+            if (!empty($request->value)) {
+                switch ($request->type){
+                    case "name":
+                    {
+                        $query = trim($request->value);
+                        $users = DB::table('users')
+                            ->where('name', 'like', '%' . $query . '%')
+                            ->join('profiles', function (JoinClause $joinClause) {
+                                $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                            })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '>', 1)->where("status", "=", 1)->paginate(7);
+                        break;
+                    }
+                    case "email":
+                    {
+                        $query = trim($request->value);
+                        $users = DB::table('users')
+                            ->where('email', 'like', '%' . $query . '%')
+                            ->join('profiles', function (JoinClause $joinClause) {
+                                $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                            })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '>', 1)->where("status", "=", 1)->paginate(7);
+                        break;
+                    }
+                }
+            } elseif($request->type === "profile"){
                 $users = DB::table('users')
-                    ->where('name', 'like', '%'.$query.'%')
-                    ->orWhere('email', 'like', '%'.$query.'%')
-                    ->leftJoin('profiles', function (JoinClause $joinClause) {
-                    $joinClause->on('users.profiles_id', '=', 'profiles.id');
-                })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(7);
+                    ->join('profiles', function (JoinClause $joinClause) {
+                        $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                    })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '=', $request->profiles)->where("status", "=", 1)->paginate(7);
             } else {
-                $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+                $users = DB::table('users')->join('profiles', function (JoinClause $joinClause) {
                     $joinClause->on('users.profiles_id', '=', 'profiles.id');
-                })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '>', 1)->paginate(7);
+                })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '>', 1)->where("status", "=", 1)->paginate(7);
             }
 
             return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 1]);
@@ -76,27 +95,27 @@ class UserController extends Controller
 
     public function showSellersUsers()
     {
-        $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+        $users = DB::table('users')->join('profiles', function (JoinClause $joinClause) {
             $joinClause->on('users.profiles_id', '=', 'profiles.id');
-        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 2)->paginate(7);
+        })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '=', 2)->where("status", "=", 1)->paginate(7);
 
         return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 2]);
     }
 
     public function showAttendantsUsers()
     {
-        $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+        $users = DB::table('users')->join('profiles', function (JoinClause $joinClause) {
             $joinClause->on('users.profiles_id', '=', 'profiles.id');
-        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 3)->paginate(7);
+        })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '=', 3)->where("status", "=", 1)->paginate(7);
 
         return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 3]);
     }
 
     public function showBuyersUsers()
     {
-        $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+        $users = DB::table('users')->join('profiles', function (JoinClause $joinClause) {
             $joinClause->on('users.profiles_id', '=', 'profiles.id');
-        })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 4)->paginate(7);
+        })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '=', 4)->where("status", "=", 1)->paginate(7);
 
         return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 4]);
     }
@@ -104,16 +123,85 @@ class UserController extends Controller
     public function showCustomersUsers()
     {
         if (Auth::user()->profiles_id != 1) {
-            $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+            $users = DB::table('users')->join('profiles', function (JoinClause $joinClause) {
                 $joinClause->on('users.profiles_id', '=', 'profiles.id');
-            })->selectRaw('users.id, users.name, users.email')->where('users.profiles_id', '=', 5)->paginate(7);
+            })->selectRaw('users.id, users.name, users.email, users.email')->where('users.profiles_id', '=', 5)->where("status", "=", 1)->paginate(7);
         } else {
-            $users = DB::table('users')->leftJoin('profiles', function (JoinClause $joinClause) {
+            $users = DB::table('users')->join('profiles', function (JoinClause $joinClause) {
                 $joinClause->on('users.profiles_id', '=', 'profiles.id');
-            })->selectRaw('users.id, users.name, profiles.role')->where('users.profiles_id', '=', 5)->paginate(7);
+            })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '=', 5)->where("status", "=", 1)->paginate(7);
         }
 
         return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 5]);
+    }
+
+    public function showInactives(Request $request)
+    {
+        if (Auth::user()->profiles_id !== 1) {
+            if (!empty($request->value)) {
+                switch ($request->type){
+                    case "name":
+                    {
+                        $query = trim($request->value);
+                        $users = DB::table('users')
+                            ->where('name', 'like', '%' . $query . '%')
+                            ->join('profiles', function (JoinClause $joinClause) {
+                                $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                            })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '=', Auth::user()->profiles_id)->where("status","=", 0)->paginate(7);
+                        break;
+                    }
+                    case "email":
+                    {
+                        $query = trim($request->value);
+                        $users = DB::table('users')
+                            ->where('email', 'like', '%' . $query . '%')
+                            ->join('profiles', function (JoinClause $joinClause) {
+                                $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                            })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '=', Auth::user()->profiles_id)->where("status","=", 0)->paginate(7);
+                        break;
+                    }
+                }
+            } else {
+                $users = DB::table('users')->join('profiles', function (JoinClause $joinClause) {
+                    $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '=', Auth::user()->profiles_id)->where("status","=", 0)->paginate(7);
+            }
+        } else {
+            if (!empty($request->value)) {
+                switch ($request->type){
+                    case "name":
+                    {
+                        $query = trim($request->value);
+                        $users = DB::table('users')
+                            ->where('name', 'like', '%' . $query . '%')
+                            ->join('profiles', function (JoinClause $joinClause) {
+                                $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                            })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '>', 1)->where("status","=", 0)->paginate(7);
+                        break;
+                    }
+                    case "email":
+                    {
+                        $query = trim($request->value);
+                        $users = DB::table('users')
+                            ->where('email', 'like', '%' . $query . '%')
+                            ->join('profiles', function (JoinClause $joinClause) {
+                                $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                            })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '>', 1)->where("status","=", 0)->paginate(7);
+                        break;
+                    }
+                }
+            } elseif($request->type === "profile"){
+                $users = DB::table('users')
+                    ->join('profiles', function (JoinClause $joinClause) {
+                        $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                    })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '=', $request->profiles)->where("status", "=", 0)->paginate(7);
+            } else {
+                $users = DB::table('users')->join('profiles', function (JoinClause $joinClause) {
+                    $joinClause->on('users.profiles_id', '=', 'profiles.id');
+                })->selectRaw('users.id, users.name, users.email, profiles.role')->where('users.profiles_id', '>', 1)->where("status","=", 0)->paginate(7);
+            }
+        }
+        return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 6]);
     }
 
     /**
@@ -132,18 +220,22 @@ class UserController extends Controller
         //
     }
 
+    public function active(User $user)
+    {
+        $user->status = 1;
+        $user->save();
+        return redirect()->back();
+
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(User $user)
     {
-        DB::table('users')->where("id", '=', $user->id)->delete();
-        $user->destroy($user->id);
-
-        $userEmail = new stdClass();
-        $userEmail->name = $user->name;
-        $userEmail->email = $user->email;
-        $userEmail->id = base64_encode($user->id);
+        $user->status = 0;
+        $user->save();
+        return redirect()->back();
 
     }
 }

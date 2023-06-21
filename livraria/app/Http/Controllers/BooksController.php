@@ -77,7 +77,7 @@ class BooksController extends Controller
 
             if($request->file()){
                 $fileName = time().'.'.$request->file()["imgcapa"]->getClientOriginalExtension();
-                $filePath = $request->file()["imgcapa"]->storeAs('books', $fileName, 'public');
+                $filePath = $request->file()["imgcapa"]->storeAs('/', $fileName, 'public');
             }
 
             $book = Books::create([
@@ -95,6 +95,8 @@ class BooksController extends Controller
                 $book->genders()->attach($gen);
             }
         }
+
+        return redirect()->route("book.search");
 
     }
 
