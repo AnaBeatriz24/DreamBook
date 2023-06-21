@@ -8,7 +8,7 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import SecondaryButton from "@/Components/SecondaryButton";
-import {FormEventHandler} from "react";
+import {FormEventHandler, useState} from "react";
 
 export default function ShowGenders({ auth }: PageProps, ) {
 
@@ -27,7 +27,7 @@ export default function ShowGenders({ auth }: PageProps, ) {
         }
     ]
 
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
     });
 
@@ -41,6 +41,7 @@ export default function ShowGenders({ auth }: PageProps, ) {
     const onHandleChange = (event) => {
         setData(event.target.name, event.target.value);
     };
+
 
     return (
         <AuthenticatedLayout

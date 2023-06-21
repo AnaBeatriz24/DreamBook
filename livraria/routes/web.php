@@ -106,6 +106,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/showGenders', [GendersController::class, 'show'])->name('gender.show');
     Route::post('/showGenders', [GendersController::class, 'store'])->name('gender.store');
+    Route::post('/showGenders/{gender}', [GendersController::class, 'edit'])->name('gender.edit');
 
     Route::get('/salesHistory', function () {
         dd('Desenvolver tela de histórico de vendas');

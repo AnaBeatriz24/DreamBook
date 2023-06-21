@@ -34,6 +34,10 @@ class GendersController extends Controller
         * TODO: Adicionar as validações sobre o request quando houver pasta lang
         */
 
+        $request->validate([
+            'name' => 'required'
+        ]);
+
         $newGender = new Genders();
         $newGender->name = $request->name;
         $newGender->save();
@@ -45,7 +49,7 @@ class GendersController extends Controller
      */
     public function show(Genders $genders)
     {
-        $genders = DB::table('genders')->select('id', 'name')->paginate(6);
+        $genders = DB::table('genders')->orderBy('id')->select('id', 'name')->paginate(6);
 
         return Inertia::render('ShowGenders', ['genders' => $genders]);
     }
@@ -53,9 +57,9 @@ class GendersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Genders $genders)
+    public function edit(Request $request, Genders $genders)
     {
-        //
+        dd('AAAAAAAAAAAAAA');
     }
 
     /**
