@@ -51,6 +51,7 @@ export default function SearchBooks({books}: string[object]) {
                     {
                         novoArray[currentIndex].map(
                             (livro:string[object]): any => {
+                                console.log(livro);
                                 return <div className="max-w-[256px] bg-gray-800 ">
                                     <Link href={route("book.index", [livro.id])}>
                                         <div className="p-6 rounded-lg w-full">
@@ -59,7 +60,7 @@ export default function SearchBooks({books}: string[object]) {
                                             </p>
                                         </div>
                                         <div className={"h-[380px] flex items-center"}>
-                                            <img src={`/books/${livro.path}`} alt="Imagem de livro"/>
+                                            <img src={`${window.location.origin}/storage/${livro.img}`} alt="Imagem de livro"/>
                                         </div>
                                     </Link>
                                     <div className={"p-6 rounded-lg w-full"}>

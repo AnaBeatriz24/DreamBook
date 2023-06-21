@@ -50,7 +50,7 @@ export default function BookIndex({auth}) {
             <div className={"flex justify-center gap-x-6 mt-16"}>
                 <div className={"w-[60vw] h-[60vh] bg-teal-950 rounded-lg flex"}>
                     <div className={"w-1/2 flex justify-center items-center"}>
-                        <img className={"w-80"} src={`/books/${book.title}.png`} alt="Imagem de livro"/>
+                        <img className={"w-80"} src={`${window.location.origin}/storage/${book.img}`} alt="Imagem de livro"/>
                     </div>
                     <div className={"text-white mt-16"}>
                         <p className={"text-3xl mt-6 w-96 break-words"}>Livro: {book.title}</p>
