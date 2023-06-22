@@ -15,9 +15,9 @@ export default function WelcomeNavBar({ routes, header, children }: PropsWithChi
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
-                            <div className=" flex items-center">
+                            <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <img src="/LogoSistema.png" className={"w-16 lg:w-16 flex flex-col"} alt=""/>
+                                    <img src="/LogoSistema.png" className={"lg:w-20 lg:w-16 md:w-16 md:h-16 w-14 h-14 flex flex-col"} alt=""/>
                                 </Link>
                             </div>
 
@@ -64,21 +64,10 @@ export default function WelcomeNavBar({ routes, header, children }: PropsWithChi
                 </div>
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('home')} active={route().current('home')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
 
-                    <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">
-                                user.name
-                            </div>
-                            <div className="font-medium text-sm text-gray-500">user.email</div>
-                        </div>
+                    <div className=" border-t border-gray-200">
 
-                        <div className="mt-3 space-y-1">
+                        <div className="space-y-1 grid grid-cols-2 flex">
                             <ResponsiveNavLink href={route('cart')}>
                                 <Cart/>
                             </ResponsiveNavLink>

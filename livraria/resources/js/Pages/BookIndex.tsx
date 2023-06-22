@@ -41,7 +41,7 @@ export default function BookIndex({auth}) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{book.title}</h2>}
+            header={<h2 className="font-semibold text-xl leading-tight">{book.title}</h2>}
         >
             <div className={"mt-8 ml-20"}>
                 <BreadchumbSystem rota={rotas} />

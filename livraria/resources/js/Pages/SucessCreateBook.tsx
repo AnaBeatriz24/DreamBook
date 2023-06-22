@@ -1,53 +1,74 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import Breadchumb from "@/Components/BreadchumbSystem";
-import SecondaryButton from "@/Components/SecondaryButton";
 import {PageProps} from "@/types";
-import {Head} from "@inertiajs/react";
+import {Head, Link} from "@inertiajs/react";
+import React, {ReactNode} from "react";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import SecondaryButton from "@/Components/SecondaryButton";
+import BreadchumbSystem from "@/Components/BreadchumbSystem";
 
-const rotas = [
-    {
-        'name': 'Adicionar Compra',
-        'route': 'book.create',
-    },
-    {
-        'name': 'Sucesso',
-        'route': 'book.store',
-    }
-]
-export default function CreateUserFinish({ auth, props}: PageProps) {
 
-    return (
-        <>
-            <AuthenticatedLayout
-                auth={props.auth}
-                errors={props.errors}
-                header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Administrador Alterado</h2>}
-            >
-                <Head title={'Administrador Alterado'}/>
+export default function SucessCreateBook({auth}:PageProps){
+    const routes:object[] = [
+        {
+            name: "Adiconar Compra",
+            route: "book.store"
+        },
+        {
+            name: "Sucesso",
+            route: "sucess.book"
+        },
+    ]
+    return <>
+        <AuthenticatedLayout
+            user={auth.user}
+            header={<h2 className="font-semibold text-xl leading-tight">Adicionar Livro</h2>}>
+            <Head title="Adicionar Livro" />
+            <div className={"mt-8 ml-20"}>
+                <BreadchumbSystem rota={routes} />
+            </div>
 
-                <div className={"mt-8 ml-20"}>
-                    <Breadchumb rota={rotas} />
+
+                <div className="flex flex-col m-auto items-center bg-teal-900 h-full mt-52 ">
+
+
+                    <div className="bg-teal-950 w-[40vh] h-[40vh] rounded-lg flex flex-col items-center space-y-6">
+                        <img src="/LogoSistema.png" className={"w-32 lg:w-64"} alt=""/>
+                        <div className='flex justify-center mt-28'>
+                            <h2 className='text-center text-2xl m-2 font-bold text-white'>
+                                Parabéns! Você acaba de adiconar uma compra ao sistema!<br/>
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-2 items-center">
+
+                            <div className="flex justify-around">
+                                <Link href={route('book.store')}>
+                                    <SecondaryButton className="m-4" type={'button'}>
+                                        Adicionar Compra
+                                    </SecondaryButton>
+                                </Link>
+                            </div>
+                            <div className="flex justify-around">
+                                <SecondaryButton className="m-4" type={'button'}>
+                                    Ver Lista de Livros
+                                </SecondaryButton>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
                 </div>
-                <div className='flex justify-center mt-16'>
-                    <h2 className='text-center text-2xl font-bold text-zinc-900'>
-                        Administrador da Empresa foi alterado com sucesso!<br/>
-                        O Administrador anterior tornou-se um usuário comum vinculado a empresa.
-                    </h2>
-                </div>
-                <div className="mt-60 flex gap-4 justify-around">
-                    <Link href={route('home')}>
-                        <SecondaryButton className="ml-4 lg:w-auto bg-zinc-600 hover:bg-zinc-700" >
-                            Voltar para home
-                        </SecondaryButton>
-                    </Link>
-                    <Link href={route('company.index')}>
-                        <SecondaryButton className="ml-4 lg:w-auto bg-green-500 hover:bg-green-700" >
-                            Ver Empresas
-                        </SecondaryButton>
-                    </Link>
-                </div>
 
-            </AuthenticatedLayout>
-        </>
-    )
-};
+
+
+        </AuthenticatedLayout>
+    </>
+
+}
+>>>>>>> origin/develop

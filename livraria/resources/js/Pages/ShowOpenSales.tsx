@@ -28,7 +28,7 @@ export default function ShowOpenSales({ auth }: PageProps, ) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Pedidos abertos por funcionários</h2>}
+            header={<h2 className="font-semibold text-xl text-white leading-tight">Pedidos abertos por funcionários</h2>}
         >
             <Head title="Pedidos abertos" />
 

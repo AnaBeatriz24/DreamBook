@@ -47,9 +47,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/contact', function () {
-    dd('Desenvolver tela de entre em contato');
-})->name('contact.index');
+Route::get('/contact', fn() => Inertia::render("Contact"))->name('contact.show');
 
 Route::get('/team', function () {
     dd('Desenvolver tela de time/sobre nós');
@@ -104,9 +102,11 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
-    Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
     Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
     Route::post('/createEntry', [EntriesController::class, 'store'])->name('entry.store');
+
+
+    Route::get('/SucessCreateBook', fn() => Inertia::render("SucessCreateBook"))->name('sucess.book');
 
    // Route::get('/ShowBookList',[BooksController::class, 'showAdd'])->name('book.show');
     Route::post('/ShowBookList/{book}',[BooksController::class, 'destroy'])->name('book.destroy');
@@ -128,4 +128,9 @@ Route::middleware('auth')->group(function () {
     })->name('sales.history');
 
 });
+
+Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
+Route::get('/showBooks/{gender}', [BooksController::class, 'show'])->name('book.searchGender');
+Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
+
 require __DIR__.'/auth.php';

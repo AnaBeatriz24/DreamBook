@@ -66,7 +66,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
-                        <p className="text-sm mt-2 text-gray-800">
+                        <p className="text-sm mt-2">
                             Your email address is unverified.
                             <Link
                                 href={route('verification.send')}
