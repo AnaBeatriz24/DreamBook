@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genders;
+use Hamcrest\Type\IsBoolean;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -42,16 +44,50 @@ class GendersController extends Controller
         $newGender->name = $request->name;
         $newGender->save();
 
+        redirect()->route('gender.show', ['status' => 1]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Genders $genders)
+    public function show(Genders $genders, $status)
     {
-        $genders = DB::table('genders')->orderBy('id')->select('id', 'name')->paginate(6);
+        //
+    }
 
-        return Inertia::render('ShowGenders', ['genders' => $genders]);
+    public function showActives(Genders $genders)
+    {
+        $genders = $this->editViewDataGenders(1);
+        return Inertia::render('ShowGenders', [
+            "genders" => $genders,
+            "statusBar" => 1
+        ]);
+    }
+
+    public function showInactives(Genders $genders)
+    {
+        $genders = $this->editViewDataGenders(0);
+        return Inertia::render('ShowGenders', [
+            "genders" => $genders,
+            "statusBar" => 0
+        ]);
+    }
+
+    public function editStatus(Genders $gender)
+    {
+        $gender->status = !$gender->status;
+        $gender->save();
+        return redirect()->route($gender->status ? "gender.showActives" : "gender.showInactives");
+    }
+
+    protected function editViewDataGenders($status): LengthAwarePaginator
+    {
+        $genders = DB::table('genders')
+            ->select('id', 'name')
+            ->where('status', '=', $status)
+            ->paginate(6);
+
+        return $genders;
     }
 
     /**
@@ -59,7 +95,7 @@ class GendersController extends Controller
      */
     public function edit(Request $request, Genders $genders)
     {
-        dd('AAAAAAAAAAAAAA');
+
     }
 
     /**
@@ -67,7 +103,7 @@ class GendersController extends Controller
      */
     public function update(Request $request, Genders $genders)
     {
-        //
+        dd('Banana');
     }
 
     /**

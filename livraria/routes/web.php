@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CouponsController;
+use App\Http\Controllers\GendersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
@@ -79,6 +80,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/showAttendants', [UserController::class, 'showAttendantsUsers'])->name('user.showAttendants');
     Route::get('/showBuyers', [UserController::class, 'showBuyersUsers'])->name('user.showBuyers');
     Route::get('/showCustomers', [UserController::class, 'showCustomersUsers'])->name('user.showCustomers');
+    Route::get('/showInactives', [UserController::class, 'showInactives'])->name('user.showInactives');
 
 
     Route::get('/coupons/createCoupon', [CouponsController::class, 'create'])->name('coupon.create');
@@ -103,9 +105,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/showBooks/{gender}', [BooksController::class, 'show'])->name('book.searchGender');
     Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
 
-    Route::get('/showGenders', [GendersController::class, 'show'])->name('gender.show');
     Route::post('/showGenders', [GendersController::class, 'store'])->name('gender.store');
     Route::post('/showGenders/{gender}', [GendersController::class, 'edit'])->name('gender.edit');
+
+    Route::get('/showGendersActives', [GendersController::class, 'showActives'])->name('gender.showActives');
+    Route::get('/showGendersInactives', [GendersController::class, 'showInactives'])->name('gender.showInactives');
+    Route::post('/showGenders/{gender}', [GendersController::class, 'editStatus'])->name('gender.editStatus');
+    Route::post('/showGenders/{gender}', [GendersController::class, 'update'])->name('gender.update');
 
     Route::get("/showBook/{book}", [BooksController::class, 'index'])->name("book.index");
 

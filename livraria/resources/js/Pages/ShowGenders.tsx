@@ -9,15 +9,32 @@ import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import SecondaryButton from "@/Components/SecondaryButton";
 import {FormEventHandler, useState} from "react";
+import ButtonStatusBarGroup from "@/Components/ButtonStatusBarGroup";
 
 export default function ShowGenders({ auth }: PageProps, ) {
 
-    let {genders} = usePage().props;
+    let {genders, statusBar} = usePage().props;
+    let routes = ["gender.showActives", "gender.showInactives"]
+    let title = ["Ativos", "Desativados"]
+
+    let buttonText = ():[string, string] => {
+        if (statusBar === 0) {
+            return ['Ativar', 'Editar']
+        } else {
+            return ['Desativar', 'Editar']
+        }
+    }
 
     let table = {
         header: ["Nome", "Ações"],
         data:genders,
-        actions: ["Editar", "Deletar"],
+        actions: buttonText(),
+    }
+
+    const ativosInativos = (): string => {
+        return statusBar === 1
+            ? "ativos"
+            : "desativados"
     }
 
     const rotas:object = [
@@ -35,7 +52,6 @@ export default function ShowGenders({ auth }: PageProps, ) {
         e.preventDefault();
 
         post(route('gender.store'));
-        alert("Gênero Cadastrado!")
     };
 
     const onHandleChange = (event) => {
@@ -85,8 +101,10 @@ export default function ShowGenders({ auth }: PageProps, ) {
                 </div>
             </div>
 
+            <ButtonStatusBarGroup routes={routes} status={statusBar} title={title}/>
+
             {genders.data.length === 0
-                ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há gêneros cadastrados`}</p>
+                ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há gêneros ${ativosInativos()}`}</p>
                 : <TableGenders props={table} ></TableGenders>}
 
             <div className={'fixed bottom-0 left-0 right-0 mb-4'}>

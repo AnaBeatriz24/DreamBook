@@ -5,8 +5,8 @@ import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import SecondaryButton from "@/Components/SecondaryButton";
 import Modal from "@/Components/Modal";
-import {FormEventHandler, useState} from "react";
-import {log} from "util";
+import {FormEventHandler, useRef, useState} from "react";
+import DangerButton from "@/Components/DangerButton";
 
 const header = (item:string) => {
     return <div className="px-2 py-3 font-black text-black text-sm">
@@ -26,21 +26,37 @@ const dataText = (itens:object) => {
 
 export default function TableGenders(props){
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data,
+        setData,
+        post,
+        processing,
+        errors,
+        reset,
+    } = useForm({
         name: '',
     });
 
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
+    const genderInput = useRef<HTMLInputElement>();
     const confirmGenderEdit = () => {
         setConfirmingUserDeletion(true);
     };
 
-    const editGender: FormEventHandler = (e) => {
+    const updateGender: FormEventHandler = (e) => {
+        alert(e.target.value)
+
         e.preventDefault();
 
-        alert('AAAA')
+        post(route('gender.update', [e.target.value]), {
+            preserveScroll: true,
+            onSuccess: () => closeModal(),
+            onError: () => genderInput.current?.focus(),
+            onFinish: () => reset(),
+        });
 
-        post('gender.edit', [e.target.value]);
+        console.log(e.target)
+
+        // post('gender.update', [e.target.value]);
     };
 
     const closeModal = () => {
@@ -48,6 +64,10 @@ export default function TableGenders(props){
 
         reset();
     };
+
+    const submit = (e) => {
+        post(route("gender.editStatus", [e.target.value]))
+    }
 
     let head = props.props.header;
     let body = props.props.data.data;
@@ -60,7 +80,7 @@ export default function TableGenders(props){
                         <button onClick={confirmGenderEdit} className="inline-flex items-center px-4 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-800 focus:outline-none focus:ring-offset-2 transition ease-in-out duration-150 " >{item}</button>
 
                         <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                            <form onSubmit={editGender} className="p-6">
+                            <form onSubmit={updateGender} className="p-6">
                                 <h2 className="text-lg font-medium text-gray-900">
                                     Tem certeza de que deseja editar gênero?
                                 </h2>
@@ -72,6 +92,7 @@ export default function TableGenders(props){
                                         type="text"
                                         name="name"
                                         value={data.name}
+                                        ref={genderInput}
                                         onChange={(e) => setData('name', e.target.value)}
                                         className="mt-1 block w-3/4"
                                         isFocused={true}
@@ -84,11 +105,21 @@ export default function TableGenders(props){
                                 <div className="mt-6 flex justify-end">
                                     <SecondaryButton onClick={closeModal}>Cancelar</SecondaryButton>
 
-                                    <button value={id} className={'inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md text-xs text-white uppercase tracking-widest hover:bg-red-500  transition ease-in-out duration-150 font-medium deleteButton'} onClick={editGender}>Editar gênero</button>
+                                    <DangerButton value={id} className="ml-3" disabled={processing} type={'submit'}>
+                                        Atualizar gênero
+                                    </DangerButton>
                                 </div>
                             </form>
                         </Modal>
                     </>
+                );
+            case 'Desativar':
+                return (
+                    <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 rounded-md font-semibold text-xs text-white tracking-widest hover:bg-amber-950 active:bg-amber-950 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 text-white text-sm rounded border border-amber-950 transition" type={"submit"}>{item}</button>
+                )
+            case 'Ativar':
+                return (
+                    <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 rounded-md font-semibold text-xs text-white tracking-widest hover:bg-amber-950 active:bg-amber-950 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 text-white text-sm rounded border border-amber-950" type={"submit"}>{item}</button>
                 )
         }
     }
