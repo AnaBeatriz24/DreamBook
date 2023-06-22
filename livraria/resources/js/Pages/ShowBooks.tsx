@@ -19,7 +19,16 @@ import Pagination from "@/Components/Pagination";
 export default function ShowBooks({ auth }: PageProps) {
 
     console.log(auth.user)
-
+    const routes:object[] = [
+        {
+            name: "Home",
+            route: "home"
+        },
+        {
+            name: "Pesquisar Livro",
+            route: "book.search"
+        },
+    ]
 
     const {books, genders} = usePage().props
 
@@ -47,6 +56,9 @@ export default function ShowBooks({ auth }: PageProps) {
                     header={<h2 className="font-semibold text-xl  leading-tight">Cupons disponíveis</h2>}
                 >
                     <Head title="Cupons disponíveis" />
+                    <div className={"mt-8 ml-20"}>
+                        <BreadchumbSystem rota={routes} />
+                    </div>
 
                     <ComponentFindBook/>
                     </AuthenticatedLayout>
