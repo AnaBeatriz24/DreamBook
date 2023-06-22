@@ -96,7 +96,7 @@ class BooksController extends Controller
             }
         }
 
-        return redirect()->route("book.search");
+        return redirect()->route("book.create");
 
     }
 
