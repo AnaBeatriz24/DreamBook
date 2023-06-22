@@ -18,8 +18,6 @@ class DatabaseSeeder extends Seeder
             PaymentMethodsSeeder::class,
             GenderSeeder::class,
             SuppliersSeeder::class,
-            PublisersSeeder::class,
-            BooksSeeder::class,
 //            StocksSeeder::class,
 //            SalesSeeder::class,
         ]);
