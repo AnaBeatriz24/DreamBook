@@ -19,20 +19,6 @@ import Pagination from "@/Components/Pagination";
 export default function ShowBooks({ auth }: PageProps) {
 
     console.log(auth.user)
-    const routes:object[] = [
-        {
-            name: "Home",
-            route: "home"
-        },
-        {
-            name: "Entre em contato",
-            route: "contact.show"
-        },
-        {
-            name: "Nosso time",
-            route: "team.index"
-        },
-    ]
 
 
     const {books, genders} = usePage().props
@@ -52,13 +38,13 @@ export default function ShowBooks({ auth }: PageProps) {
             { auth.user === null
                 ?
                 <WelcomeNavBar routes={routes}>
-                    <Head title="Welcome" />
+                    <Head title="Welcome"/>
                     <ComponentFindBook/>
                 </WelcomeNavBar>
 
                 : <AuthenticatedLayout
                     user={auth.user}
-                    header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Cupons disponíveis</h2>}
+                    header={<h2 className="font-semibold text-xl  leading-tight">Cupons disponíveis</h2>}
                 >
                     <Head title="Cupons disponíveis" />
 

@@ -50,7 +50,7 @@ export default function ShowUsers({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Visualizar Usuários</h2>}
+            header={<h2 className="font-semibold text-xl leading-tight">Visualizar Usuários</h2>}
         >
             <Head title="Visualizar Usuários" />
 
@@ -86,7 +86,7 @@ export default function ShowUsers({ auth }: PageProps) {
                                 type="text"
                                 name="value"
                                 value={data.value}
-                                className="mt-1 block w-full text-black"
+                                className="mt-1 block w-full text-white"
                                 isFocused={true}
                                 onChange={onHandleChange} />
                             }
@@ -104,7 +104,7 @@ export default function ShowUsers({ auth }: PageProps) {
             <BarGroupViewUsers routes={actions()[1]} status={statusBar} title={actions()[2]}/>
 
             {users.data.length === 0
-                ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há usuários cadastrados`}</p>
+                ? <p className={"text-white text-center mt-24 text-3xl font-bold"}>{`Não há usuários cadastrados`}</p>
                 : <TableUsers props={tabela}></TableUsers>}
 
             <div className={'fixed bottom-0 left-0 right-0 mb-4'}>
