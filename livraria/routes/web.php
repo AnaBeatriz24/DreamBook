@@ -72,15 +72,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/createUsers', [UserController::class, 'create'])->name('user.create');
     Route::post('/createUsers', [UserController::class, 'store'])->name('user.store');
     Route::post('/deleteUser/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('/activeUser/{user}', [UserController::class, 'active'])->name('user.active');
 
     //Visualização da tabela de usuários
     Route::get('/showUsers', [UserController::class, 'showAllUsers'])->name('user.showAll');
-    Route::post('/showUsers', [UserController::class, 'showAllUsers'])->name('user.search');
-
     Route::get('/showSellers', [UserController::class, 'showSellersUsers'])->name('user.showSellers');
     Route::get('/showAttendants', [UserController::class, 'showAttendantsUsers'])->name('user.showAttendants');
     Route::get('/showBuyers', [UserController::class, 'showBuyersUsers'])->name('user.showBuyers');
     Route::get('/showCustomers', [UserController::class, 'showCustomersUsers'])->name('user.showCustomers');
+    Route::get('/showInactives', [UserController::class, 'showInactives'])->name('user.showInactives');
+
+    Route::post('/showUser', [UserController::class, 'showAllUsers'])->name('user.search');
+
 
 
     Route::get('/coupons/createCoupon', [CouponsController::class, 'create'])->name('coupon.create');
@@ -111,6 +114,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/Edit/{book}', [BooksController::class, 'edit'])->name('books.edit');
+    Route::get("/Edit/{book}", [BooksController::class, 'editBook'])->name('store.editBook');
 
 
 

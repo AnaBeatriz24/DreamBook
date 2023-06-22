@@ -18,7 +18,7 @@ export default function ShowBookList({ auth }: PageProps ) {
 
 
 
-    let header=["Nome", "Quantidade", "Valor"];
+    let header=["Nome", "Status", "Quantidade", "Valor"];
     let routes=["book.showActive", "book.showInactive"]
     let title=["Ativos", "Desativados"]
 
@@ -68,6 +68,8 @@ export default function ShowBookList({ auth }: PageProps ) {
 
                 ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há livros ${ativosInativos()}`}</p>
                 : <TableBook props={tabela}></TableBook>}
+
+
         </AuthenticatedLayout>
     );
 }
