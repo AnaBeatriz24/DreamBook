@@ -21,7 +21,17 @@ export default function WelcomeNavBar({ routes, header, children }: PropsWithChi
                                 </Link>
                             </div>
 
-
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                {
+                                    routes.map(
+                                        (rout) => {
+                                            return <NavLink className={"text-white hover:text-gray-300"} href={route(rout.route)} active={route().current(rout.route)}>
+                                                {rout.name}
+                                            </NavLink>
+                                        }
+                                    )
+                                }
+                            </div>
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
