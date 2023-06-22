@@ -8,17 +8,15 @@ export default function TableAvailableCupons(props) {
         </div>
     }
 
-const dataText = (items) => {
-    return Object.values(items).map((item, index: Number) => {
-        return index === 0 ?
-            null :
-            <div className="px-2 py-3 break-words font-medium font-medium text-white text-sm rounded">
-                {item}
-            </div>
-    })
-}
-export default function TableAvailableCupons(props) {
-
+    const dataText = (items) => {
+        return Object.values(items).map((item, index: Number) => {
+            return index === 0 ?
+                null :
+                <div className="px-2 py-3 break-words font-medium font-medium text-white text-sm rounded">
+                    {item}
+                </div>
+        })
+    }
     let head = props.props.header;
     let body = props.props.data.data;
 
@@ -57,7 +55,7 @@ export default function TableAvailableCupons(props) {
                 head.map(
                     item => {
                         return header(item)
-                })
+                    })
             }
         </div>
 
