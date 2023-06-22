@@ -114,6 +114,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/Edit/{book}', [BooksController::class, 'edit'])->name('books.edit');
+    Route::get("/Edit/{book}", [BooksController::class, 'editBook'])->name('store.editBook');
 
 
 

@@ -151,6 +151,67 @@ class BooksController extends Controller
         return Inertia::render('EditBook',['book'=>$book]);
     }
 
+    public function editBook(Books $book, Request $request, Stocks $stocks)
+    {
+
+        $results = DB::table('books')
+            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+            ->get();
+
+        $results->title = $request ->title_book;
+        $results->description = $request ->descricao;
+        $results->isbn = $request->isbn_book;
+        $results->img = $request->imgcapa_books;
+        $results->publishers = $request->editora_book;
+        $results->authors= $request->autor_book;
+        $results->genders=$request->genero_book;
+        $results->quantity=$request->quantidade_stocks;
+        $results->amount=$request->valor_entrada;
+
+        dd($results);
+
+
+
+
+
+//        if(Books::where("isbn", $request->isbn)->count() === 0){
+//            $autores = [];
+//            foreach ($request->autor as $autor){
+//                $at = Authors::where("name", '=', $autor)->count();
+//                if($at === 0)
+//                    array_push($autores, Authors::create(["name" => $autor]));
+//                else {
+//                    $at = Authors::where("name", '=', $autor)->get();
+//                    array_push($autores, $at);
+//                }
+//
+//            }
+//            $editora = Publisher::create(["name" => $request->editora])->id;
+//
+//            if($request->file()){
+//                $fileName = time().'.'.$request->file()["imgcapa"]->getClientOriginalExtension();
+//                $filePath = $request->file()["imgcapa"]->storeAs('/', $fileName, 'public');
+//            }
+//
+//            $book = Books::create([
+//                "title" => $request->titulo,
+//                "isbn" => $request->isbn,
+//                "description" => $request->descricao,
+//                "publishers_id" => $editora,
+//                "img" => $filePath
+//            ]);
+//            foreach ($autores as $autor){
+//                $book->authors()->attach($autor);
+//            }
+//            foreach ($request->genero as $genero){
+//                $gen = Genders::find($genero);
+//                $book->genders()->attach($gen);
+
+//        $manager->name = $request->name_manager;
+//        $manager->email = $request->email;
+//        $manager->save();
+    }
+
     public function showtwo(Books $books, Stocks $stocks)
     {
         $results = $this->editViewDataBook(1);
