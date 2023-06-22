@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Coupons extends Model
 {
@@ -14,16 +15,13 @@ class Coupons extends Model
 
     protected $fillable = [
         'name',
-        'discount'
-    ];
-
-    protected $hidden = [
+        'discount',
         "id",
         'status'
     ];
 
-    public function sales():BelongsTo
+    public function sales():HasMany
     {
-        return $this->belongsTo(Sales::class, "coupons_id");
+        return $this->hasMany(Sales::class, "coupons_id");
     }
 }

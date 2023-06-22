@@ -63,6 +63,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get("/cart", [SalesController::class, 'create'])->name("cart");
     Route::post("/cart", [SalesController::class, 'store'])->name("cart.store");
+    Route::post("/updateSale", [SalesController::class, 'updateSales'])->name("cart.updateSales");
+    Route::post("/appliedCoupon", [SalesController::class, 'appliedCouponSale'])->name("cart.appliedCoupon");
     Route::get('/openSales', [SalesController::class, 'showOpenSales'])->name('sales.open');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

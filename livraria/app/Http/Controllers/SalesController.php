@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coupons;
 use App\Models\Sales;
 use App\Models\Stocks;
+use App\Models\Books;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -60,18 +62,16 @@ class SalesController extends Controller
      */
     public function create()
     {
-        //        $userId = Auth::id();
-        //
-        //        $books = DB::table('sales_books')
-        //            ->join('books', 'sales_books.books_id', '=', 'books.id')
-        //            ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
-        //            ->where('users_id', '=', $userId)
-        //            ->get()
-        //        ;
-        //
-        //        dd($books);
-
-        return Inertia::render("Cart");
+        $user = Auth::user();
+        $sale = Sales::where('users_id', "=", $user->id)->where("status", "=", 0)->count() > 0 ? Sales::where('users_id', "=", $user->id)->where("status", "=", 0)->get()[0] : null;
+        $books = $sale === null ? null : $sale->books;
+        $coupon = $sale === null ? null : $sale->coupons;
+        if($books !== null){
+            foreach ($books as $book){
+                $book->maxStock = $book->stocks->quantity;
+            }
+        }
+        return Inertia::render("Cart", ["sale"=> $sale, "books" => $books, "coupon" => $coupon]);
     }
 
     /**
@@ -126,6 +126,21 @@ class SalesController extends Controller
     public function update(Request $request, Sales $sales)
     {
         //
+    }
+
+    public function updateSales(Request $request)
+    {
+        $book = Books::find($request->idBook)->stocks->quantity;
+        if($request->quantity <= $book) {
+            DB::unprepared("update sales_books set quantity = $request->quantity where sales_id = $request->idSales and books_id = $request->idBook");
+        }
+    }
+
+    public function appliedCouponSale(Request $request)
+    {
+        dd($request);
+        $cupom = Coupons::where("name", "=", $request->cupom)->where("status", "=", 1)->count() == 1 ? Coupons::where("name", "=", $request->cupom)->where("status", "=", 1)->get()[0]: null;
+
     }
 
     /**
