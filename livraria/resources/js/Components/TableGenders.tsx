@@ -1,4 +1,4 @@
-import {Link, useForm} from "@inertiajs/react";
+import {useForm} from "@inertiajs/react";
 import OptionsTable from "@/Components/OptionsTable";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
@@ -33,7 +33,7 @@ export default function TableGenders(props){
         errors,
         reset,
     } = useForm({
-        name: '',
+        name: 'AAAAAAA',
     });
 
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
@@ -43,7 +43,6 @@ export default function TableGenders(props){
     };
 
     const updateGender: FormEventHandler = (e) => {
-        alert(e.target.value)
 
         e.preventDefault();
 
@@ -66,7 +65,7 @@ export default function TableGenders(props){
     };
 
     const submit = (e) => {
-        post(route("gender.editStatus", [e.target.value]))
+        post(route("gender.edit", [e.target.value]))
     }
 
     let head = props.props.header;
@@ -96,7 +95,6 @@ export default function TableGenders(props){
                                         onChange={(e) => setData('name', e.target.value)}
                                         className="mt-1 block w-3/4"
                                         isFocused={true}
-                                        placeholder={"Alguém me mata plmds"}
                                     />
 
                                     <InputError message={errors.name} className="mt-2" />
@@ -105,7 +103,7 @@ export default function TableGenders(props){
                                 <div className="mt-6 flex justify-end">
                                     <SecondaryButton onClick={closeModal}>Cancelar</SecondaryButton>
 
-                                    <DangerButton value={id} className="ml-3" disabled={processing} type={'submit'}>
+                                    <DangerButton value={id} className="ml-3" disabled={processing} >
                                         Atualizar gênero
                                     </DangerButton>
                                 </div>
@@ -115,11 +113,11 @@ export default function TableGenders(props){
                 );
             case 'Desativar':
                 return (
-                    <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 rounded-md font-semibold text-xs text-white tracking-widest hover:bg-amber-950 active:bg-amber-950 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 text-white text-sm rounded border border-amber-950 transition" type={"submit"}>{item}</button>
+                    <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-800 focus:outline-none focus:ring-offset-2 transition ease-in-out duration-150 " type={"submit"}>{item}</button>
                 )
             case 'Ativar':
                 return (
-                    <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 rounded-md font-semibold text-xs text-white tracking-widest hover:bg-amber-950 active:bg-amber-950 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:ring-offset-2 text-white text-sm rounded border border-amber-950" type={"submit"}>{item}</button>
+                    <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-800 focus:outline-none focus:ring-offset-2 transition ease-in-out duration-150 " type={"submit"}>{item}</button>
                 )
         }
     }
