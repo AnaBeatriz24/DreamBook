@@ -1,4 +1,4 @@
-import {useForm} from '@inertiajs/react';
+import {Link, useForm} from '@inertiajs/react';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import SecondaryButton from "@/Components/SecondaryButton";
@@ -21,8 +21,9 @@ export default function Contact() {
 
     return(
         <>
-            <div className="flex flex-col m-auto space-y-2 items-center">
+            <div className="flex flex-col m-auto space-y-2 items-center bg-teal-950 h-screen">
                 <img src="/LogoSistema.png" className={"w-32 lg:w-64"} alt=""/>
+
                 <form onSubmit={submit} method={"post"}>
                     <div className="flex flex-col mx-auto">
                         <div className="flex gap-4 justify-center">
@@ -81,7 +82,7 @@ export default function Contact() {
                                 ></textarea>
                             </div>
                         </div>
-                        <div className="flex gap-4 justify-around mb-20">
+                        <div className="flex gap-4 justify-around mb-20 flex ">
                             <SecondaryButton className="w-full justify-center" processing={processing} type={'submit'}>
                                 Enviar
                             </SecondaryButton>
