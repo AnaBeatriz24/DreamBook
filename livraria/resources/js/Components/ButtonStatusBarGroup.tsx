@@ -4,7 +4,7 @@ export default function ButtonStatusBarGroup({status, routes, title}) {
             <div className="inline-flex" role="group">
                 <a href={route(routes[0])}>
                     <button
-                        className={`${ status === 1 ? " border-y-2 border-y-green-300" : ""} flex items-center gap-2 rounded-l hover:border-y-green-300
+                        className={`${ status === 1 ? " border-y-2 border-y-green-300" : ""} flex items-center gap-2 text-white rounded-l hover:border-y-green-300
                             px-6 py-2 my-4 transition hover:bg-zinc-200 duration-150 ease-in-out`}
                         disabled={status === 1}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 fill-green-500 hover:fill-green-700">
@@ -16,7 +16,7 @@ export default function ButtonStatusBarGroup({status, routes, title}) {
                 </a>
                 <a href={route(routes[1])}>
                     <button
-                        className={`${ status === 0 ? "border-y-2 border-y-red-300" : ""} rounded-r hover:border-y-red-300 flex items-center gap-2
+                        className={`${ status === 0 ? "border-y-2 border-y-red-300" : ""} rounded-r text-white hover:border-y-red-300 flex items-center gap-2
                             px-6 py-2 my-4 transition hover:bg-zinc-200 duration-150 ease-in-out`}
                         disabled={status === 0}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 fill-red-500 hover:fill-red-700">
