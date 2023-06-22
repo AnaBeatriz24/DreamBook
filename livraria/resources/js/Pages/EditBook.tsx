@@ -1,8 +1,11 @@
-import {Head, useForm, usePage} from "@inertiajs/react";
+import {Head, Link, useForm, usePage} from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import {PageProps} from "@/types";
 import Breadchumb from "@/Components/BreadchumbSystem";
 import SecondaryButton from "@/Components/SecondaryButton";
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
 
 const rotas = [
     {
@@ -29,8 +32,8 @@ export default function EditBook({ auth }: PageProps){
         editora_book: book.editora,
         autor_book: book.autor,
         genero_book: book.genero,
-        quantidade_stocks: stocks.quantidade,
-        valor_entrada: stocks.valor_entrada,
+        // quantidade_stocks: stocks.quantidade,
+        // valor_entrada: stocks.valor_entrada,
     });
 
     const onHandleChange = (event) => {
@@ -39,7 +42,7 @@ export default function EditBook({ auth }: PageProps){
 
     const submit = (e) => {
         e.preventDefault()
-        post(route("store.editBook", [data.isbn]));
+        post(route("store.editBook", [data.id_book]));
     };
 
     return<>
@@ -58,7 +61,7 @@ export default function EditBook({ auth }: PageProps){
                     id="id_book"
                     type="id_book"
                     name="id_book"
-                    value={data.id_manager}
+                    value={data.id_book}
                     className="mt-1 block w-screen"
                     isFocused={true}
                     handleChange={onHandleChange}
@@ -67,38 +70,128 @@ export default function EditBook({ auth }: PageProps){
                 <div className="mt-4 flex gap-4 justify-center">
                     <div className="flex flex-col">
                         <div className="mt-4">
-                            <InputLabel forInput="name_manager" value="Nome do gerente" />
+                            <InputLabel forInput="titulo_book" value="Título" />
                             <TextInput
-                                id="name_manager"
+                                id="titulo_book"
                                 type="text"
-                                name="name_manager"
-                                value={data.name_manager}
+                                name="titulo_book"
+                                value={data.titulo_book}
                                 className="mt-1 block w-screen"
                                 isFocused={true}
                                 handleChange={onHandleChange}
                             />
-                            <InputError message={errors.name_manager} className="mt-2" />
+                            <InputError message={errors.titulo_book} className="mt-2" />
                         </div>
 
                         <div className="mt-4">
-                            <InputLabel forInput="email" value="E-mail de confirmação do gerente" />
+                            <InputLabel forInput="descricao" value="E-mail de confirmação do gerente" />
                             <TextInput
-                                id="email"
-                                type="email"
-                                name="email"
-                                value={data.email}
+                                id="descricao"
+                                type="descricao"
+                                name="descricao"
+                                value={data.descricao}
                                 className="mt-1 block w-screen"
                                 autoComplete="username"
                                 isFocused={true}
                                 handleChange={onHandleChange}
                             />
-                            <InputError message={errors.email} className="mt-2" />
+                            <InputError message={errors.descricao} className="mt-2" />
+                        </div>
+
+                        <div className="mt-4">
+                            <InputLabel forInput="isbn_book" value="E-mail de confirmação do gerente" />
+                            <TextInput
+                                id="isbn_book"
+                                type="isbn_book"
+                                name="isbn_book"
+                                value={data.isbn_book}
+                                className="mt-1 block w-screen"
+                                autoComplete="username"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                            />
+                            <InputError message={errors.isbn_book} className="mt-2" />
+                        </div>
+
+                        <div className="mt-4">
+                            <InputLabel forInput="editora_book" value="E-mail de confirmação do gerente" />
+                            <TextInput
+                                id="editora_book"
+                                type="editora_book"
+                                name="editora_book"
+                                value={data.editora_book}
+                                className="mt-1 block w-screen"
+                                autoComplete="username"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                            />
+                            <InputError message={errors.editora_book} className="mt-2" />
+                        </div>
+
+                        <div className="mt-4">
+                            <InputLabel forInput="autor_book" value="E-mail de confirmação do gerente" />
+                            <TextInput
+                                id="autor_book"
+                                type="autor_book"
+                                name="autor_book"
+                                value={data.autor_book}
+                                className="mt-1 block w-screen"
+                                autoComplete="username"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                            />
+                        </div>
+                            <InputError message={errors.autor_book} className="mt-2" />
+
+                        <div className="mt-4">
+                            <InputLabel forInput="genero_book" value="E-mail de confirmação do gerente" />
+                            <TextInput
+                                id="genero_book"
+                                type="genero_bookgenero_book"
+                                name="genero_book"
+                                value={data.genero_book}
+                                className="mt-1 block w-screen"
+                                autoComplete="username"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                            />
+                            <InputError message={errors.genero_book} className="mt-2" />
+                        </div>
+
+                        <div className="mt-4">
+                            <InputLabel forInput="quantidade_stocks" value="E-mail de confirmação do gerente" />
+                            <TextInput
+                                id="quantidade_stocks"
+                                type="quantidade_stocks"
+                                name="quantidade_stocks"
+                                value={data.quantidade_stocks}
+                                className="mt-1 block w-screen"
+                                autoComplete="username"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                            />
+                            <InputError message={errors.quantidade_stocks} className="mt-2" />
+                        </div>
+
+                        <div className="mt-4">
+                            <InputLabel forInput="valor_entrada" value="E-mail de confirmação do gerente" />
+                            <TextInput
+                                id="valor_entrada"
+                                type="valor_entrada"
+                                name="valor_entrada"
+                                value={data.valor_entrada}
+                                className="mt-1 block w-screen"
+                                autoComplete="username"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                            />
+                            <InputError message={errors.valor_entrada} className="mt-2" />
                         </div>
                     </div>
                 </div>
 
                 <div className="mt-28 flex gap-4 justify-around">
-                    <Link href={route('manager.view')}>
+                    <Link href={route('book.showActive')}>
                         <SecondaryButton className="ml-4 bg-[#ef4444] hover:bg-red-700" processing={processing} type={"button"}>
                             Cancelar
                         </SecondaryButton>
