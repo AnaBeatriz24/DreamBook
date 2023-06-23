@@ -1,11 +1,10 @@
 import SecondaryButton from "@/Components/SecondaryButton";
-import React, {FormEvent, FormEventHandler, useState} from 'react';
+import React, {useState} from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import {Link, useForm} from "@inertiajs/react";
 
 export default function SearchBooks({books}: string[object]) {
 
-    console.log(books)
 
     let novoArray = [];
     const corte = 9;
