@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profiles;
+use App\Models\Sales;
 use App\Models\User;
 use DateTime;
 use Illuminate\Database\Query\JoinClause;
@@ -205,7 +206,6 @@ class UserController extends Controller
 
     public function history()
     {
-
         $sales = DB::table('sales_books')
             ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
             ->join('books', 'sales_books.books_id', '=', 'books.id')
@@ -213,15 +213,24 @@ class UserController extends Controller
             ->where('sales.status', 1)
             ->where('sales.users_id', Auth::id())
             ->paginate(7);
-            ;
 
         foreach ($sales as $sale) {
-            if (is_null($sale->cashier_id)) {
-                $sale->cashier_id = "Não houve caixa";
+            $cashier = User::where('id', '=', $sale->cashier_id)->first();
+            $attendant = User::where('id', '=', $sale->attendant_id)->first();
+
+            if (is_null($cashier)) {
+                $sale->cashier = "Não houve caixa";
+            } else {
+                $sale->cashier = $cashier->name;
             }
-            if (is_null($sale->attendant_id)) {
-                $sale->attendant_id = "Não houve atendente";
+            if (is_null($attendant)) {
+                $sale->attendant = "Não houve atendente";
+            } else {
+                $sale->attendant = $attendant->name;
             }
+
+            unset($sale->cashier_id);
+            unset($sale->attendant_id);
         }
 
         foreach ($sales as $sale) {

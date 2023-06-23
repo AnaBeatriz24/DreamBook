@@ -36,7 +36,7 @@ export default function Cart({ auth, books, sale, coupon }: PageProps) {
                 <BreadchumbSystem rota={rotas} />
             </div>
 
-            {sale === null ? <h1>Não há nenhum item no carrinho de compras</h1> :
+            {sale === null ? <h1  className='text-white text-center mt-24 text-3xl font-bold'>Não há nenhum item no carrinho de compras</h1> :
                 <>
                     <TableCart books={listBooks} cupom={coupon}></TableCart>
                     <div className={"mt-8 ml-20 grid grid-cols-2"}>

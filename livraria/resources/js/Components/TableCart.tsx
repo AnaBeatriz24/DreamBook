@@ -7,7 +7,7 @@ import RowTableCart from "@/Components/RowTableCart";
 export default function TableCart({books= [], cupom}) {
 
     const header = (item:string) => {
-        return <div className="px-8 py-3 font-medium text-black">
+        return <div className="px-8 py-3 font-medium text-white">
             {item}
         </div>
     }

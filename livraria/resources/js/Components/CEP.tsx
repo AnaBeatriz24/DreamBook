@@ -64,39 +64,39 @@ export default function CEP() {
     }
 
     return <>
-        <div className={"text-black"}>
+        <div className={" text-black"}>
             <div className={"grid grid-cols-3 gap-2"}>
-                <div className={"col-span-3"}>
+                <div className={"col-span-3  text-white"}>
                     <h2>CEP:</h2>
                     <TextInput require=""     name="cep" id="cep" value={data.cep} minLength={8} maxLength={8} onChange={(e) => setData(e.target.name, e.target.value)} onBlur={resp}/>
                 </div>
                 <div>
-                    <h2>Logradouro:</h2>
+                    <h2 className=' text-white'>Logradouro:</h2>
                     <TextInput require="" name="name" className={"w-full"} value={dados.name} onChange={(e) => setDados({...dados, name: e.target.value})} disabled={abre.status}/>
                 </div>
                 <div>
-                    <h2>Complemento:</h2>
+                    <h2 className=' text-white'>Complemento:</h2>
                     <TextInput require="" name="complement" className={"w-full"} value={dados.complement}
                                onChange={(e) => setDados({...dados, complement: e.target.value})} disabled={abre.status}/>
                 </div>
                 <div>
-                    <h2>Bairro:</h2>
+                    <h2 className=' text-white'>Bairro:</h2>
                     <TextInput require="" name="district" value={dados.district}
                                onChange={(e) => setDados({...dados, district: e.target.value})} disabled={abre.status}/>
                 </div>
                 <div>
-                    <h2>Número:</h2>
+                    <h2 className=' text-white'>Número:</h2>
                     <TextInput require="" name="number" value={dados.number}
                                onChange={(e) => setDados({...dados, number: e.target.value})} disabled={abre.status}/>
                 </div>
 
                 <div>
-                    <h2>Cidade:</h2>
+                    <h2 className=' text-white'>Cidade:</h2>
                     <TextInput require="" name="city" value={dados.city}
                                onChange={(e) => setDados({...dados, city: e.target.value})} disabled={abre.status}/>
                 </div>
                 <div>
-                    <h2>UF:</h2>
+                    <h2 className=' text-white'>UF:</h2>
                     <TextInput require="" name="uf" value={dados.uf}
                                onChange={(e) => setDados({...dados, uf: e.target.value})} disabled={abre.status}/>
                 </div>
