@@ -22,32 +22,35 @@ class SalesController extends Controller
     public function showOpenSales(): Response
     {
         $sales = Sales::where("status", 0)->get();
+        $openSales=[];
 
-        foreach ($sales as $sale){
-            if(!is_null($sale->attendant_id)) {
-                $sale->idVendedor = $sale->attendant->id;
-                $sale->nameVendedor = $sale->attendant->name;
+        if (count($sales)>0){
+            foreach ($sales as $sale){
+                if(!is_null($sale->attendant_id)) {
+                    $sale->idVendedor = $sale->attendant->id;
+                    $sale->nameVendedor = $sale->attendant->name;
+                }
+            }
+
+            foreach ($sales as $sale){
+                $sale->idUser = $sale->users->id;
+                $sale->nameUser = $sale->users->name;
+            }
+
+            foreach ($sales as $sale){
+                $total = 0;
+                foreach($sale->books as $book){
+                    $total += ($book->pivot->amount * $book->pivot->quantity);
+                }
+                $sale->total = $total;
+            }
+
+            foreach ($sales as $sale){
+                if(!is_null($sale->attendant_id)){
+                    $openSales[] = [$sale->id, $sale->nameVendedor,$sale->total];
+                }
             }
         }
-
-        foreach ($sales as $sale){
-            $sale->idUser = $sale->users->id;
-            $sale->nameUser = $sale->users->name;
-        }
-
-        foreach ($sales as $sale){
-            $total = 0;
-            foreach($sale->books as $book){
-                $total += ($book->pivot->amount * $book->pivot->quantity);
-            }
-            $sale->total = $total;
-        }
-
-        foreach ($sales as $sale){
-            if(!is_null($sale->attendant_id)){
-                $openSales[] = [$sale->id, $sale->nameVendedor,$sale->total];
-            }
-            }
 
         return Inertia::render('ShowOpenSales', ['sales' => $openSales]);
     }

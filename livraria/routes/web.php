@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CouponsController;
+use App\Http\Controllers\GendersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EntriesController;
-use App\Models\Genders;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -47,9 +47,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/contact', function () {
-    dd('Desenvolver tela de entre em contato');
-})->name('contact.index');
+Route::get('/contact', fn() => Inertia::render("Contact"))->name('contact.show');
 
 Route::get('/team', function () {
     dd('Desenvolver tela de time/sobre nós');
@@ -79,7 +77,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/createUsers', [UserController::class, 'create'])->name('user.create');
     Route::post('/createUsers', [UserController::class, 'store'])->name('user.store');
     Route::post('/deleteUser/{user}', [UserController::class, 'destroy'])->name('user.destroy');
-    Route::post('/activeUser/{user}', [UserController::class, 'active'])->name('user.active');
 
     //Visualização da tabela de usuários
     Route::get('/showUsers', [UserController::class, 'showAllUsers'])->name('user.showAll');
@@ -88,9 +85,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/showBuyers', [UserController::class, 'showBuyersUsers'])->name('user.showBuyers');
     Route::get('/showCustomers', [UserController::class, 'showCustomersUsers'])->name('user.showCustomers');
     Route::get('/showInactives', [UserController::class, 'showInactives'])->name('user.showInactives');
-
-    Route::post('/showUser', [UserController::class, 'showAllUsers'])->name('user.search');
-
 
 
     Route::get('/coupons/createCoupon', [CouponsController::class, 'create'])->name('coupon.create');
@@ -101,25 +95,54 @@ Route::middleware('auth')->group(function () {
     ->name('coupon.success');
 
     Route::get('/coupons/showActiveCoupons', [CouponsController::class, 'show'])->name('coupon.showActive');
-
     Route::get('/coupons/showInactiveCoupons', [CouponsController::class, 'showInactives'])->name('coupon.showInactive');
-
     Route::post("/coupons/{coupon}", [CouponsController::class, 'editStatus'])->name("coupons.editStatus");
 
 
+    Route::get('/books/showActiveBooks', [BooksController::class, 'showtwo'])->name('book.showActive');
+    Route::get('/books/showInactiveBooks', [BooksController::class, 'showInactives'])->name('book.showInactive');
+    Route::post("/books/{book}", [BooksController::class, 'editStatus'])->name("book.editStatus");
+
+
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
-    Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
     Route::post('/createBook', [BooksController::class, 'store'])->name('book.store');
     Route::post('/createEntry', [EntriesController::class, 'store'])->name('entry.store');
+
+
+    Route::get('/SucessCreateBook', fn() => Inertia::render("SucessCreateBook"))->name('sucess.book');
+
+   // Route::get('/ShowBookList',[BooksController::class, 'showAdd'])->name('book.show');
+    Route::post('/ShowBookList/{book}',[BooksController::class, 'destroy'])->name('book.destroy');
+    Route::get('/ShowBookList/EditBook/{book}',[BooksController::class, 'update'])->name('book.update');
+
+
+    Route::get('/Edit/{book}', [BooksController::class, 'edit'])->name('books.edit');
+    Route::get("/EditB/{book}", [BooksController::class, 'editBook'])->name('store.editBook');
+
+
 
     Route::get('/showBooks/{gender}', [BooksController::class, 'show'])->name('book.searchGender');
     Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
 
+    Route::post('/showGenders', [GendersController::class, 'store'])->name('gender.store');
+    Route::get('/editGenders/{gender}', [GendersController::class, 'edit'])->name('gender.edit');
+    Route::post('/editedGenders/{gender}', [GendersController::class, 'update'])->name('gender.update');
+
+    Route::get('/showGendersActives', [GendersController::class, 'showActives'])->name('gender.showActives');
+    Route::get('/showGendersInactives', [GendersController::class, 'showInactives'])->name('gender.showInactives');
+
+    Route::post('/showGenders/{gender}', [GendersController::class, 'editStatus'])->name('gender.editStatus');
+
+    Route::get('/gender/successGender', [GendersController::class, 'editedFinish'])->name('gender.success');
+
     Route::get("/showBook/{book}", [BooksController::class, 'index'])->name("book.index");
 
-    Route::get('/salesHistory', function () {
-        dd('Desenvolver tela de histórico de vendas');
-    })->name('sales.history');
+    Route::get('/salesHistory', [UserController::class, 'history'])->name('sales.history');
 
 });
+
+Route::get('/showBooks', [BooksController::class, 'show'])->name('book.search');
+Route::get('/showBooks/{gender}', [BooksController::class, 'show'])->name('book.searchGender');
+Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
+
 require __DIR__.'/auth.php';

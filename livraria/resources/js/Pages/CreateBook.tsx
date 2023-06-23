@@ -125,7 +125,7 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
 
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Adicionar Livro</h2>}
+            header={<h2 className="font-semibold text-xl leading-tight">Adicionar Livro</h2>}
         >
             <Head title="Adicionar Livro" />
 

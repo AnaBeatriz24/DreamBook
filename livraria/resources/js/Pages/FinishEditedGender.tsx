@@ -8,43 +8,41 @@ export default function FinishCreateCoupon({ auth }: PageProps) {
 
     const rotas = [
         {
-            'name': 'Adicionar cupom',
-            'route': 'coupon.create',
+            'name': 'Gerenciar Gêneros',
+            'route': 'gender.showActives',
         },
         {
-            'name': 'Cupom adicionado',
-            'route': 'coupon.success',
+            'name': 'Gênero Editado',
+            'route': 'gender.success',
         }
     ]
-
-    // TODO: Finalizar a estilização da página
 
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl leading-tight">Cupom adicionado</h2>}
+            header={<h2 className="font-semibold text-xl text-white leading-tight">Gênero Editado</h2>}
         >
 
-            <Head title={"Cupom adicionado"}/>
+            <Head title={"Gênero Editado"}/>
 
             <div className={"mt-8 ml-20"}>
                 <BreadchumbSystem rota={rotas} />
             </div>
 
             <div className='flex justify-center mt-16'>
-                <h2 className='text-center text-2xl font-bold text-zinc-900'>
-                    Cupom cadastrado com sucesso!
+                <h2 className='text-center text-2xl font-bold text-white'>
+                    Gênero editado com sucesso!
                 </h2>
             </div>
             <div className="mt-60 flex gap-4 justify-around">
-                <Link href={route('coupon.showActive')}>
-                    <SecondaryButton className="ml-4 lg:w-auto bg-zinc-500 hover:bg-zinc-700" type={'button'}>
-                        Ver cupons cadastrados
+                <Link href={route('home')}>
+                    <SecondaryButton className="ml-4 lg:w-auto bg-amber-800 hover:bg-amber-900" type={'button'}>
+                        Voltar para home
                     </SecondaryButton>
                 </Link>
-                <Link href={route('coupon.create')}>
-                    <SecondaryButton className="ml-4 lg:w-auto bg-zinc-500 hover:bg-zinc-700" type={'button'}>
-                        Cadastrar outro cupom
+                <Link href={route('gender.showActives')}>
+                    <SecondaryButton className="ml-4 lg:w-auto bg-amber-800 hover:bg-amber-900" type={'button'}>
+                        Gerenciar Gêneros
                     </SecondaryButton>
                 </Link>
             </div>

@@ -48,7 +48,7 @@ class EntriesController extends Controller
         }
 
         //fazer a tela de agradecimento aqui
-        return Inertia::render('ShowBooks', []);
+        return Inertia::render('SucessCreateBook', []);
 
 
     }

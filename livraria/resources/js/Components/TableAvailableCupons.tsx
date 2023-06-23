@@ -3,7 +3,7 @@ import OptionsTable from "@/Components/OptionsTable";
 
 export default function TableAvailableCupons(props) {
     const header = (item) => {
-        return <div className="px-8 py-3 font-medium font-black text-black text-sm">
+        return <div className="px-8 py-3 font-medium font-black text-white text-sm">
             {item}
         </div>
     }
@@ -55,13 +55,13 @@ export default function TableAvailableCupons(props) {
                 head.map(
                     item => {
                         return header(item)
-                })
+                    })
             }
         </div>
 
         {
             body.map(data => {
-                return <div className="mx-auto bg-teal-950 rounded-lg w-[90vw] grid grid-cols-4 text-center items-center mb-2">
+                return <div className="mx-auto bg-teal-950 rounded-lg w-[90vw] grid grid-cols-4 text-white text-center items-center mb-2">
                     {dataText(data)}
                     <OptionsTable buttons={buttons(data)} data={data} />
                 </div>

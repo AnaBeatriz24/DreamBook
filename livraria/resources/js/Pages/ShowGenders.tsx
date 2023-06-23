@@ -1,45 +1,76 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import {Head, useForm, usePage} from '@inertiajs/react';
 import { PageProps } from '@/types';
+import TableGenders from "@/Components/TableGenders";
+import Pagination from "@/Components/Pagination";
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
-import { Head, useForm } from '@inertiajs/react';
 import SecondaryButton from "@/Components/SecondaryButton";
 import {FormEventHandler} from "react";
+import ButtonStatusBarGroup from "@/Components/ButtonStatusBarGroup";
 
-export default function CreateCoupon({ auth }: PageProps) {
+export default function ShowGenders({ auth }: PageProps, ) {
 
-    const rotas = [
+    let {genders, statusBar, status} = usePage().props;
+    console.log(status)
+
+    let routes = ["gender.showActives", "gender.showInactives"]
+    let title = ["Ativos", "Desativados"]
+
+    let buttonText = ():[string, string] => {
+        if (statusBar === 0) {
+            return ['Ativar', 'Editar']
+        } else {
+            return ['Desativar', 'Editar']
+        }
+    }
+
+    let table = {
+        header: ["Nome", "Ações"],
+        data:genders,
+        actions: buttonText(),
+    }
+
+    const ativosInativos = (): string => {
+        return statusBar === 1
+            ? "ativos"
+            : "desativados"
+    }
+
+    const rotas:object = [
         {
-            'name': 'Adicionar Cupom',
-            'route': 'coupon.create',
+            'name': 'Gerenciar Gêneros',
+            'route': 'gender.show',
         }
     ]
 
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
-        discount: '',
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('coupon.store'));
+        post(route('gender.store'), {
+            preserveScroll: true,
+            onSuccess: () => alert("Gênero Cadastrado!"),
+            onFinish: () => reset(),
+        });
     };
 
     const onHandleChange = (event) => {
         setData(event.target.name, event.target.value);
     };
 
-    // TODO: Finalizar a estilização da página
 
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl leading-tight">Adicionar Cupons</h2>}
+            header={<h2 className="font-semibold text-xl text-white leading-tight">Gerenciar Gêneros Textuais</h2>}
         >
-            <Head title="Adicionar Cupons" />
+            <Head title="Gêneros Textuais" />
 
             <div className="mt-8 ml-20">
                 <BreadchumbSystem rota={rotas}/>
@@ -50,7 +81,7 @@ export default function CreateCoupon({ auth }: PageProps) {
 
                     <form onSubmit={submit}>
                         <div>
-                            <InputLabel htmlFor="name" className={"text-white"} value="Nome" />
+                            <InputLabel htmlFor="name" className={"text-white"} value="Novo Gênero" />
 
                             <TextInput
                                 id="name"
@@ -66,21 +97,6 @@ export default function CreateCoupon({ auth }: PageProps) {
                             <InputError message={errors.name} className="mt-2" />
                         </div>
 
-                        <div className="mt-4">
-                            <InputLabel htmlFor="discount" className={"text-white"} value="Desconto em porcentagem" />
-
-                            <TextInput
-                                id="discount"
-                                type="number"
-                                name="discount"
-                                value={data.discount}
-                                className="mt-1 block w-full"
-                                autoComplete="discount"
-                                onChange={onHandleChange}
-                            />
-
-                            <InputError message={errors.discount} className="mt-2" />
-                        </div>
 
                         <div className="w-full flex justify-center mt-6">
                             <SecondaryButton type={'submit'} className="ml-4" disabled={processing}>
@@ -89,6 +105,16 @@ export default function CreateCoupon({ auth }: PageProps) {
                         </div>
                     </form>
                 </div>
+            </div>
+
+            <ButtonStatusBarGroup routes={routes} status={statusBar} title={title}/>
+
+            {genders.data.length === 0
+                ? <p className={"text-white text-center mt-24 text-3xl font-bold"}>{`Não há gêneros ${ativosInativos()}`}</p>
+                : <TableGenders props={table} ></TableGenders>}
+
+            <div className={'fixed bottom-0 left-0 right-0 mb-4'}>
+                {genders.last_page !== 1 ? <Pagination registries={genders} /> : <></>}
             </div>
         </AuthenticatedLayout>
     );

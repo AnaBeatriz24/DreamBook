@@ -1,4 +1,3 @@
-import ComponentDelete from "@/Components/ComponentDelete";
 import {Link, useForm} from "@inertiajs/react";
 import OptionsTable from "@/Components/OptionsTable";
 
@@ -12,36 +11,36 @@ const dataText = (itens:object) => {
     return Object.values(itens).map((item, index) => {
         return index === 0 ?
             null :
-            <div className="px-2 py-3 break-all font-medium text-white text-sm rounded">
+            <div className="px-2 py-3 break-all font-black text-white text-sm rounded">
                 {item}
             </div>
     })
 }
 
-export default function TableUsers(props){
-    let head = props.props.header;
-    let body = props.props.data.data;
+export default function TableGenders(props){
 
     const {post} = useForm();
 
+    const submit = (e) => {
+        post(route("gender.editStatus", [e.target.value]))
+    }
+
+    let head = props.props.header;
+    let body = props.props.data.data;
+
     const dataAction = (item:string, id:number) => {
         switch (item) {
-            case 'Histórico':
+            case 'Editar':
                 return (
-                    <Link href={route('sales.history', [id])} className="inline-flex items-center px-4 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-800 focus:outline-none focus:ring-offset-2 transition ease-in-out duration-150 " type={"submit"}>{item}</Link>
-                )
+                    <Link href={route('gender.edit', [id])} className={"inline-flex items-center px-4 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-800 focus:outline-none focus:ring-offset-2 transition ease-in-out duration-150"}>{item}</Link>
+                );
             case 'Desativar':
-                const deleteComponentData = {
-                    routePost: "user.destroy",
-                    item: "usuário",
-                    id: id
-                }
                 return (
-                    <ComponentDelete routePost={deleteComponentData.routePost} item={deleteComponentData.item} id={deleteComponentData.id}/>
+                    <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-800 focus:outline-none focus:ring-offset-2 transition ease-in-out duration-150 " type={"submit"}>{item}</button>
                 )
             case 'Ativar':
                 return (
-                    <button onClick={() => post(route('user.active', [id]))} className="inline-flex items-center px-4 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-800 focus:outline-none focus:ring-offset-2 transition ease-in-out duration-150 " type={"submit"}>{item}</button>
+                    <button onClick={submit} value={id} className="inline-flex items-center px-4 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-800 focus:outline-none focus:ring-offset-2 transition ease-in-out duration-150 " type={"submit"}>{item}</button>
                 )
         }
     }

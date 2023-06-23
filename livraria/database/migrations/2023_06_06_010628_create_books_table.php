@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("isbn");
             $table->longText("img")->nullable();
             $table->unsignedBigInteger("publishers_id");
+            $table->boolean("status")->default(true);
             $table->timestamps();
 
             $table->foreign('publishers_id')
