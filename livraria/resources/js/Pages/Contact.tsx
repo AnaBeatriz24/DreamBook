@@ -43,11 +43,6 @@ export default function Contact() {
             <WelcomeNavBar routes={routes}>
                 <Head title="Welcome" />
                 <div className={"flex flex-col items-center mt-6 pb-6 space-y-16"}>
-                    <div className={"grid  space-x-16"}>
-                        <Link href={route("book.search")}>
-                            <ButtonHome opt="searchBook" />
-                        </Link>
-                    </div>
                     <div className="bg-teal-950 w-[90vw] lg:w-3/4 lg:h-[80vh] rounded-lg flex flex-col items-center space-y-6">
                     <div className="flex flex-col m-auto space-y-2 items-center bg-teal-950 h-screen">
                         <img src="/LogoSistema.png" className={"w-32 lg:w-64"} alt=""/>

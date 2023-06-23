@@ -72,14 +72,6 @@ export default function ShowBooks({ auth }: PageProps) {
                     <div className={"flex flex-col items-center mt-6 pb-6 space-y-16"}>
 
 
-                        <section className={"bg-teal-950 w-[90vw] lg:w-3/4 lg:min-h-[80vh] rounded-lg flex flex-col items-center justify-center space-y-6"}>
-                            <p className={"text-2xl font-bold text-white mt-6"}>Nosso Time</p>
-                            <Team />
-                        </section>
-
-                        <section className={"bg-teal-950 w-[90vw] lg:w-3/4 lg:h-[80vh] rounded-lg flex flex-col items-center space-y-6"}>
-                            <ContactComponent/>
-                        </section>
                     </div>
                     </AuthenticatedLayout>
                 }
