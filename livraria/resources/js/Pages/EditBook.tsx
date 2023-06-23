@@ -10,6 +10,7 @@ import React, {useState} from "react";
 import {name} from "axios";
 import PrimaryButton from "@/Components/PrimaryButton";
 import AddAuthor from "@/Components/AddAuthor";
+import internal from "stream";
 
 const rotas = [
     {
@@ -22,26 +23,35 @@ const rotas = [
     },
 ]
 
-export default function EditBook( dataBook={autor:string},{ auth, book, autores, editora, generos }: PageProps){
+export default function EditBook( { auth, book, autores, editora, generos }: PageProps){
     //
-    const [listAutores, setListAutores] = useState(
-        dataBook.autores.map((a) => {
-            console.log(a)
-            return <AddAuthor dataAuthor={{author: autores[a].name}}/>;
+
+    // const selectAutor = (
+    //     autores.map((e) =>{
+    //
+    //     })
+    // )
+    //
+    // const addLine = () => {
+    //     setListAutores([...listAutores, <AddAuthor dataAuthor={{author: ""}} />]);
+    // }
+    //
+    // const removeAuthors = () =>{
+    //     let array = listAutores
+    //     array.pop()
+    //     setListAutores([...array])
+    // }
+    let b =[];
+    const selectAutores = (
+
+
+        autores.map((a) => {
+            console.log(autores[1].name)
+            return <AddAuthor dataAuthor={{author: autores.length.name}}/>;
+
+
         })
     );
-
-    const addLine = () => {
-        setListAutores([...listAutores, <AddAuthor dataAuthor={{author: ""}} />]);
-    }
-
-    const removeAuthors = () =>{
-        let array = listAutores
-        array.pop()
-        setListAutores([...array])
-    }
-
-     console.log(autores)
 
 
 
@@ -114,18 +124,18 @@ export default function EditBook( dataBook={autor:string},{ auth, book, autores,
                                         handleChange={onHandleChange}
                                         required={true}
                                     />
-                                    {...listAutores}
+                                    {/*{...listAutores}*/}
 
-                                    <SecondaryButton className="ml-4" type={'button'} onClick={addLine}>
-                                        Adicionar autor
-                                    </SecondaryButton>
+                                    {/*<SecondaryButton className="ml-4" type={'button'} onClick={addLine}>*/}
+                                    {/*    Adicionar autor*/}
+                                    {/*</SecondaryButton>*/}
 
-                                    {
-                                        (listAutores.length===1) ? <>
-                                        </> : <SecondaryButton className="ml-4" type={'button'} onClick={removeAuthors}>
-                                            Remover autor
-                                        </SecondaryButton>
-                                    }
+                                    {/*{*/}
+                                    {/*    (listAutores.length===1) ? <>*/}
+                                    {/*    </> : <SecondaryButton className="ml-4" type={'button'} onClick={removeAuthors}>*/}
+                                    {/*        Remover autor*/}
+                                    {/*    </SecondaryButton>*/}
+                                    {/*}*/}
                                 </div>
                             </div>
                             <div className="flex flex-col  items-center">

@@ -53,7 +53,6 @@ export default function TableBook(props){
         post(route("book.editStatus", [e.target.value]))
     }
 
-    console.log(body)
     return <>
 
         <div className="grid grid-flow-col grid-cols-4 gap-4 lg:w-3/4 md:w-3/4 lg:ml-40 ml-20 p-mx-auto">
