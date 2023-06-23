@@ -76,7 +76,7 @@ export default function CartFinish({ auth, books, sale, coupon, payments }: Page
 
                         {(pay.method === 3) ? <div>
                             <h2 >Quantidade de Parcelas:</h2>
-                            <TextInput type="number" require="" name="parcel" value={data.parcel} onChange={(e) => setData(e.target.name, e.target.value)} min={1} max={12} onBlur={(e) => {
+                            <TextInput type="number" require="" className='text-black' name="parcel" value={data.parcel} onChange={(e) => setData(e.target.name, e.target.value)} min={1} max={12} onBlur={(e) => {
                                 if(e.target.value > 12) {
                                     e.target.value = 12;
                                     setData(e.target.name, e.target.value);

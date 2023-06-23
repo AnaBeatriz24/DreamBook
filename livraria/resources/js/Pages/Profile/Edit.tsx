@@ -5,9 +5,8 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
 
-export default function Edit( { auth, mustVerifyEmail, status, }: PageProps<{ mustVerifyEmail: boolean, status?: string }>) {
+export default function Edit({ auth, mustVerifyEmail, status }: PageProps<{ mustVerifyEmail: boolean, status?: string }>) {
     return (
-
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl leading-tight">Perfil</h2>}
@@ -28,10 +27,6 @@ export default function Edit( { auth, mustVerifyEmail, status, }: PageProps<{ mu
                         <UpdatePasswordForm className="max-w-xl" />
                     </div>
 
-
-                    <div className="p-4 sm:p-8 bg-teal-950 shadow sm:rounded-lg">
-                        <DeleteUserForm className="max-w-xl" />
-                    </div>
                 </div>
             </div>
         </AuthenticatedLayout>

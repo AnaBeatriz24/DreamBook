@@ -49,9 +49,9 @@ export default function SucessCreateBook({auth}:PageProps){
                                 </Link>
                             </div>
                             <div className="flex justify-around">
-                                <Link href={route("book.showActive")}>
+                                <Link href={route('book.showActive')}>
                                     <SecondaryButton className="m-4" type={'button'}>
-                                        Ver Lista de Livros
+                                        Ver lista de livros
                                     </SecondaryButton>
                                 </Link>
                             </div>

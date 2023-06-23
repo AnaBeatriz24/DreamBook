@@ -47,14 +47,14 @@ export default function BookIndex({auth}) {
                 <BreadchumbSystem rota={rotas} />
             </div>
 
-            <div className={"flex justify-center gap-x-6 mt-16"}>
-                <div className={"w-[60vw] h-[60vh] bg-teal-950 rounded-lg flex"}>
+            <div className={"flex justify-center items-center gap-x-6 mt-16 pb-12"}>
+                <div className={"w-[60vw] min-h-[60vh] bg-teal-950 rounded-lg flex pb-8 "}>
                     <div className={"w-1/2 flex justify-center items-center"}>
                         <img className={"w-80"} src={`${window.location.origin}/storage/${book.img}`} alt="Imagem de livro"/>
                     </div>
                     <div className={"text-white mt-16"}>
                         <p className={"text-3xl mt-6 w-96 break-words"}>Livro: {book.title}</p>
-                        <p className={"text-2xl mt-6 w-96 break-words"}>Descrição: {book.description}</p>
+                        <p className={"text-xl mt-6 w-96 break-words"}>Descrição: {book.description}</p>
                         <p className={"text-xl mt-6 w-96 break-words"}>Autor(a): {book.author}</p>
                         <p className={"text-xl mt-6 w-96 break-words"}>Editora: {book.publisher}</p>
                     </div>

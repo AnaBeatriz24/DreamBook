@@ -46,9 +46,9 @@ export default function PageFinish({auth}:PageProps){
                             </Link>
                         </div>
                         <div className="flex justify-around">
-                            <Link href={route('home')}>
+                            <Link href={route('sales.history')}>
                                 <SecondaryButton className="m-4" type={'button'}>
-                                    Voltar para Home
+                                    Ver Histórico
                                 </SecondaryButton>
                             </Link>
                         </div>

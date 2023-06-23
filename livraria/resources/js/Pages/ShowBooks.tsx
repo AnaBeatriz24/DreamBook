@@ -18,16 +18,25 @@ import Pagination from "@/Components/Pagination";
 
 export default function ShowBooks({ auth }: PageProps) {
 
-    console.log(auth.user)
     const routes:object[] = [
         {
             name: "Home",
-            route: "home"
-        },
-        {
-            name: "Pesquisar Livro",
             route: "book.search"
         },
+        {
+            name:"Entre em Contato",
+            route: 'contact.show'
+        },
+        {
+            name: 'Meu Histórico',
+            route: 'sales.history'
+        }
+    ]
+    const routes1:object[] = [
+        {
+            name: "Livros listados",
+            route: "book.search"
+        }
     ]
 
     const {books, genders} = usePage().props
@@ -49,18 +58,35 @@ export default function ShowBooks({ auth }: PageProps) {
                 <WelcomeNavBar routes={routes}>
                     <Head title="Welcome"/>
                     <ComponentFindBook/>
+                    <div className={"flex flex-col items-center mt-6 pb-6 space-y-16"}>
+                        <section className={"bg-teal-950 w-[90vw] lg:w-3/4 lg:min-h-[80vh] rounded-lg flex flex-col items-center justify-center space-y-6"}>
+                            <p className={"text-2xl font-bold text-white mt-6"}>Nosso Time</p>
+                            <Team />
+                        </section>
+
+                        <section className={"bg-teal-950 w-[90vw] lg:w-3/4 lg:h-[80vh] rounded-lg flex flex-col items-center space-y-6"}>
+                            <ContactComponent/>
+                        </section>
+                    </div>
                 </WelcomeNavBar>
+
+
 
                 : <AuthenticatedLayout
                     user={auth.user}
-                    header={<h2 className="font-semibold text-xl  leading-tight">Cupons disponíveis</h2>}
+                    header={<h2 className="font-semibold text-xl  leading-tight">Dream Book Library</h2>}
                 >
-                    <Head title="Cupons disponíveis" />
+                    <Head title="Pesquisar Livros" />
                     <div className={"mt-8 ml-20"}>
-                        <BreadchumbSystem rota={routes} />
+                        <BreadchumbSystem rota={routes1} />
                     </div>
 
                     <ComponentFindBook/>
+
+                    <div className={"flex flex-col items-center mt-6 pb-6 space-y-16"}>
+
+
+                    </div>
                     </AuthenticatedLayout>
                 }
 
