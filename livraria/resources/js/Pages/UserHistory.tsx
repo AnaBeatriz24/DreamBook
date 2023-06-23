@@ -12,6 +12,7 @@ export default function History({ auth }: PageProps, ) {
     let header: string[]=["Capa", "Livro", "Data", "Vendedor", "Caixa", "Valor", "Ações", ""];
     let actions = ["Comprar de novo"]
 
+
     let table:object = {
         header: header,
         data:sales,
@@ -36,9 +37,11 @@ export default function History({ auth }: PageProps, ) {
                 <BreadchumbSystem rota={rotas}/>
             </div>
 
-            {sales.length === 0
-                ? <p className={"text-white text-center mt-24 text-3xl font-bold"}>{`Não há nenhuma compra recente`}</p>
-                : <TableHistory props={table}></TableHistory>}
+
+            {sales.data.length === 0
+                ? <p className={"text-white text-center mt-24 text-3xl font-bold"}>{`Não há nenhuma venda recente`}</p>
+                : <TableHistory props={table}></TableHistory>
+            }
 
             <div className={'fixed bottom-0 left-0 right-0 mb-4'}>
                 {sales.last_page !== 1 ? <Pagination registries={sales} /> : <></>}
