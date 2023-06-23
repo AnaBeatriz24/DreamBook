@@ -134,7 +134,7 @@ class SalesController extends Controller
                 DB::unprepared("call finaliza_venda($cart->id, $method, $request->parcel)");
             }
         }
-        //return tela de agradeciomento de compra
+        return Inertia::render("PageFinish");
     }
 
     public function cepStore(Request $request)
