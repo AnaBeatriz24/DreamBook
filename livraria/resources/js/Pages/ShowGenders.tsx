@@ -68,7 +68,7 @@ export default function ShowGenders({ auth }: PageProps, ) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Gerenciar Gêneros Textuais</h2>}
+            header={<h2 className="font-semibold text-xl text-white leading-tight">Gerenciar Gêneros Textuais</h2>}
         >
             <Head title="Gêneros Textuais" />
 
@@ -110,7 +110,7 @@ export default function ShowGenders({ auth }: PageProps, ) {
             <ButtonStatusBarGroup routes={routes} status={statusBar} title={title}/>
 
             {genders.data.length === 0
-                ? <p className={"text-zinc-600 text-center mt-24 text-3xl font-bold"}>{`Não há gêneros ${ativosInativos()}`}</p>
+                ? <p className={"text-white text-center mt-24 text-3xl font-bold"}>{`Não há gêneros ${ativosInativos()}`}</p>
                 : <TableGenders props={table} ></TableGenders>}
 
             <div className={'fixed bottom-0 left-0 right-0 mb-4'}>

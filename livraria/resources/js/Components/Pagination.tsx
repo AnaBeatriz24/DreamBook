@@ -51,7 +51,7 @@ export default function Pagination({registries, top= true, bottom= false}) {
                         ? <a href={url} aria-current="page" className="z-10 bg-zinc-50 border-teal-400
                         text-zinc-600 relative inline-flex items-center px-4 py-2 border text-sm
                         font-medium"> {label} </a>
-                        : <a href={url} className="bg-white border-gray-500 text-zinc-700 hover:bg-zinc-200 transition ease-in-out duration-150
+                        : <a href={url} className="teal-950 border-gray-500 text-zinc-700 hover:bg-zinc-200 transition ease-in-out duration-150
                         relative inline-flex items-center px-4 py-2 border text-sm font-medium"> {label} </a>
                     }
                 </>
@@ -60,23 +60,23 @@ export default function Pagination({registries, top= true, bottom= false}) {
     }
 
     return (
-        <div className={`bg-white px-4 py-3 flex items-center justify-between ${top ? "border-t" : ""} ${bottom ? "border-b" : ""} border-gray-200 sm:px-6`}>
+        <div className={`bg-teal-950 px-4 py-3 flex items-center justify-between ${top ? '' : ""} ${bottom ? "border-b" : ""} border-gray-200 sm:px-6`}>
             <div className="flex-1 flex justify-between sm:hidden">
                 <a href={registries.prev_page_url}
-                   className="relative inline-flex items-center px-4 py-2 border border-gray-500 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Anterior </a>
+                   className="relative inline-flex items-center px-4 py-2 border border-teal-950  text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Anterior </a>
                 <a href={registries.next_page_url}
-                   className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-500 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Próximo </a>
+                   className="ml-3 relative inline-flex items-center px-4 py-2 border border-teal-950  text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Próximo </a>
             </div>
             <div className="hidden sm:flex-1 sm:flex sm:items-center sm:flex-col">
                 <div>
-                    <p className="text-md text-zinc-700 mb-4">
+                    <p className="text-md text-white mb-4">
                         Página <span className="font-medium">{registries.current_page}</span> de <span className="font-medium">{registries.last_page}</span>
                     </p>
                 </div>
                 <div>
                     <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                         <a href={registries.first_page_url}
-                           className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-500 bg-white text-sm font-medium text-zinc-700 hover:bg-zinc-200 transition ease-in-out duration-150">
+                           className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-teal-950  bg-white text-sm font-medium text-zinc-700 hover:bg-zinc-200 transition ease-in-out duration-150">
                             <span className="sr-only">Anterior</span>
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
