@@ -109,12 +109,6 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
                 }} genders={genders} status={book_status} book={book_insert}/>]);
             } else {
                 alert("livro localizado");
-                // if (dataResponse.items[0].volumeInfo.authors?.length > 0) {
-                //     data.autor = dataResponse.items[0].volumeInfo.authors;
-                // }
-                // data.titulo = dataResponse.items[0].volumeInfo.title + (dataResponse.items[0].volumeInfo.subtitle?.length > 0 ? dataResponse.items[0].volumeInfo.subtitle : "");
-                // data.editora = dataResponse.items[0].volumeInfo.publisher ?? "";
-                // data.descricao = dataResponse.items[0].volumeInfo.description ?? "";
                 setBooks([...books, <Book dataBook={{
                     isbn: data.isbn,
                     titulo: dataResponse.items[0].volumeInfo.title + (dataResponse.items[0].volumeInfo.subtitle?.length > 0 ? dataResponse.items[0].volumeInfo.subtitle : ""),

@@ -5,6 +5,8 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { User } from '@/types';
+import Cart from "@/Logos/Cart";
+import Profile from "@/Logos/Profile";
 
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -49,9 +51,12 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                 }
                             </div>
                         </div>
-
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
-                            <div className="ml-3 relative">
+                            <div className="ml-3 relative sm:items-center">
+                                <div className={"flex space-x-8 sm:items-center"}>
+                                    <Link href={route('cart')}>
+                                        <Cart/>
+                                    </Link>
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
@@ -84,6 +89,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
+                                </div>
                             </div>
                         </div>
 
