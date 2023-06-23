@@ -15,7 +15,7 @@ export default function Cart({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Carrinho</h2>}
+            header={<h2 className="font-semibold text-xl leading-tight">Carrinho</h2>}
         >
             <Head title="Carrinho" />
 
