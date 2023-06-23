@@ -228,7 +228,7 @@ class UserController extends Controller
             $sale->tradeDate = (new DateTime($sale->tradeDate))->format("d/m/Y h:m:s");
         }
 
-        return Inertia::render('History', [
+        return Inertia::render('UserHistory', [
             'sales' => $sales,
         ]);
 

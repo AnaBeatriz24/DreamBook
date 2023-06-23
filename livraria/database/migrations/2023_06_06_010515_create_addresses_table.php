@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("cep");
+            $table->string("district");
+            $table->string("city");
+            $table->string("uf");
             $table->integer("number");
             $table->string("complement");
             $table->unsignedBigInteger("users_id");

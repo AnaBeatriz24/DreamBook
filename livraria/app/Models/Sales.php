@@ -16,6 +16,7 @@ class Sales extends Model
     protected $table = "sales";
 
     protected $fillable = [
+        "id",
         'status',
         'buyNow',
         'tradeDate',
@@ -29,18 +30,14 @@ class Sales extends Model
         "attendant_id"
     ];
 
-    protected $hidden = [
-        "id"
-    ];
-
     public function paymentMethods():HasMany
     {
         return $this->hasMany(PaymentMethods::class, "paymentMethods_id");
     }
 
-    public function coupons():HasMany
+    public function coupons():HasOne
     {
-        return $this->hasMany(Coupons::class, "coupons_id");
+        return $this->hasOne(Coupons::class, "id", "coupons_id");
     }
 
         public function users():BelongsTo

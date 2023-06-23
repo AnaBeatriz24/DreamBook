@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Addresses;
+use App\Models\Coupons;
+use App\Models\PaymentMethods;
 use App\Models\Sales;
 use App\Models\Stocks;
+use App\Models\Books;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -63,18 +67,31 @@ class SalesController extends Controller
      */
     public function create()
     {
-        //        $userId = Auth::id();
-        //
-        //        $books = DB::table('sales_books')
-        //            ->join('books', 'sales_books.books_id', '=', 'books.id')
-        //            ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
-        //            ->where('users_id', '=', $userId)
-        //            ->get()
-        //        ;
-        //
-        //        dd($books);
+        $user = Auth::user();
+        $sale = Sales::where('users_id', "=", $user->id)->where("status", "=", 0)->count() > 0 ? Sales::where('users_id', "=", $user->id)->where("status", "=", 0)->get()[0] : null;
+        $books = $sale === null ? null : $sale->books;
+        $coupon = $sale === null ? null : $sale->coupons;
+        if($books !== null){
+            foreach ($books as $book){
+                $book->maxStock = $book->stocks->quantity;
+            }
+        }
+        return Inertia::render("Cart", ["sale"=> $sale, "books" => $books, "coupon" => $coupon]);
+    }
 
-        return Inertia::render("Cart");
+    public function createFinish()
+    {
+        $user = Auth::user();
+        $sale = Sales::where('users_id', "=", $user->id)->where("status", "=", 0)->count() > 0 ? Sales::where('users_id', "=", $user->id)->where("status", "=", 0)->get()[0] : null;
+        $books = $sale === null ? null : $sale->books;
+        $coupon = $sale === null ? null : $sale->coupons;
+        $payments = PaymentMethods::all();
+        if($books !== null){
+            foreach ($books as $book){
+                $book->maxStock = $book->stocks->quantity;
+            }
+        }
+        return Inertia::render("CartFinish", ["sale"=> $sale, "books" => $books, "coupon" => $coupon, "payments" => $payments]);
     }
 
     /**
@@ -107,28 +124,74 @@ class SalesController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Sales $sales)
+    public function storeFinish(Request $request)
     {
-        //
+        if(Auth::user()->profiles_id === 5){
+            if(Sales::where("users_id", Auth::user()->id)->where("status", 0)->count() > 0){
+                $cart = Sales::where("users_id", Auth::user()->id)->where("status", 0)->first();
+                $method = $request->query->get('method');
+                DB::unprepared("call finaliza_venda($cart->id, $method, $request->parcel)");
+            }
+        }
+        //return tela de agradeciomento de compra
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Sales $sales)
+    public function cepStore(Request $request)
     {
-        //
+        if(Auth::user()->profiles_id === 5){
+            $addr = Addresses::create([
+                "name" => $request->query->get("name"),
+                "cep" => $request->query->get("cep"),
+                "number" => $request->query->get("number"),
+                "complement" => $request->query->get("complement"),
+                "district" => $request->query->get("district"),
+                "city" => $request->query->get("city"),
+                "uf" => $request->query->get("uf"),
+                "users_id" => Auth::user()->id
+            ]);
+
+
+            $cart = Sales::where("users_id", Auth::user()->id)->where("status", 0)->first();
+            $cart->addresses_id = $addr->id;
+            $cart->save();
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Sales $sales)
+    public function updateSales(Request $request)
     {
-        //
+        $book = Books::find($request->idBook)->stocks->quantity;
+        if($request->quantity <= $book) {
+            DB::unprepared("update sales_books set quantity = $request->quantity where sales_id = $request->idSales and books_id = $request->idBook");
+        }
+    }
+
+    public function updateSalesRemoveBook(Request $request)
+    {
+        DB::unprepared("delete from sales_books where books_id = $request->idBook and sales_id = $request->idSales");
+        return redirect()->route("cart", ["atualiza" => true]);
+    }
+
+    public function appliedCouponSale(Request $request)
+    {
+//        dd($request);
+        $cupom = Coupons::where("name", "=", $request->cupom)->where("status", "=", 1)->count() == 1 ? Coupons::where("name", "=", $request->cupom)->where("status", "=", 1)->get()[0]: null;
+        if($cupom !== null){
+            $sale = Sales::find($request->idSale);
+            $sale->coupons_id = $cupom->id;
+            $sale->save();
+        }
+        return redirect()->route("cart");
+    }
+
+    public function appliedCouponSaleRemove(Request $request)
+    {
+//        dd($request);
+
+        $sale = Sales::find($request->idSale);
+        $sale->coupons_id = null;
+        $sale->save();
+        return redirect()->route("cart");
+
     }
 
     /**
