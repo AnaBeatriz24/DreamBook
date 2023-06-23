@@ -7,12 +7,12 @@ import TableHistory from "@/Components/TableHistory";
 
 export default function History({ auth }: PageProps, ) {
 
-    let {sales} = usePage().props;
+    let {sales}:PageProps = usePage().props;
 
-    let header=["Capa", "Livro", "Data", "Vendedor", "Caixa", "Valor", "Ações", ""];
+    let header: string[]=["Capa", "Livro", "Data", "Vendedor", "Caixa", "Valor", "Ações", ""];
     let actions = ["Comprar de novo"]
 
-    let table = {
+    let table:object = {
         header: header,
         data:sales,
         actions: actions,
@@ -41,7 +41,7 @@ export default function History({ auth }: PageProps, ) {
                 : <TableHistory props={table}></TableHistory>}
 
             <div className={'fixed bottom-0 left-0 right-0 mb-4'}>
-                {sales.last_page !== 1 ? <Pagination registries={coupons} /> : <></>}
+                {sales.last_page !== 1 ? <Pagination registries={sales} /> : <></>}
             </div>
         </AuthenticatedLayout>
     );

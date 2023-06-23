@@ -8,13 +8,15 @@ export default function TableHistory(props) {
         </div>
     }
 
+    console.log(window.location.origin)
+
     const dataText = (items) => {
         return Object.values(items).map((item, index: Number) => {
             return index === 0
                 ? null
                 : index === 1
-                    ? <div className="px-2 py-3">
-                        <img src={`${item}`} alt={`Imagem do livro ${items.title}`}/>
+                    ? <div className="px-2 py-3 w-full flex justify-center">
+                        <img src={`${window.location.origin}/storage/app/public/${item}`} alt={`${item}`}/>
                     </div>
                     : <div className="px-2 py-3 break-words font-medium font-medium text-white text-sm rounded">
                         {item}
@@ -72,7 +74,5 @@ export default function TableHistory(props) {
                 </div>
             })
         }
-
-        <img src="../../../storage/app/public/1687482312.jpeg" alt="imagem"/>
     </>
 }
