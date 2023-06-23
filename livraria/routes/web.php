@@ -62,6 +62,9 @@ Route::get('/home', function () {
 Route::middleware('auth')->group(function () {
 
     Route::get("/cart", [SalesController::class, 'create'])->name("cart");
+    Route::get("/cart/finish", [SalesController::class, 'createFinish'])->name("cart.finish");
+    Route::post("/cart/finish/payment", [SalesController::class, 'storeFinish'])->name("cart.finishPayment");
+    Route::post("/cep", [SalesController::class, 'cepStore'])->name("cart.cep");
     Route::post("/cart", [SalesController::class, 'store'])->name("cart.store");
     Route::post("/updateSale", [SalesController::class, 'updateSales'])->name("cart.updateSales");
     Route::post("/updateSaleRemoveBook", [SalesController::class, 'updateSalesRemoveBook'])->name("cart.updateSalesRemoveBook");

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Addresses;
 use App\Models\Coupons;
+use App\Models\PaymentMethods;
 use App\Models\Sales;
 use App\Models\Stocks;
 use App\Models\Books;
@@ -74,6 +76,21 @@ class SalesController extends Controller
         return Inertia::render("Cart", ["sale"=> $sale, "books" => $books, "coupon" => $coupon]);
     }
 
+    public function createFinish()
+    {
+        $user = Auth::user();
+        $sale = Sales::where('users_id', "=", $user->id)->where("status", "=", 0)->count() > 0 ? Sales::where('users_id', "=", $user->id)->where("status", "=", 0)->get()[0] : null;
+        $books = $sale === null ? null : $sale->books;
+        $coupon = $sale === null ? null : $sale->coupons;
+        $payments = PaymentMethods::all();
+        if($books !== null){
+            foreach ($books as $book){
+                $book->maxStock = $book->stocks->quantity;
+            }
+        }
+        return Inertia::render("CartFinish", ["sale"=> $sale, "books" => $books, "coupon" => $coupon, "payments" => $payments]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -101,6 +118,39 @@ class SalesController extends Controller
                     'quantity' => $saleAdd->quantity + 1
                 ]);
             }
+        }
+    }
+
+    public function storeFinish(Request $request)
+    {
+        if(Auth::user()->profiles_id === 5){
+            if(Sales::where("users_id", Auth::user()->id)->where("status", 0)->count() > 0){
+                $cart = Sales::where("users_id", Auth::user()->id)->where("status", 0)->first();
+                $method = $request->query->get('method');
+                DB::unprepared("call finaliza_venda($cart->id, $method, $request->parcel)");
+            }
+        }
+        //return tela de agradeciomento de compra
+    }
+
+    public function cepStore(Request $request)
+    {
+        if(Auth::user()->profiles_id === 5){
+            $addr = Addresses::create([
+                "name" => $request->query->get("name"),
+                "cep" => $request->query->get("cep"),
+                "number" => $request->query->get("number"),
+                "complement" => $request->query->get("complement"),
+                "district" => $request->query->get("district"),
+                "city" => $request->query->get("city"),
+                "uf" => $request->query->get("uf"),
+                "users_id" => Auth::user()->id
+            ]);
+
+
+            $cart = Sales::where("users_id", Auth::user()->id)->where("status", 0)->first();
+            $cart->addresses_id = $addr->id;
+            $cart->save();
         }
     }
 
