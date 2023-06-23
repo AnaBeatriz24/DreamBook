@@ -106,14 +106,14 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/showGenders', [GendersController::class, 'store'])->name('gender.store');
     Route::get('/editGenders/{gender}', [GendersController::class, 'edit'])->name('gender.edit');
-    Route::post('/editGenders/', [GendersController::class, 'update'])->name('gender.update');
+    Route::post('/editedGenders/{gender}', [GendersController::class, 'update'])->name('gender.update');
 
     Route::get('/showGendersActives', [GendersController::class, 'showActives'])->name('gender.showActives');
     Route::get('/showGendersInactives', [GendersController::class, 'showInactives'])->name('gender.showInactives');
 
     Route::post('/showGenders/{gender}', [GendersController::class, 'editStatus'])->name('gender.editStatus');
 
-    Route::post('/gender/successGender', [GendersController::class, 'editedFinish'])->name('gender.success');
+    Route::get('/gender/successGender', [GendersController::class, 'editedFinish'])->name('gender.success');
 
     Route::get("/showBook/{book}", [BooksController::class, 'index'])->name("book.index");
 

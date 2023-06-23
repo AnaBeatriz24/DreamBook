@@ -12,10 +12,6 @@ export default function FinishCreateCoupon({ auth }: PageProps) {
             'route': 'gender.showActives',
         },
         {
-            'name': 'Editar Gênero',
-            'route': 'gender.edit',
-        },
-        {
             'name': 'Gênero Editado',
             'route': 'gender.success',
         }
@@ -44,7 +40,7 @@ export default function FinishCreateCoupon({ auth }: PageProps) {
                         Voltar para home
                     </SecondaryButton>
                 </Link>
-                <Link href={route('gender.ShowActives')}>
+                <Link href={route('gender.showActives')}>
                     <SecondaryButton className="ml-4 lg:w-auto bg-zinc-500 hover:bg-zinc-700" type={'button'}>
                         Gerenciar Gêneros
                     </SecondaryButton>

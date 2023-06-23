@@ -8,12 +8,14 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import SecondaryButton from "@/Components/SecondaryButton";
-import {FormEventHandler, useState} from "react";
+import {FormEventHandler} from "react";
 import ButtonStatusBarGroup from "@/Components/ButtonStatusBarGroup";
 
 export default function ShowGenders({ auth }: PageProps, ) {
 
-    let {genders, statusBar} = usePage().props;
+    let {genders, statusBar, status} = usePage().props;
+    console.log(status)
+
     let routes = ["gender.showActives", "gender.showInactives"]
     let title = ["Ativos", "Desativados"]
 
@@ -51,7 +53,11 @@ export default function ShowGenders({ auth }: PageProps, ) {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('gender.store'));
+        post(route('gender.store'), {
+            preserveScroll: true,
+            onSuccess: () => alert("Gênero Cadastrado!"),
+            onFinish: () => reset(),
+        });
     };
 
     const onHandleChange = (event) => {

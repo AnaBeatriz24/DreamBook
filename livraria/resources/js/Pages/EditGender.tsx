@@ -21,7 +21,6 @@ const rotas = [
 export default function EditGender({ auth }: PageProps) {
 
     const {gender} = usePage().props
-    console.log(gender)
 
     const { data, setData, post, processing, errors } = useForm({
         name: gender[0].name,
