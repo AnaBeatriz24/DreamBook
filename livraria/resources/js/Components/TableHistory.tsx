@@ -16,7 +16,7 @@ export default function TableHistory(props) {
                 ? null
                 : index === 1
                     ? <div className="px-2 py-3 w-full flex justify-center">
-                        <img src={`${window.location.origin}/storage/app/public/${item}`} alt={`${item}`}/>
+                        <img className={"w-32"} src={`${window.location.origin}/storage/${item}`} alt={`${item}`}/>
                     </div>
                     : <div className="px-2 py-3 break-words font-medium font-medium text-white text-sm rounded">
                         {item}
@@ -57,7 +57,7 @@ export default function TableHistory(props) {
 
 
     return <>
-        <div className="grid grid-flow-col grid-cols-7 justify-evenly text-center">
+        <div className="grid grid-flow-col grid-cols-7 justify-evenly text-center mt-12">
             {
                 head.map(
                     item => {

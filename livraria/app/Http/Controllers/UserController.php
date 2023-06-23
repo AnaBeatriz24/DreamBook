@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Profiles;
 use App\Models\User;
+use DateTime;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -223,7 +224,9 @@ class UserController extends Controller
             }
         }
 
-        // dd($sales);
+        foreach ($sales as $sale) {
+            $sale->tradeDate = (new DateTime($sale->tradeDate))->format("d/m/Y h:m:s");
+        }
 
         return Inertia::render('History', [
             'sales' => $sales,
