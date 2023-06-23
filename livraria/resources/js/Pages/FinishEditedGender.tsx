@@ -30,18 +30,18 @@ export default function FinishCreateCoupon({ auth }: PageProps) {
             </div>
 
             <div className='flex justify-center mt-16'>
-                <h2 className='text-center text-2xl font-bold text-zinc-900'>
+                <h2 className='text-center text-2xl font-bold text-white'>
                     Gênero editado com sucesso!
                 </h2>
             </div>
             <div className="mt-60 flex gap-4 justify-around">
                 <Link href={route('home')}>
-                    <SecondaryButton className="ml-4 lg:w-auto bg-zinc-500 hover:bg-zinc-700" type={'button'}>
+                    <SecondaryButton className="ml-4 lg:w-auto bg-amber-800 hover:bg-amber-900" type={'button'}>
                         Voltar para home
                     </SecondaryButton>
                 </Link>
                 <Link href={route('gender.showActives')}>
-                    <SecondaryButton className="ml-4 lg:w-auto bg-zinc-500 hover:bg-zinc-700" type={'button'}>
+                    <SecondaryButton className="ml-4 lg:w-auto bg-amber-800 hover:bg-amber-900" type={'button'}>
                         Gerenciar Gêneros
                     </SecondaryButton>
                 </Link>
