@@ -208,7 +208,7 @@ class UserController extends Controller
         $sales = DB::table('sales_books')
             ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
             ->join('books', 'sales_books.books_id', '=', 'books.id')
-            ->select('books.title', 'sales.tradeDate', 'sales.attendant_id', 'sales.cashier_id', 'sales_books.amount')
+            ->select('books.id', 'books.img', 'books.title', 'sales.tradeDate', 'sales.attendant_id', 'sales.cashier_id', 'sales_books.amount')
             ->where('sales.status', 1)
             ->where('sales.users_id', Auth::id())
             ->paginate(7);
