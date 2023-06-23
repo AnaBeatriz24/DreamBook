@@ -3,12 +3,12 @@ export default function Team() {
     const teamIfro = [
         {
             name:"Ana Beatriz de Freitas",
-            description:"Programadora",
+            description:"Diretor Executivo",
             src:"/photos-team/ana.png",
         },
         {
             name:"Marcello Brasileiro",
-            description:"Programador",
+            description:"Diretor de Projeto",
             src:"/photos-team/marcello.png",
         },
     ];
