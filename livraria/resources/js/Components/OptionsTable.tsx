@@ -51,7 +51,7 @@ export default function OptionsTable(props) {
             <div className={(showingNavigationDropdown ? 'relative' : 'hidden') + ' xl:hidden right-2 mt-2'}>
                 <div className="">
                     {
-                        <div className={"px-6 py-3 w-[90vw] gap-2 justify-end flex flex-wrap"}>
+                        <div className={"px-6 py-3 w-[90vw] gap-2 justify-end md:justify-center sm:m-4 sm:justify-centerflex flex-wrap"}>
                             {props.buttons}
                         </div>
                     }

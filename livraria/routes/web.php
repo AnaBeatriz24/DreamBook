@@ -88,10 +88,13 @@ Route::middleware('auth')->group(function () {
     ->name('coupon.success');
 
     Route::get('/coupons/showActiveCoupons', [CouponsController::class, 'show'])->name('coupon.showActive');
-
     Route::get('/coupons/showInactiveCoupons', [CouponsController::class, 'showInactives'])->name('coupon.showInactive');
-
     Route::post("/coupons/{coupon}", [CouponsController::class, 'editStatus'])->name("coupons.editStatus");
+
+
+    Route::get('/books/showActiveBooks', [BooksController::class, 'showtwo'])->name('book.showActive');
+    Route::get('/books/showInactiveBooks', [BooksController::class, 'showInactives'])->name('book.showInactive');
+    Route::post("/books/{book}", [BooksController::class, 'editStatus'])->name("book.editStatus");
 
 
     Route::get('/createBook', [BooksController::class, 'create'])->name('book.create');
@@ -101,6 +104,18 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/SucessCreateBook', fn() => Inertia::render("SucessCreateBook"))->name('sucess.book');
 
+   // Route::get('/ShowBookList',[BooksController::class, 'showAdd'])->name('book.show');
+    Route::post('/ShowBookList/{book}',[BooksController::class, 'destroy'])->name('book.destroy');
+    Route::get('/ShowBookList/EditBook/{book}',[BooksController::class, 'update'])->name('book.update');
+
+
+    Route::get('/Edit/{book}', [BooksController::class, 'edit'])->name('books.edit');
+    Route::get("/EditB/{book}", [BooksController::class, 'editBook'])->name('store.editBook');
+
+
+
+    Route::get('/showBooks/{gender}', [BooksController::class, 'show'])->name('book.searchGender');
+    Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
 
     Route::post('/showGenders', [GendersController::class, 'store'])->name('gender.store');
     Route::get('/editGenders/{gender}', [GendersController::class, 'edit'])->name('gender.edit');
@@ -115,9 +130,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get("/showBook/{book}", [BooksController::class, 'index'])->name("book.index");
 
-    Route::get('/salesHistory', function () {
-        dd('Desenvolver tela de histórico de vendas');
-    })->name('sales.history');
+    Route::get('/salesHistory', [UserController::class, 'history'])->name('sales.history');
 
 });
 

@@ -55,7 +55,7 @@ export default function TableAvailableCupons(props) {
                 head.map(
                     item => {
                         return header(item)
-                })
+                    })
             }
         </div>
 

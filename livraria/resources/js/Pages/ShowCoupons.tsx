@@ -10,6 +10,7 @@ export default function ShowCoupons({ auth }: PageProps, ) {
 
     let {coupons, statusBar} = usePage().props;
 
+
     let header=["Nome", "Valor do desconto", "Status", "Ações", ""];
     let routes = ["coupon.showActive", "coupon.showInactive"]
     let title = ["Ativos", "Desativados"]

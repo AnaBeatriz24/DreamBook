@@ -21,8 +21,10 @@ class Books extends Model
         'isbn',
         'img',
         'publishers_id',
-        "id"
+        "id",
+        'status'
     ];
+
 
     public function stocks():HasOne
     {

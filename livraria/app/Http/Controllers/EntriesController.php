@@ -48,8 +48,7 @@ class EntriesController extends Controller
         }
 
         //fazer a tela de agradecimento aqui
-//        return Inertia::render('ShowBooks', []);
-        return redirect()->route("sucess.book");
+        return Inertia::render('SucessCreateBook', []);
 
 
     }
