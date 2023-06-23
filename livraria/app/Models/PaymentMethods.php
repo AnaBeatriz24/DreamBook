@@ -13,11 +13,7 @@ class PaymentMethods extends Model
     protected $table = "payment_methods";
 
     protected $fillable = [
-        'method'
-    ];
-
-    protected $hidden = [
-        "id"
+        'method', "id"
     ];
 
     public function sales():BelongsTo
