@@ -54,7 +54,7 @@ export default function BookIndex({auth}) {
                     </div>
                     <div className={"text-white mt-16"}>
                         <p className={"text-3xl mt-6 w-96 break-words"}>Livro: {book.title}</p>
-                        <p className={"text-2xl mt-6 w-96 break-words"}>Descrição: {book.description}</p>
+                        <p className={"text-xl mt-6 w-96 break-words"}>Descrição: {book.description}</p>
                         <p className={"text-xl mt-6 w-96 break-words"}>Autor(a): {book.author}</p>
                         <p className={"text-xl mt-6 w-96 break-words"}>Editora: {book.publisher}</p>
                     </div>
