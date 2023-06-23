@@ -14,17 +14,17 @@ export default function Authenticated({ user, header, children }: PropsWithChild
         // @ts-ignore
         switch(user.profiles_id) {
             case 1:
-                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Adicionar Compra", "book.create"], ["Pesquisar Livros", "book.search"],
+                return [["Home", "book.search"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Adicionar Compra", "book.create"], ["Pesquisar Livros", "book.search"],
                     ["Adicionar Cupons", "coupon.create"],
                     ["Cupons Disponíveis", "coupon.showActive"],];
             case 2:
-                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"]];
+                return [["Home", "book.search"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"]];
             case 3:
-                return [["Home", "home"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Pedidos Abertos", "sales.open"]];
+                return [["Home", "book.search"], ["Adicionar Usuário", "user.create"], ["Visualizar Usuários", "user.showAll"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Pedidos Abertos", "sales.open"]];
             case 4:
-                return [["Home", "home"], ["Adicionar Compra", "book.create"], ["Pesquisar Livros", "book.search"],];
+                return [["Home", "book.search"], ["Adicionar Compra", "book.create"],];
             case 5:
-                return [["Home", "home"], ["Pesquisar Livros", "book.search"], ["Meu Histórico", "sales.history"], ["Entre em Contato", "contact.show"], ["Sobre nós", "team.index"]];
+                return [["Home", "book.search"], ["Entre em Contato", "contact.show"], ["Meu Histórico", "sales.history"],];
         }};
 
     return (

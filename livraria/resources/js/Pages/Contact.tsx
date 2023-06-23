@@ -12,15 +12,15 @@ export default function Contact() {
     const routes:object[] = [
         {
             name: "Home",
-            route: "home"
+            route: "book.search"
         },
         {
             name: "Entre em contato",
             route: "contact.show"
         },
         {
-            name: "Nosso time",
-            route: "team.index"
+            name: "Meu Histórico",
+            route: "sales.history"
         },
     ]
 

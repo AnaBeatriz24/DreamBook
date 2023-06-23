@@ -7,7 +7,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EntriesController;
+use App\Models\Genders;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,28 +25,38 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+    if (!empty($gender->id)) {
+        $queryGender = trim($gender->id);
 
-        /*TODO: Fazer a seleção dos livros mais vendidos pelo banco de dados */
-        'livrosMaisVendidos' => [
-            0 => [
-                "name" => "Harry Potter e o Cálice de Fogo",
-                "path" => "books/HarryPotterCaliceFogo.png"
-            ],
-            1 => [
-                "name" => "O diário de Anne Frank",
-                "path" => "books/DiarioAnne.png"
-            ],
-            2 => [
-                "name" => "A temperatura entre você e eu",
-                "path" => "books/TemperaturaVoceEu.png"
-            ],
-        ],
+        $gender = Genders::find($queryGender);
+
+        $books = DB::table('books_genders')
+            ->join('books', 'books_genders.books_id', '=', 'books.id')
+            ->where('genders_id', '=', $gender->id)
+            ->get();
+    } else {
+        $books = DB::table('books')->get();
+    }
+
+    $genders = DB::table('genders')->get();
+
+    foreach ($books as $book) {
+        $book->path = "$book->title.png";
+    }
+
+    return Inertia::render('ShowBooks', [
+        'books' => $books,
+        'genders' => $genders,
     ]);
+
+
+
+//    return Inertia::render('Welcome', [
+//        'canLogin' => Route::has('login'),
+//        'canRegister' => Route::has('register'),
+//        'laravelVersion' => Application::VERSION,
+//        'phpVersion' => PHP_VERSION, [BooksController::class, 'show']
+//    ]);
 });
 
 Route::get('/contact', fn() => Inertia::render("Contact"))->name('contact.show');
