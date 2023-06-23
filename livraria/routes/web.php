@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CouponsController;
+use App\Http\Controllers\GendersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EntriesController;
-use App\Models\Genders;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -70,7 +70,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/createUsers', [UserController::class, 'create'])->name('user.create');
     Route::post('/createUsers', [UserController::class, 'store'])->name('user.store');
     Route::post('/deleteUser/{user}', [UserController::class, 'destroy'])->name('user.destroy');
-    Route::post('/activeUser/{user}', [UserController::class, 'active'])->name('user.active');
 
     //Visualização da tabela de usuários
     Route::get('/showUsers', [UserController::class, 'showAllUsers'])->name('user.showAll');
@@ -79,9 +78,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/showBuyers', [UserController::class, 'showBuyersUsers'])->name('user.showBuyers');
     Route::get('/showCustomers', [UserController::class, 'showCustomersUsers'])->name('user.showCustomers');
     Route::get('/showInactives', [UserController::class, 'showInactives'])->name('user.showInactives');
-
-    Route::post('/showUser', [UserController::class, 'showAllUsers'])->name('user.search');
-
 
 
     Route::get('/coupons/createCoupon', [CouponsController::class, 'create'])->name('coupon.create');
@@ -120,6 +116,17 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/showBooks/{gender}', [BooksController::class, 'show'])->name('book.searchGender');
     Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
+
+    Route::post('/showGenders', [GendersController::class, 'store'])->name('gender.store');
+    Route::get('/editGenders/{gender}', [GendersController::class, 'edit'])->name('gender.edit');
+    Route::post('/editedGenders/{gender}', [GendersController::class, 'update'])->name('gender.update');
+
+    Route::get('/showGendersActives', [GendersController::class, 'showActives'])->name('gender.showActives');
+    Route::get('/showGendersInactives', [GendersController::class, 'showInactives'])->name('gender.showInactives');
+
+    Route::post('/showGenders/{gender}', [GendersController::class, 'editStatus'])->name('gender.editStatus');
+
+    Route::get('/gender/successGender', [GendersController::class, 'editedFinish'])->name('gender.success');
 
     Route::get("/showBook/{book}", [BooksController::class, 'index'])->name("book.index");
 
