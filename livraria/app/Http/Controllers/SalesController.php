@@ -100,6 +100,7 @@ class SalesController extends Controller
     public function store(Request $request)
     {
         if(Auth::user()->profiles_id === 5){
+
             if(Sales::where("users_id", Auth::user()->id)->where("status", 0)->count() > 0){
                 $cart = Sales::where("users_id", Auth::user()->id)->where("status", 0)->first();
             } else {
@@ -108,8 +109,8 @@ class SalesController extends Controller
                 ]);
             }
             $stock = Stocks::where("books_id", $request->idLivro)->first();
+            $saleAdd = DB::table('sales_books')->where('books_id', $stock->books_id)->where('sales_id', $cart->id)->first();
 
-            $saleAdd = DB::table('sales_books')->where('books_id', $stock->books_id)->first();
 
             if (is_null($saleAdd)) {
                 if($stock->quantity > 0)
