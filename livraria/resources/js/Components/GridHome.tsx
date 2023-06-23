@@ -39,7 +39,7 @@ const buttons = (profile:number) => {
             <Link href={route("gender.showActives")}>
                 <ButtonHome opt="viewGenders" />
             </Link>
-            <Link href={route("coupon.showActive")}>
+            <Link href={route("book.showActive")}>
                 <ButtonHome opt="viewBooks" />
             </Link>
         </>

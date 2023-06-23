@@ -6,11 +6,10 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
-import AddAuthor from "@/Components/AddAuthor";
-import React from "react";
-import UpdateTitle from "@/Components/UpdateTitle";
+import React, {useState} from "react";
 import {name} from "axios";
 import PrimaryButton from "@/Components/PrimaryButton";
+import AddAuthor from "@/Components/AddAuthor";
 
 const rotas = [
     {
@@ -22,9 +21,27 @@ const rotas = [
         'route': 'books.edit',
     },
 ]
-export default function EditBook({ auth, book, autores, editora, generos }: PageProps){
 
-     console.log(autores[0].name)
+export default function EditBook( dataBook={autor:string},{ auth, book, autores, editora, generos }: PageProps){
+    //
+    const [listAutores, setListAutores] = useState(
+        dataBook.autores.map((a) => {
+            console.log(a)
+            return <AddAuthor dataAuthor={{author: autores[a].name}}/>;
+        })
+    );
+
+    const addLine = () => {
+        setListAutores([...listAutores, <AddAuthor dataAuthor={{author: ""}} />]);
+    }
+
+    const removeAuthors = () =>{
+        let array = listAutores
+        array.pop()
+        setListAutores([...array])
+    }
+
+     console.log(autores)
 
 
 
@@ -48,10 +65,6 @@ export default function EditBook({ auth, book, autores, editora, generos }: Page
     const submit = (e) => {
         e.preventDefault()
         post(route("store.editBook", [data.id_book]));
-    };
-    const submitTitle = (e) => {
-        e.preventDefault()
-        post(route("store.editTitle", [data.titulo_book]));
     };
 
     return<>
@@ -101,6 +114,18 @@ export default function EditBook({ auth, book, autores, editora, generos }: Page
                                         handleChange={onHandleChange}
                                         required={true}
                                     />
+                                    {...listAutores}
+
+                                    <SecondaryButton className="ml-4" type={'button'} onClick={addLine}>
+                                        Adicionar autor
+                                    </SecondaryButton>
+
+                                    {
+                                        (listAutores.length===1) ? <>
+                                        </> : <SecondaryButton className="ml-4" type={'button'} onClick={removeAuthors}>
+                                            Remover autor
+                                        </SecondaryButton>
+                                    }
                                 </div>
                             </div>
                             <div className="flex flex-col  items-center">

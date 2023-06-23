@@ -51,7 +51,7 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CreateBook',["genders" => Genders::all(), "suppliers" => Suppliers::all(), "books" => Books::all()]);
+        return Inertia::render('CreateBook',["genders" => Genders::where('status', '=',1)->get(), "suppliers" => Suppliers::all(), "books" => Books::all()]);
     }
 
     /**
@@ -115,10 +115,13 @@ class BooksController extends Controller
                 ->where('genders_id', '=', $gender->id)
                 ->get();
         } else {
-            $books = DB::table('books')->get();
+            $books = DB::table('books')
+                ->where('status','=', '1')
+                ->get();
         }
 
-        $genders = DB::table('genders')->get();
+        $genders = DB::table('genders')
+            ->get();
 
         foreach ($books as $book) {
              $book->path = "$book->title.png";
@@ -130,16 +133,6 @@ class BooksController extends Controller
         ]);
     }
 
-//    public function showAdd(Books $books, Stocks $stocks){
-//
-//
-//        $results = DB::table('books')
-//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
-//            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
-//            ->get();
-//
-//        return Inertia::render('ShowBookList',["results"=>$results]);
-//    }
 
     /**
      * Show the form for editing the specified resource.

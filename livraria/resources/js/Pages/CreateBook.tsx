@@ -9,7 +9,6 @@ import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import PrimaryButton from "@/Components/PrimaryButton";
 import RegistrationSupplier from "@/Components/RegistrationSupplier";
 import SecondaryButton from "@/Components/SecondaryButton";
-import AddAuthor from "@/Components/AddAuthor";
 import Book from "@/Components/Book";
 import {unmountComponentAtNode} from "react-dom";
 import OptionsTable from "@/Components/OptionsTable";
