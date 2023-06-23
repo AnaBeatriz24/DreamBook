@@ -17,10 +17,10 @@ class Addresses extends Model
         'cep',
         'number',
         'complement',
-        "users_id"
-    ];
-
-    protected $hidden = [
+        "users_id",
+        "district",
+        "city",
+        "uf",
         "id"
     ];
 
