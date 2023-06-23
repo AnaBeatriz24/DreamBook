@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Books;
+use App\Models\Company;
 use App\Models\Genders;
 use App\Models\Publisher;
+use App\Models\Stocks;
 use App\Models\Suppliers;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use App\Models\Authors;
 
@@ -125,13 +130,87 @@ class BooksController extends Controller
         ]);
     }
 
+//    public function showAdd(Books $books, Stocks $stocks){
+//
+//
+//        $results = DB::table('books')
+//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+//            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+//            ->get();
+//
+//        return Inertia::render('ShowBookList',["results"=>$results]);
+//    }
+
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Books $books)
+    public function edit(Books $book)
     {
-        //
+        //dd($books);
+
+        return Inertia::render('EditBook',['book'=>$book]);
     }
+
+    public function editBook(Books $book, Request $request, Stocks $stocks)
+    {
+//
+//        $results = DB::table('books')
+//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+//            ->get();
+//
+//        $results->title = $request ->title_book;
+//        $results->description = $request ->descricao;
+//        $results->isbn = $request->isbn_book;
+//        $results->img = $request->imgcapa_books;
+//        $results->publishers = $request->editora_book;
+//        $results->authors= $request->autor_book;
+//        $results->genders=$request->genero_book;
+//        $results->quantity=$request->quantidade_stocks;
+//        $results->amount=$request->valor_entrada;
+////        $results->save();
+////
+////        return redirect()->route("store.editBook");
+//        return Inertia::render('EditBook',['book'=>$book]);
+
+    }
+
+    public function showtwo(Books $books, Stocks $stocks)
+    {
+        $results = $this->editViewDataBook(1);
+//        $results = DB::table('books')
+//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+//            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+//            ->get();
+
+        return Inertia::render('ShowBookList', [
+            "results" =>$results,
+            "statusBar" => 1
+        ]);
+    }
+    public function showInactives(Books $books)
+    {
+        $results = $this->editViewDataBook(0);
+
+//        $results = DB::table('books')
+//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+//            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+//            ->get();
+
+        return Inertia::render('ShowBookList', [
+            "results" =>$results,
+            "statusBar" => 0
+        ]);
+    }
+
+
+    public function editStatus(Books $book)
+    {
+        $results = $book;
+        $results->status = !$results->status;
+        $results->save();
+        return redirect()->route($results->status ? "book.showActive" : "book.showInactive");
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -144,8 +223,27 @@ class BooksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Books $books)
+    public function destroy(Books $book)
+
     {
         //
     }
+    protected function editViewDataBook($status): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        return DB::table('books')
+            ->where('status', '=', $status)
+            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+            ->select("books.id", "books.title", "books.status", "stocks.quantity", "stocks.amount")
+            ->paginate(7);
+//        $books = DB::table('books')
+//            ->select('id', 'title', 'status')
+//            ->where('status', '=', $status)
+//
+
+
+
+
+
+    }
+
 }
