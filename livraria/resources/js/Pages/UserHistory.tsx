@@ -1,13 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, useForm, usePage} from '@inertiajs/react';
+import {Head, usePage} from '@inertiajs/react';
 import { PageProps } from '@/types';
 import Pagination from "@/Components/Pagination";
 import BreadchumbSystem from "@/Components/BreadchumbSystem";
 import TableHistory from "@/Components/TableHistory";
-import {FormEventHandler} from "react";
-import TextInput from "@/Components/TextInput";
-import InputLabel from "@/Components/InputLabel";
-import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function History({ auth }: PageProps, ) {
 

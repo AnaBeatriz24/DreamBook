@@ -204,7 +204,7 @@ class UserController extends Controller
         return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 6]);
     }
 
-    public function history(Request $request)
+    public function history()
     {
         $sales = DB::table('sales_books')
             ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
