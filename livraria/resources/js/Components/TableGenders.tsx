@@ -2,7 +2,7 @@ import {Link, useForm} from "@inertiajs/react";
 import OptionsTable from "@/Components/OptionsTable";
 
 const header = (item:string) => {
-    return <div className="px-2 py-3 font-black text-black text-sm">
+    return <div className="px-2 py-3 font-bold text-white text-sm">
         {item}
     </div>
 }
@@ -66,7 +66,7 @@ export default function TableGenders(props){
 
         {
             body.map(data => {
-                return <div className="mx-auto bg-teal-900 rounded-lg w-[90vw] grid grid-cols-4 text-center items-center mb-2">
+                return <div className="mx-auto bg-teal-950 rounded-lg w-[90vw] grid grid-cols-4 text-center items-center mb-2">
                     {dataText(data)}
                     <OptionsTable buttons={buttons(data)} data={data} />
                 </div>
