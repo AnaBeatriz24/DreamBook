@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Profiles;
 use App\Models\User;
+use DateTime;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -208,7 +209,7 @@ class UserController extends Controller
         $sales = DB::table('sales_books')
             ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
             ->join('books', 'sales_books.books_id', '=', 'books.id')
-            ->select('books.title', 'sales.tradeDate', 'sales.attendant_id', 'sales.cashier_id', 'sales_books.amount')
+            ->select('books.id', 'books.img', 'books.title', 'sales.tradeDate', 'sales.attendant_id', 'sales.cashier_id', 'sales_books.amount')
             ->where('sales.status', 1)
             ->where('sales.users_id', Auth::id())
             ->paginate(7);
@@ -223,7 +224,9 @@ class UserController extends Controller
             }
         }
 
-        // dd($sales);
+        foreach ($sales as $sale) {
+            $sale->tradeDate = (new DateTime($sale->tradeDate))->format("d/m/Y h:m:s");
+        }
 
         return Inertia::render('History', [
             'sales' => $sales,
