@@ -3,7 +3,7 @@ import {Link, useForm} from "@inertiajs/react";
 import OptionsTable from "@/Components/OptionsTable";
 
 const header = (item:string) => {
-    return <div className="px-2 py-3 font-medium font-black text-black text-sm">
+    return <div className="px-2 py-3 font-medium font-black text-white text-sm">
         {item}
     </div>
 }
@@ -19,8 +19,9 @@ const dataText = (itens:object) => {
 }
 
 export default function TableBook(props){
+    console.log(props);
     let head = props.props.header;
-    let body = props.props.data.data;
+    let body = props.props.data;
 
 
     const dataAction = (item:string, id:number) => {
@@ -53,21 +54,18 @@ export default function TableBook(props){
         post(route("book.editStatus", [e.target.value]))
     }
 
-    console.log(body)
     return <>
 
-        <div className="grid grid-flow-col grid-cols-4 gap-4 lg:w-3/4 md:w-3/4 lg:ml-40 ml-20 p-mx-auto">
+        <div className="grid grid-flow-col items-center text-center grid-cols-4 gap-4 w-[90vw] mx-auto">
             { head.map(item => {
                 return header(item)
             })
             }
-            <div className="px-6 py-3">
-            </div>
         </div>
 
         {
             body.map(data => {
-                return <div className="mx-auto bg-teal-900 rounded-lg w-[90vw] grid grid-cols-4 text-center items-center mb-2">
+                return <div className="mx-auto bg-teal-950 rounded-lg w-[90vw] grid grid-cols-4 text-center items-center mb-2">
                     {dataText(data)}
                     <OptionsTable buttons={buttons(data)} data={data} />
                 </div>

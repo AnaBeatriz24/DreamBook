@@ -5,7 +5,7 @@ export default function PrimaryButton({ className = '', disabled, children, ...p
         <button
             {...props}
             className={
-                `inline-flex items-center px-5 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest shadow-sm hover:bg-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-900 focus:bg-amber-800 disabled:opacity-25 transition ease-in-out duration-150 ${
+                `inline-flex items-center px-5 py-2 bg-amber-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest shadow-sm hover:bg-amber-900 focus:outline-none focus:ring-2 disabled:opacity-25 transition ease-in-out duration-150 ${
                     disabled && 'opacity-25'
                 } ` + className
             }

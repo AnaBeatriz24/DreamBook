@@ -51,7 +51,7 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CreateBook',["genders" => Genders::all(), "suppliers" => Suppliers::all(), "books" => Books::all()]);
+        return Inertia::render('CreateBook',["genders" => Genders::where('status', '=',1)->get(), "suppliers" => Suppliers::all(), "books" => Books::all()]);
     }
 
     /**
@@ -115,10 +115,13 @@ class BooksController extends Controller
                 ->where('genders_id', '=', $gender->id)
                 ->get();
         } else {
-            $books = DB::table('books')->get();
+            $books = DB::table('books')
+                ->where('status','=', '1')
+                ->get();
         }
 
-        $genders = DB::table('genders')->get();
+        $genders = DB::table('genders')
+            ->get();
 
         foreach ($books as $book) {
              $book->path = "$book->title.png";
@@ -130,45 +133,60 @@ class BooksController extends Controller
         ]);
     }
 
-//    public function showAdd(Books $books, Stocks $stocks){
-//
-//
-//        $results = DB::table('books')
-//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
-//            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
-//            ->get();
-//
-//        return Inertia::render('ShowBookList',["results"=>$results]);
-//    }
+    public function deleteAuthor(Request $request)
+    {
+        DB::unprepared("delete from books_authors where authors_id = ".$request->query->get("idAutor"));
+    }
+
+    public function updatePub(Request $request)
+    {
+        DB::unprepared("update publishers set name = '".$request->query->get("name")."' where id = ".$request->query->get("idPub"));
+    }
+
+    public function updateBook(Request $request)
+    {
+
+        $book = Books::find($request->idBook);
+
+        if($request->file()){
+            $fileName = time().'.'.$request->file()["imgcapa"]->getClientOriginalExtension();
+            $filePath = $request->file()["imgcapa"]->storeAs('/', $fileName, 'public');
+            $book->img = $filePath;
+        }
+
+        $book->title = $request->titulo;
+        $book->description = $request->descricao;
+        $book->save();
+
+        if(sizeof($request->genero) > 0){
+//            dd($request->genero);
+            DB::unprepared("delete from books_genders where books_id = ".$book->id);
+            foreach ($request->genero as $genero){
+                $gen = Genders::find($genero);
+                $book->genders()->attach($gen);
+            }
+        }
+        return redirect()->route("book.showActive");
+    }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Books $book)
     {
-        //dd($books);
-
-        return Inertia::render('EditBook',['book'=>$book]);
+        return Inertia::render('EditBook',['book'=>$book, "autores" => $book->authors, "editora" => $book->publishers, "generos" => Genders::all(), "gendersBooks" => $book->genders]);
     }
 
     public function editBook(Books $book, Request $request, Stocks $stocks)
     {
+
+
+
+
+
+
 //
-//        $results = DB::table('books')
-//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
-//            ->get();
-//
-//        $results->title = $request ->title_book;
-//        $results->description = $request ->descricao;
-//        $results->isbn = $request->isbn_book;
-//        $results->img = $request->imgcapa_books;
-//        $results->publishers = $request->editora_book;
-//        $results->authors= $request->autor_book;
-//        $results->genders=$request->genero_book;
-//        $results->quantity=$request->quantidade_stocks;
-//        $results->amount=$request->valor_entrada;
-////        $results->save();
-////
 ////        return redirect()->route("store.editBook");
 //        return Inertia::render('EditBook',['book'=>$book]);
 
@@ -176,11 +194,11 @@ class BooksController extends Controller
 
     public function showtwo(Books $books, Stocks $stocks)
     {
-        $results = $this->editViewDataBook(1);
-//        $results = DB::table('books')
-//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
-//            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
-//            ->get();
+        $results = DB::table('books')
+            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+            ->where("books.status", "=", 1)
+            ->get();
 
         return Inertia::render('ShowBookList', [
             "results" =>$results,
@@ -189,7 +207,11 @@ class BooksController extends Controller
     }
     public function showInactives(Books $books)
     {
-        $results = $this->editViewDataBook(0);
+        $results = DB::table('books')
+            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+            ->select("books.id", "books.title", "stocks.quantity", "stocks.amount")
+            ->where("books.status", "=", 0)
+            ->get();
 
 //        $results = DB::table('books')
 //            ->join('stocks', 'books.id', '=', 'stocks.books_id')
@@ -228,13 +250,16 @@ class BooksController extends Controller
     {
         //
     }
-    protected function editViewDataBook($status): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    protected function editViewDataBook($status)
     {
-        return DB::table('books')
-            ->where('status', '=', $status)
-            ->join('stocks', 'books.id', '=', 'stocks.books_id')
-            ->select("books.id", "books.title", "books.status", "stocks.quantity", "stocks.amount")
-            ->paginate(7);
+//        return DB::table('books')
+//            ->where('status', '=', $status)
+//            ->join('stocks', 'books.id', '=', 'stocks.books_id')
+//            ->select("books.id", "books.title", "books.status", "stocks.quantity", "stocks.amount")
+//            ->paginate(7);
+
+
+
 //        $books = DB::table('books')
 //            ->select('id', 'title', 'status')
 //            ->where('status', '=', $status)

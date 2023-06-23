@@ -31,14 +31,14 @@ class Books extends Model
         return $this->hasOne(Stocks::class, "books_id", "id");
     }
 
-    public function publishers():HasMany
+    public function publishers():HasOne
     {
-        return $this->hasMany(Publisher::class, "publishers_id");
+        return $this->hasOne(Publisher::class, "id", "publishers_id");
     }
 
     public function authors():BelongsToMany
     {
-        return $this->belongsToMany(Authors::class, "books_authors", "books_id", "authors_id");
+        return $this->belongsToMany(Authors::class, "books_authors", "books_id", "authors_id", "id", "id");
     }
 
     public function genders():BelongsToMany
