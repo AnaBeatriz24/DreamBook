@@ -20,9 +20,23 @@ export default function ShowBooks({ auth }: PageProps) {
 
     const routes:object[] = [
         {
-            name: "Livros listados",
+            name: "Home",
             route: "book.search"
         },
+        {
+            name:"Entre em Contato",
+            route: 'contact.show'
+        },
+        {
+            name: 'Meu Histórico',
+            route: 'sales.history'
+        }
+    ]
+    const routes1:object[] = [
+        {
+            name: "Livros listados",
+            route: "book.search"
+        }
     ]
 
     const {books, genders} = usePage().props
@@ -64,7 +78,7 @@ export default function ShowBooks({ auth }: PageProps) {
                 >
                     <Head title="Pesquisar Livros" />
                     <div className={"mt-8 ml-20"}>
-                        <BreadchumbSystem rota={routes} />
+                        <BreadchumbSystem rota={routes1} />
                     </div>
 
                     <ComponentFindBook/>
