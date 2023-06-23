@@ -7,7 +7,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EntriesController;
-use App\Models\Genders;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -106,12 +105,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/showBooks/{gender}', [BooksController::class, 'show'])->name('books.searchSubmit');
 
     Route::post('/showGenders', [GendersController::class, 'store'])->name('gender.store');
-    Route::post('/showGenders/{gender}', [GendersController::class, 'edit'])->name('gender.edit');
+    Route::get('/editGenders/{gender}', [GendersController::class, 'edit'])->name('gender.edit');
+    Route::post('/editGenders/', [GendersController::class, 'update'])->name('gender.update');
 
     Route::get('/showGendersActives', [GendersController::class, 'showActives'])->name('gender.showActives');
     Route::get('/showGendersInactives', [GendersController::class, 'showInactives'])->name('gender.showInactives');
+
     Route::post('/showGenders/{gender}', [GendersController::class, 'editStatus'])->name('gender.editStatus');
-    Route::post('/showGenders/{gender}', [GendersController::class, 'update'])->name('gender.update');
+
+    Route::post('/gender/successGender', [GendersController::class, 'editedFinish'])->name('gender.success');
 
     Route::get("/showBook/{book}", [BooksController::class, 'index'])->name("book.index");
 

@@ -43,7 +43,6 @@ class GendersController extends Controller
         $newGender = new Genders();
         $newGender->name = $request->name;
         $newGender->save();
-
     }
 
     /**
@@ -66,6 +65,7 @@ class GendersController extends Controller
     public function showInactives(Genders $genders)
     {
         $genders = $this->editViewDataGenders(0);
+        $genders = $this->editViewDataGenders(0);
         return Inertia::render('ShowGenders', [
             "genders" => $genders,
             "statusBar" => 0
@@ -74,7 +74,6 @@ class GendersController extends Controller
 
     public function editStatus(Genders $gender)
     {
-        dd('aaaa');
         $gender->status = !$gender->status;
         $gender->save();
         return redirect()->route($gender->status ? "gender.showActives" : "gender.showInactives");
@@ -93,18 +92,24 @@ class GendersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, Genders $genders)
+    public function edit(Genders $gender)
     {
-        dd("Mano00");
+        $genders = Genders::where('id', $gender->id)->get();
+
+        return Inertia::render('EditGender', ['gender' => $genders]);
+    }
+
+    public function editedFinish()
+    {
+        return Inertia::render('FinishEditedCoupon');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Genders $genders)
+    public function update(Request $request, Genders $gender)
     {
-        dd($request);
-
+        dd($request->name, $gender);
 //        if ($user->email === $request->email) {
 //            $request->validate([
 //                'name_user' => 'required',
@@ -112,7 +117,30 @@ class GendersController extends Controller
 //                'email_confirmation' => 'required',
 //                'emails' => [new DifferentEmailRule('', $request->emails)]
 //            ]);
-        }
+//        } else {
+//            $request->validate([
+//                'name_user' => 'required',
+//                'email' => ['required', 'unique:users'],
+//                'email_confirmation' => 'required',
+//                'emails' => [new DifferentEmailRule('', $request->emails)]
+//            ]);
+//        }
+//
+//        // Verificar se os dados do forms é igual ao da base de dados, para não disparar email desnecessário
+//        if ($user->name !== $request->name_user || $user->email !== $request->email) {
+//
+//            $user->name = $request->name_user;
+//            $user->email = $request->email;
+//            $user->save();
+//
+//            $user = new stdClass();
+//            $user->name = $request->name_user;
+//            $user->email = $request->email;
+//            Mail::send(new SendMailUserCommon($user, 2));
+//        }
+//
+//        return redirect()->route('user.edited');
+    }
 
     /**
      * Remove the specified resource from storage.
