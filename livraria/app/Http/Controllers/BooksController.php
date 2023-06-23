@@ -171,7 +171,7 @@ class BooksController extends Controller
 //        $results->save();
 
 
-        return Inertia::render('EditBook',['book'=>$book, "autores" => $book->authors, "editora" => $book->publishers]);
+        return Inertia::render('EditBook',['book'=>$book, "autores" => $book->authors, "editora" => $book->publishers, "generos" => $book->genders]);
     }
 
     public function editBook(Books $book, Request $request, Stocks $stocks)

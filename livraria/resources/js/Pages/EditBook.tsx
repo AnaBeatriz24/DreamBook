@@ -9,6 +9,8 @@ import InputError from "@/Components/InputError";
 import AddAuthor from "@/Components/AddAuthor";
 import React from "react";
 import UpdateTitle from "@/Components/UpdateTitle";
+import {name} from "axios";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 const rotas = [
     {
@@ -20,9 +22,11 @@ const rotas = [
         'route': 'books.edit',
     },
 ]
-export default function EditBook({ auth, book, autores, editora }: PageProps){
+export default function EditBook({ auth, book, autores, editora, generos }: PageProps){
 
-    console.log(book, editora, autores)
+     console.log(autores[0].name)
+
+
 
     const { data, setData, post, processing, errors } = useForm({
         id_book: book.id,
@@ -31,8 +35,8 @@ export default function EditBook({ auth, book, autores, editora }: PageProps){
         isbn_book: book.isbn,
         imgcapa_books: book.img,
         editora_book: editora.name,
-        autor_book: book.author,
-        genero_book: book.genero,
+        autor_book: autores[0].name,
+        genero_book: generos.length.name,
         // quantidade_stocks: stocks.quantidade,
         // valor_entrada: stocks.valor_entrada,
     });
@@ -44,6 +48,10 @@ export default function EditBook({ auth, book, autores, editora }: PageProps){
     const submit = (e) => {
         e.preventDefault()
         post(route("store.editBook", [data.id_book]));
+    };
+    const submitTitle = (e) => {
+        e.preventDefault()
+        post(route("store.editTitle", [data.titulo_book]));
     };
 
     return<>
@@ -61,9 +69,22 @@ export default function EditBook({ auth, book, autores, editora }: PageProps){
                     <form onSubmit={submit} method={"post"}>
                         <div className="flex flex-col mx-auto">
                             <div className="flex gap-4 justify-center">
-                                <div className="mt-4 w-full lg:w-[60vw]">
-                                    <UpdateTitle dataTitle={{title: "" }} value={data.title}/>
-                                </div>
+                                <form>
+                                    <div className="mt-4 w-full lg:w-[60vw]">
+                                        <InputLabel className={"text-white"} forInput="titulo_book" value="Título" />
+
+                                        <TextInput
+                                            id="titulo_book"
+                                            name="titulo_book"
+                                            type={"text"}
+                                            value={data.titulo_book}
+                                            className="mt-1 w-full"
+                                            autoComplete="titulo_book"
+                                            onChange={onHandleChange}
+                                            required={true}
+                                        />
+                                    </div>
+                                </form>
                             </div>
 
                             <div className="flex flex-col  items-center">
@@ -93,7 +114,7 @@ export default function EditBook({ auth, book, autores, editora }: PageProps){
                                         value={data.editora_book}
                                         className="mt-1 w-full"
                                         autoComplete="editora_book"
-                                        handleChange={onHandleChange}
+                                        onChange={onHandleChange}
                                         required={true}
                                     />
                                 </div>
@@ -109,15 +130,15 @@ export default function EditBook({ auth, book, autores, editora }: PageProps){
                             </div>
                             <div className="flex flex-col  items-center">
                                 <div className="mt-4 w-full">
-                                    <InputLabel className={"text-white"} forInput="editora_book" value="Assunto" />
+                                    <InputLabel className={"text-white"} forInput="genero_book" value="Generos Associados" />
 
                                     <TextInput
-                                        id="editora_book"
-                                        name="editora_book"
+                                        id="genero_book"
+                                        name="genero_book"
                                         type={"text"}
-                                        value={data.editora_book}
+                                        value={data.genero_book}
                                         className="mt-1 w-full"
-                                        autoComplete="editora_book"
+                                        autoComplete="genero_book"
                                         handleChange={onHandleChange}
                                         required={true}
                                     />
@@ -144,122 +165,5 @@ export default function EditBook({ auth, book, autores, editora }: PageProps){
 
         </AuthenticatedLayout>
     </>
-    // <form onSubmit={submit} method={'post'}>
-    //
-    //     <TextInput
-    //         id="id_book"
-    //         type="id_book"
-    //         name="id_book"
-    //         value={data.id_book}
-    //         className="mt-1 block w-screen"
-    //         isFocused={true}
-    //         handleChange={onHandleChange}
-    //     />
-    //
-    //     <div className="mt-4 flex gap-4 justify-center">
-    //         <div className="flex flex-col">
-    //             <div className="mt-4">
-    //                 <InputLabel forInput="titulo_book" value="Título" />
-    //                 <TextInput
-    //                     id="titulo_book"
-    //                     type="text"
-    //                     name="titulo_book"
-    //                     value={data.titulo_book}
-    //                     className="mt-1 block w-screen"
-    //                     isFocused={true}
-    //                     handleChange={onHandleChange}
-    //                 />
-    //                 <InputError message={errors.titulo_book} className="mt-2" />
-    //             </div>
-    //
-    //             <div className="mt-4">
-    //                 <InputLabel forInput="descricao" value="E-mail de confirmação do gerente" />
-    //                 <TextInput
-    //                     id="descricao"
-    //                     type="descricao"
-    //                     name="descricao"
-    //                     value={data.descricao}
-    //                     className="mt-1 block w-screen"
-    //                     autoComplete="username"
-    //                     isFocused={true}
-    //                     handleChange={onHandleChange}
-    //                 />
-    //                 <InputError message={errors.descricao} className="mt-2" />
-    //             </div>
-    //
-    //             <div className="mt-4">
-    //                 <InputLabel forInput="isbn_book" value="E-mail de confirmação do gerente" />
-    //                 <TextInput
-    //                     id="isbn_book"
-    //                     type="isbn_book"
-    //                     name="isbn_book"
-    //                     value={data.isbn_book}
-    //                     className="mt-1 block w-screen"
-    //                     autoComplete="username"
-    //                     isFocused={true}
-    //                     handleChange={onHandleChange}
-    //                 />
-    //                 <InputError message={errors.isbn_book} className="mt-2" />
-    //             </div>
-    //
-    //             <div className="mt-4">
-    //                 <InputLabel forInput="editora_book" value="E-mail de confirmação do gerente" />
-    //                 <TextInput
-    //                     id="editora_book"
-    //                     type="editora_book"
-    //                     name="editora_book"
-    //                     value={data.editora_book}
-    //                     className="mt-1 block w-screen"
-    //                     autoComplete="username"
-    //                     isFocused={true}
-    //                     handleChange={onHandleChange}
-    //                 />
-    //                 <InputError message={errors.editora_book} className="mt-2" />
-    //             </div>
-    //
-    //             <div className="mt-4">
-    //                 <InputLabel forInput="autor_book" value="E-mail de confirmação do gerente" />
-    //                 <TextInput
-    //                     id="autor_book"
-    //                     type="autor_book"
-    //                     name="autor_book"
-    //                     value={data.autor_book}
-    //                     className="mt-1 block w-screen"
-    //                     autoComplete="username"
-    //                     isFocused={true}
-    //                     handleChange={onHandleChange}
-    //                 />
-    //             </div>
-    //             <InputError message={errors.autor_book} className="mt-2" />
-    //
-    //             <div className="mt-4">
-    //                 <InputLabel forInput="genero_book" value="E-mail de confirmação do gerente" />
-    //                 <TextInput
-    //                     id="genero_book"
-    //                     type="genero_bookgenero_book"
-    //                     name="genero_book"
-    //                     value={data.genero_book}
-    //                     className="mt-1 block w-screen"
-    //                     autoComplete="username"
-    //                     isFocused={true}
-    //                     handleChange={onHandleChange}
-    //                 />
-    //                 <InputError message={errors.genero_book} className="mt-2" />
-    //             </div>
-    //         </div>
-    //     </div>
-    //
-    //
-    //     <div className="mt-28 flex gap-4 justify-around">
-    //         <Link href={route('book.showActive')}>
-    //             <SecondaryButton className="ml-4 bg-[#ef4444] hover:bg-red-700" processing={processing} type={"button"}>
-    //                 Cancelar
-    //             </SecondaryButton>
-    //         </Link>
-    //         <SecondaryButton className="bg-green-500 ml-4 hover:bg-green-700" processing={processing} type={'submit'}>
-    //             Editar informações
-    //         </SecondaryButton>
-    //     </div>
-    // </form>
 
 }
