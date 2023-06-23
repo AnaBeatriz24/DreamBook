@@ -2,6 +2,7 @@
 import OptionsTable from "@/Components/OptionsTable";
 import {useForm} from "@inertiajs/react";
 import {useState} from "react";
+import DangerButton from "@/Components/DangerButton";
 
 export default function RowTableCart({book}) {
 
@@ -12,7 +13,6 @@ export default function RowTableCart({book}) {
                 {data.title}
             </div>
             <div className="px-2 py-3 break-words font-medium text-black rounded">
-
                 <input type="number" name="quantity" id="quantity"
                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                        value={data.quantity} onChange={(e) => {
@@ -24,6 +24,7 @@ export default function RowTableCart({book}) {
             </div>
             <div className="px-2 py-3 break-words font-medium text-white rounded">
                 R$ {data.amount * data.quantity}
+                <DangerButton className={"float-right"} type={"button"} onClick={() => post(route("cart.updateSalesRemoveBook"))}>Remover</DangerButton>
             </div>
     </>
 }

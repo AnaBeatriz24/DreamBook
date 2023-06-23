@@ -104,30 +104,6 @@ class SalesController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Sales $sales)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Sales $sales)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Sales $sales)
-    {
-        //
-    }
-
     public function updateSales(Request $request)
     {
         $book = Books::find($request->idBook)->stocks->quantity;
@@ -136,10 +112,32 @@ class SalesController extends Controller
         }
     }
 
+    public function updateSalesRemoveBook(Request $request)
+    {
+        DB::unprepared("delete from sales_books where books_id = $request->idBook and sales_id = $request->idSales");
+        return redirect()->route("cart", ["atualiza" => true]);
+    }
+
     public function appliedCouponSale(Request $request)
     {
-        dd($request);
+//        dd($request);
         $cupom = Coupons::where("name", "=", $request->cupom)->where("status", "=", 1)->count() == 1 ? Coupons::where("name", "=", $request->cupom)->where("status", "=", 1)->get()[0]: null;
+        if($cupom !== null){
+            $sale = Sales::find($request->idSale);
+            $sale->coupons_id = $cupom->id;
+            $sale->save();
+        }
+        return redirect()->route("cart");
+    }
+
+    public function appliedCouponSaleRemove(Request $request)
+    {
+//        dd($request);
+
+        $sale = Sales::find($request->idSale);
+        $sale->coupons_id = null;
+        $sale->save();
+        return redirect()->route("cart");
 
     }
 

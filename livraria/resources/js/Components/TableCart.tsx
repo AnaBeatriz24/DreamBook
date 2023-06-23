@@ -4,7 +4,7 @@ import {useForm} from "@inertiajs/react";
 import {useRef, useState} from "react";
 import RowTableCart from "@/Components/RowTableCart";
 
-export default function TableCart({books= []}) {
+export default function TableCart({books= [], cupom}) {
 
     const header = (item:string) => {
         return <div className="px-8 py-3 font-medium text-black">
@@ -37,9 +37,16 @@ export default function TableCart({books= []}) {
             <div className="px-2 py-3 break-words font-medium text-white rounded col-span-3 place-self-end">
                 Total
             </div>
-            <div className="px-2 py-3 break-words font-medium text-white rounded">
-                R$ {total}
-            </div>
+            {(cupom === null) ?
+                <div className="px-2 py-3 break-words font-medium text-white rounded">
+                    R$ { total }
+                </div>
+                :
+                <div className="px-2 py-3 break-words font-medium text-white rounded">
+                    <span className={"line-through"}>R$ { total }</span> (- {`${cupom.discount}%`})
+                    <h3>R$ {total * (1 - cupom.discount/100)}</h3>
+                </div>
+            }
         </div>
     </>
 }

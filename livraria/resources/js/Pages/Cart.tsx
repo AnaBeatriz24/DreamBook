@@ -14,6 +14,10 @@ export default function Cart({ auth, books, sale, coupon }: PageProps) {
         }
     ]
 
+    if(window.location.search.includes("atualiza")){
+        window.location.href = window.location.pathname;
+    }
+
     const listBooks = books.map((book) => {
         return {idBook: book.id, idSales: book.pivot.sales_id, title: book.title, quantity: book.pivot.quantity, maxStock: book.maxStock, amount: book.pivot.amount}
     })
@@ -33,7 +37,7 @@ export default function Cart({ auth, books, sale, coupon }: PageProps) {
 
             {sale === null ? <h1>Não há nenhum item no carrinho de compras</h1> :
                 <>
-                    <TableCart books={listBooks}></TableCart>
+                    <TableCart books={listBooks} cupom={coupon}></TableCart>
                     <div className={"mt-8 ml-20"}>
                         <CupomApply idSale={sale.id} coupon={coupon}/>
                     </div>
