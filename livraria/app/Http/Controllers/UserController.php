@@ -9,9 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-use mysql_xdevapi\Table;
-use stdClass;
-use function Termwind\render;
+use function Symfony\Component\String\s;
 
 class UserController extends Controller
 {
@@ -202,6 +200,35 @@ class UserController extends Controller
             }
         }
         return Inertia::render('ShowUsers', ['users' => $users, 'statusBar'=> 6]);
+    }
+
+    public function history()
+    {
+
+        $sales = DB::table('sales_books')
+            ->join('sales', 'sales_books.sales_id', '=', 'sales.id')
+            ->join('books', 'sales_books.books_id', '=', 'books.id')
+            ->select('books.title', 'sales.tradeDate', 'sales.attendant_id', 'sales.cashier_id', 'sales_books.amount')
+            ->where('sales.status', 1)
+            ->where('sales.users_id', Auth::id())
+            ->paginate(7);
+            ;
+
+        foreach ($sales as $sale) {
+            if (is_null($sale->cashier_id)) {
+                $sale->cashier_id = "Não houve caixa";
+            }
+            if (is_null($sale->attendant_id)) {
+                $sale->attendant_id = "Não houve atendente";
+            }
+        }
+
+        // dd($sales);
+
+        return Inertia::render('History', [
+            'sales' => $sales,
+        ]);
+
     }
 
     /**

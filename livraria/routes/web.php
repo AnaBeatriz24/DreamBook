@@ -123,9 +123,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get("/showBook/{book}", [BooksController::class, 'index'])->name("book.index");
 
-    Route::get('/salesHistory', function () {
-        dd('Desenvolver tela de histórico de vendas');
-    })->name('sales.history');
+    Route::get('/salesHistory', [UserController::class, 'history'])->name('sales.history');
 
 });
 
