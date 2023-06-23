@@ -117,6 +117,9 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/Edit/{book}', [BooksController::class, 'edit'])->name('books.edit');
+    Route::post('/EditAuthor', [BooksController::class, 'deleteAuthor'])->name('excluiAutor');
+    Route::post('/UpdatePub', [BooksController::class, 'updatePub'])->name('updatePub');
+    Route::post('/updateBook', [BooksController::class, 'updateBook'])->name('updateBook');
     Route::get("/EditB/{book}", [BooksController::class, 'editBook'])->name('store.editBook');
 
 

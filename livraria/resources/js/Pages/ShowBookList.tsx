@@ -11,14 +11,9 @@ import TableBook from "@/Components/TableBook";
 import Books from "@/Components/Books";
 import ButtonStatusBarGroup from "@/Components/ButtonStatusBarGroup";
 
-export default function ShowBookList({ auth }: PageProps ) {
-
-
-    let {results, statusBar} = usePage().props;
-
-
-
-    let header=["Nome", "Status", "Quantidade", "Valor", "Ações"];
+export default function ShowBookList({ auth, results }: PageProps ) {
+    let {statusBar} = usePage().props;
+    let header=["Nome", "Quantidade", "Valor", "Ações"];
     let routes=["book.showActive", "book.showInactive"]
     let title=["Ativos", "Desativados"]
 
@@ -36,10 +31,9 @@ export default function ShowBookList({ auth }: PageProps ) {
         }
     }
 
-
     let tabela = {
         header: header,
-        data:results,
+        data: results,
         actions: buttonText(),
     }
 
@@ -64,7 +58,7 @@ export default function ShowBookList({ auth }: PageProps ) {
             <ButtonStatusBarGroup routes={routes} status={statusBar} title={title}/>
 
 
-            {results.data.length === 0
+            {results.length === 0
 
                 ? <p className={"text-white text-center mt-24 text-3xl font-bold"}>{`Não há livros ${ativosInativos()}`}</p>
                 : <TableBook props={tabela}></TableBook>}
