@@ -210,7 +210,7 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
                                         {...books}
                                     </div>
 
-                                    <div>
+                                    <div >
                                         <InputLabel value={"Livros Comprados"}/>
                                         <div className="grid grid-flow-col grid-cols-4 gap-4 w-3/4 mx-auto">
                                             { head.map(item => {
@@ -222,9 +222,9 @@ export default function CreateBook({ auth, genders, suppliers}: PageProps) {
                                         </div>
                                         {
                                             listBook.map(datas => {
-                                                return <div className="mx-auto bg-teal-900 rounded-lg w-[90vw] grid grid-cols-4 text-center items-center mb-2">
+                                                return <div className="mx-auto bg-teal-900 rounded-lg grid grid-cols-4 text-center items-center mb-2">
                                                     {dataText(datas)}
-                                                    <div className="px-6 py-3">
+                                                    <div className=" w-auto px-6 py-3">
                                                         <SecondaryButton className="ml-4" type={'button'} onClick={() => {
                                                             let arra = listBook.filter(item => item !== datas);
                                                             setListBook([...arra]);
