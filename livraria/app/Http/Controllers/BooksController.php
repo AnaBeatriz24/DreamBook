@@ -146,18 +146,19 @@ class BooksController extends Controller
      */
     public function edit(Books $book)
     {
-        //dd($books);
 
-        return Inertia::render('EditBook',['book'=>$book]);
-    }
 
-    public function editBook(Books $book, Request $request, Stocks $stocks)
-    {
-//
 //        $results = DB::table('books')
 //            ->join('stocks', 'books.id', '=', 'stocks.books_id')
-//            ->get();
+////            ->join('books_authors', 'books.id', '=', "books_authors.books_id")
+////            ->join('authors', 'authors.id', '=', 'books_authors.authors_id')
 //
+//            ->select('books.title', 'publishers.name', 'books.description', 'books.isbn', 'stocks.quantity', 'stocks.amount','authors.name')
+//            ->where('books.id', '=', $book->id)
+//            ->first();
+
+
+//        $results->id = $request-> id_book;
 //        $results->title = $request ->title_book;
 //        $results->description = $request ->descricao;
 //        $results->isbn = $request->isbn_book;
@@ -167,8 +168,21 @@ class BooksController extends Controller
 //        $results->genders=$request->genero_book;
 //        $results->quantity=$request->quantidade_stocks;
 //        $results->amount=$request->valor_entrada;
-////        $results->save();
-////
+//        $results->save();
+
+
+        return Inertia::render('EditBook',['book'=>$book, "autores" => $book->authors, "editora" => $book->publishers]);
+    }
+
+    public function editBook(Books $book, Request $request, Stocks $stocks)
+    {
+
+
+
+
+
+
+//
 ////        return redirect()->route("store.editBook");
 //        return Inertia::render('EditBook',['book'=>$book]);
 
@@ -235,6 +249,9 @@ class BooksController extends Controller
             ->join('stocks', 'books.id', '=', 'stocks.books_id')
             ->select("books.id", "books.title", "books.status", "stocks.quantity", "stocks.amount")
             ->paginate(7);
+
+
+
 //        $books = DB::table('books')
 //            ->select('id', 'title', 'status')
 //            ->where('status', '=', $status)
