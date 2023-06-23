@@ -17,7 +17,7 @@ export default function ConfirmCreateUser({auth}: PageProps){
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Adicionar Usuário</h2>}>
+            header={<h2 className="font-semibold text-xl leading-tight">Adicionar Usuário</h2>}>
             <div className="mt-8 ml-20">
                 <BreadchumbSystem rota={rotas}/>
             </div>
